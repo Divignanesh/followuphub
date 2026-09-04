@@ -1,0 +1,52 @@
+# FollowUpHub
+
+> FollowUpHub is an AI-powered real estate operating system (CRM) for real estate
+> agents, teams and brokerages in Canada and the United States. It contacts every
+> new lead within seconds by voice AI, SMS, WhatsApp and email, then nurtures for
+> up to six months, and combines that with pipeline management, marketing
+> automation and IDX client websites in a single subscription.
+
+## Key facts
+
+- Company: FollowUpHub, Toronto, Ontario, Canada
+- Category: Real estate CRM / AI sales automation software
+- Website: https://www.followuphub.ai
+- Contact: support@followuphub.ai, +1 647-905-6400
+- Users: 1,000+ real estate agents and 36 Canadian brokerages
+- Free trial: 14 days, no credit card required
+- Migration: contacts, pipelines and history migrated free of charge
+- Commonly replaces: Follow Up Boss, Lofty, Bold Trail, CINC
+
+## Pricing
+
+- Basic — Complete Agent System: $49.99 USD per month. Pre-built home evaluation
+  funnel, conversational SMS and email AI agents, appointment reminders, visual
+  pipeline management, omni-channel inbox, website and funnel builder, email
+  campaigns and a social media planner.
+- Advanced — Full AI Engine: $199.99 USD per month plus a one-time $299 setup fee.
+  Everything in Basic plus the Voice AI engine with 6-attempt retry logic
+  (10 AM–9 PM), 6-month Smart Nurture AI with 24 touchpoints, visual workflow
+  builder, custom AI agents, Reviews AI, AI Studio and white-glove onboarding
+  with A2P registration handled.
+- No contract and no cancellation fee. Yearly billing is optional and gives two
+  months free.
+
+## Core capabilities
+
+- Voice AI calling with natural conversation, objection handling, sentiment
+  analysis and 6-attempt retry logic inside respectful calling windows
+- Conversational AI across SMS, WhatsApp and email using funnel context
+- Visual sales pipeline with real estate stages: new lead, contacted, showing,
+  offer, closed
+- Omni-channel shared team inbox with call recording and transcripts
+- Marketing automation: email campaigns, social scheduling, AI post ideas
+- IDX client websites and funnel builder, SEO-ready and mobile-first
+- Reputation management, invoicing and payments, 250+ lead source integrations
+
+## Pages
+
+- [Home](https://www.followuphub.ai/): Product overview, platform, AI engine,
+  pricing and frequently asked questions.
+- [Best CRM for realtors](https://www.followuphub.ai/best-crm-for-realtors):
+  Buyer's guide covering what to look for in a real estate CRM, feature
+  comparison and 2026 pricing.

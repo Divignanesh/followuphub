@@ -5,7 +5,22 @@
 const CDN = "https://www.followuphub.ai";
 const a = (p: string) => `${CDN}${p}`;
 
+/**
+ * Self-hosted photography. The production CSP is `img-src 'self'`, so any
+ * external stock URL would be blocked in the browser — these are served from
+ * our own /images directory instead. Sources are listed in
+ * public/images/CREDITS.md.
+ */
+export const LISTINGS = [
+  { src: "/images/listing-1.jpg", alt: "Red brick two-storey home with a manicured front lawn" },
+  { src: "/images/listing-2.jpg", alt: "Detached family home with a covered porch and wide driveway" },
+  { src: "/images/listing-3.jpg", alt: "Two-storey home with blue shingle gable and double garage" },
+  { src: "/images/listing-4.jpg", alt: "Suburban house with a large lawn and mature trees" },
+] as const;
+
 export const IMG = {
+  agentOnCall: "/images/agent-on-call.jpg",
+  ogImage: "/images/og-image.jpg",
   logo: a("/__l5e/assets-v1/ade88837-8e3a-4579-94b6-3cffbea0c549/followuphub-logo.png"),
   logoLight: a("/__l5e/assets-v1/4a8a70d2-4ae5-4db3-ba46-1d79ae9cee23/followuphub-logo-light.png"),
   hero: a("/__l5e/assets-v1/6e4e9167-e19c-4074-9807-84fa89a51e2f/fuh-hero.jpg"),

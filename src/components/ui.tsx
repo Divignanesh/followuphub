@@ -141,10 +141,61 @@ export function SectionHeading({
   kicker?: string;
   title: ReactNode;
   lede?: ReactNode;
-  align?: "center" | "left";
+  /** "split" puts the title left and the lede right across the full width. */
+  align?: "center" | "left" | "split";
   tone?: "ink" | "cream";
   as?: "h2" | "h3";
 }) {
+  const heading = (
+    <Tag
+      className={cx(
+        "text-[2rem] font-extrabold leading-[1.08] tracking-[-0.03em] sm:text-[2.6rem]",
+        tone === "cream" ? "text-cream" : "text-ink",
+      )}
+    >
+      {title}
+    </Tag>
+  );
+
+  const ledeEl = lede ? (
+    <p
+      className={cx(
+        "text-[17px] leading-[1.7]",
+        tone === "cream" ? "text-mist/85" : "text-ink-soft",
+      )}
+    >
+      {lede}
+    </p>
+  ) : null;
+
+  if (align === "split") {
+    return (
+      <motion.div
+        variants={stagger(0.08)}
+        initial="hidden"
+        whileInView="show"
+        viewport={viewport}
+        className="grid gap-x-12 gap-y-5 border-b border-line pb-10 lg:grid-cols-[1.15fr_1fr] lg:items-end"
+      >
+        <div>
+          {kicker && (
+            <motion.div variants={fadeUp}>
+              <Kicker tone={tone}>{kicker}</Kicker>
+            </motion.div>
+          )}
+          <motion.div variants={fadeUp} className="mt-5 max-w-xl">
+            {heading}
+          </motion.div>
+        </div>
+        {ledeEl && (
+          <motion.div variants={fadeUp} className="max-w-lg lg:pb-1">
+            {ledeEl}
+          </motion.div>
+        )}
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       variants={stagger(0.08)}
@@ -158,26 +209,13 @@ export function SectionHeading({
           <Kicker tone={tone}>{kicker}</Kicker>
         </motion.div>
       )}
-      <motion.div variants={fadeUp}>
-        <Tag
-          className={cx(
-            "mt-5 text-[2rem] font-extrabold leading-[1.08] tracking-[-0.03em] sm:text-[2.6rem]",
-            tone === "cream" ? "text-cream" : "text-ink",
-          )}
-        >
-          {title}
-        </Tag>
+      <motion.div variants={fadeUp} className="mt-5">
+        {heading}
       </motion.div>
-      {lede && (
-        <motion.p
-          variants={fadeUp}
-          className={cx(
-            "mt-4 text-[17px] leading-[1.7]",
-            tone === "cream" ? "text-mist/85" : "text-ink-soft",
-          )}
-        >
-          {lede}
-        </motion.p>
+      {ledeEl && (
+        <motion.div variants={fadeUp} className="mt-4">
+          {ledeEl}
+        </motion.div>
       )}
     </motion.div>
   );

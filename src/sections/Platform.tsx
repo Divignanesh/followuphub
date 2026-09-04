@@ -3,6 +3,7 @@ import { Globe, LayoutGrid, Megaphone, PhoneCall, type LucideIcon } from "lucide
 import type { ReactNode } from "react";
 import { scaleIn, springSoft, stagger, viewport } from "../lib/motion";
 import { SectionHeading, cx } from "../components/ui";
+import { LISTINGS } from "../lib/assets";
 
 /* ------------------------------ mini panels ------------------------------ */
 
@@ -80,6 +81,7 @@ function CampaignMini() {
 }
 
 function WebsiteMini() {
+  const [hero, ...rest] = LISTINGS;
   return (
     <div className="overflow-hidden rounded-lg border border-line bg-cream">
       <div className="flex items-center gap-1.5 border-b border-line px-3 py-2">
@@ -88,11 +90,28 @@ function WebsiteMini() {
         <span className="ml-1 font-mono text-[10px] text-ink-faint">yourname.ca</span>
       </div>
       <div className="space-y-2 p-3">
-        <div className="h-12 rounded bg-teal/15" />
+        <img
+          src={hero.src}
+          alt={hero.alt}
+          width={640}
+          height={480}
+          loading="lazy"
+          decoding="async"
+          className="h-16 w-full rounded object-cover"
+        />
         <div className="grid grid-cols-3 gap-1.5">
-          <div className="h-8 rounded bg-sand" />
-          <div className="h-8 rounded bg-sand" />
-          <div className="h-8 rounded bg-sand" />
+          {rest.map((l) => (
+            <img
+              key={l.src}
+              src={l.src}
+              alt={l.alt}
+              width={640}
+              height={480}
+              loading="lazy"
+              decoding="async"
+              className="h-10 w-full rounded object-cover"
+            />
+          ))}
         </div>
         <div className="flex justify-between pt-0.5 text-[10.5px] font-semibold">
           <span className="text-ink-soft">IDX feed</span>

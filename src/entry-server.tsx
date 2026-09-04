@@ -27,11 +27,11 @@ export type RouteMeta = {
   changefreq: string;
 };
 
-// Existing production asset — swap for a purpose-built 1200x630 card when one exists.
-const OG_IMAGE =
-  "https://www.followuphub.ai/__l5e/assets-v1/6e4e9167-e19c-4074-9807-84fa89a51e2f/fuh-hero.jpg";
-const OG_W = "1920";
-const OG_H = "1280";
+// 1200x630 is the size every social platform crops to; serving it directly
+// avoids their lossy re-crop of the taller hero photograph.
+const OG_IMAGE = `${SITE.domain}/images/og-image.jpg`;
+const OG_W = "1200";
+const OG_H = "630";
 
 function pageSchema(extra: object[], faqs: readonly Faq[]) {
   return graph([

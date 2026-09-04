@@ -47,6 +47,7 @@ export function Workflow() {
     <section className="border-y border-line bg-sand py-24 sm:py-28">
       <div className="container-x">
         <SectionHeading
+          align="split"
           kicker="Great businesses don't just happen"
           title="You build them with flexible systems that scale as you grow."
           lede="Four stages, one platform. Each one feeds the next, so nothing falls between tools."

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Check, PhoneCall, Waves } from "lucide-react";
 import { fadeUp, scaleIn, stagger, viewport } from "../lib/motion";
 import { Button, Kicker, cx } from "../components/ui";
+import { IMG } from "../lib/assets";
 
 const capabilities = [
   "Natural voice conversations, not recorded scripts",
@@ -58,6 +59,21 @@ export function AIEngine() {
               Turn on the AI engine
             </Button>
           </motion.div>
+
+          <motion.figure variants={fadeUp} className="mt-10 overflow-hidden rounded-2xl">
+            <img
+              src={IMG.agentOnCall}
+              alt="A real estate agent taking a call outside a property listed for sale"
+              width={1100}
+              height={460}
+              loading="lazy"
+              decoding="async"
+              className="h-36 w-full object-cover object-[center_30%]"
+            />
+            <figcaption className="bg-cream/10 px-4 py-2.5 text-[12.5px] font-semibold text-mist">
+              The AI does the dialling. You take the conversations worth having.
+            </figcaption>
+          </motion.figure>
         </motion.div>
 
         {/* call panel */}
@@ -145,6 +161,7 @@ export function AIEngine() {
             </p>
           </div>
         </motion.div>
+
       </div>
     </section>
   );

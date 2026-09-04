@@ -89,7 +89,7 @@ function Card({ who, quote }: { who: string; quote: string }) {
  * Two rows drifting in opposite directions.
  *
  * The first pass of each row is the real, readable content; the second pass is
- * an aria-hidden clone that exists only to make the loop seamless. Both rows
+ * an aria-hidden clone that exists only to keep the loop continuous. Both rows
  * pause on hover and on keyboard focus, and stop entirely under
  * prefers-reduced-motion, where the section reads as a plain horizontal list.
  */

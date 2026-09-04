@@ -26,6 +26,7 @@ export function Integrations() {
     <section id="integrations" className="py-24 sm:py-28">
       <div className="container-x">
         <SectionHeading
+          align="split"
           kicker="Open platform, infinite possibilities"
           title="Choose the tools that give you an edge."
           lede="FollowUpHub connects to 250+ lead sources, websites and tools. Pick what works for you now, and add more whenever you want without interrupting your work."

@@ -85,6 +85,7 @@ export function WhatsIncluded() {
     <section id="included" className="py-24 sm:py-28">
       <div className="container-x">
         <SectionHeading
+          align="left"
           kicker="What's included"
           title="The full platform, from first lead to closed deal."
           lede="Every capability below is part of the subscription. Nothing here is a paid add-on."

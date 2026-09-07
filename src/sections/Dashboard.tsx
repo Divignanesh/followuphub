@@ -1,31 +1,62 @@
 import { motion } from "framer-motion";
-import { BarChart3, Bell, Kanban, Megaphone, Search, Users, Wallet } from "lucide-react";
+import {
+  ArrowLeft,
+  Bell,
+  Camera,
+  ChevronsUpDown,
+  CircleHelp,
+  LayoutDashboard,
+  Megaphone,
+  MousePointerClick,
+  Package,
+  Rocket,
+  Search,
+  Settings,
+  Share2,
+  Sparkle,
+  Sparkles,
+  SlidersHorizontal,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 import { SectionHeading, cx } from "../components/ui";
-import { EASE_OUT, scaleIn, stagger, viewport } from "../lib/motion";
+import { IMG } from "../lib/assets";
+import { scaleIn, viewport } from "../lib/motion";
 
-const kpis = [
-  { n: "248", label: "Total leads" },
-  { n: "156", label: "Contacted" },
-  { n: "64", label: "Showings" },
-  { n: "28", label: "Offers" },
-  { n: "18", label: "Closed deals" },
+/**
+ * A faithful rendering of the FollowUpHub application shell: the same
+ * navigation, the same order, the same top-bar controls. Drawn rather than
+ * screenshotted so it stays legible at this size and survives a redesign of
+ * the app, but nothing here is invented — every label is a real destination.
+ */
+const nav: { icon: LucideIcon; label: string; badge?: string; active?: boolean }[] = [
+  { icon: Rocket, label: "Get Free AI" },
+  { icon: Sparkles, label: "AI Suite", badge: "New" },
+  { icon: Sparkle, label: "Ask AI" },
+  { icon: MousePointerClick, label: "Launchpad" },
+  { icon: LayoutDashboard, label: "Agency Dashboard" },
+  { icon: SlidersHorizontal, label: "SaaS Configurator" },
+  { icon: Search, label: "Prospecting" },
+  { icon: Users, label: "Sub-Accounts", active: true },
+  { icon: Camera, label: "Account Snapshots" },
+  { icon: Share2, label: "Reselling" },
+  { icon: Package, label: "Add-Ons" },
 ];
 
-const columns: { title: string; tone: string; cards: string[] }[] = [
-  { title: "New lead", tone: "bg-teal", cards: ["Dana Whitfield", "R. Chen"] },
-  { title: "Contacted", tone: "bg-[#3c6e63]", cards: ["M. Okoye", "T. Bergeron"] },
-  { title: "Showing", tone: "bg-clay", cards: ["S. Patel"] },
-  { title: "Offer", tone: "bg-gold", cards: ["J. Nakamura"] },
-  { title: "Closed", tone: "bg-teal-deep", cards: ["A. Dubois"] },
+const fields = [
+  { label: "First Name", required: true, value: "John" },
+  { label: "Last Name", required: true },
+  { label: "Email", required: true },
+  { label: "Business Name", required: true },
+  { label: "Business Niche", select: true },
+  { label: "Business Phone", required: true },
 ];
 
-const leaderboard = [
-  { pos: 1, name: "Sarah M.", deals: 6 },
-  { pos: 2, name: "Kevin L.", deals: 5 },
-  { pos: 3, name: "Amara O.", deals: 4 },
+const topActions = [
+  { icon: Megaphone, className: "bg-[#12b76a]" },
+  { icon: Bell, className: "bg-[#f04438]" },
+  { icon: CircleHelp, className: "bg-[#2e90fa]" },
 ];
-
-const sidebar = [Kanban, Users, Wallet, Megaphone, BarChart3];
 
 export function Dashboard() {
   return (
@@ -46,127 +77,119 @@ export function Dashboard() {
         >
           <div
             role="img"
-            aria-label="FollowUpHub team dashboard showing 248 total leads, a five-stage pipeline and a team leaderboard"
-            className="overflow-hidden rounded-2xl border border-line bg-card shadow-lift"
+            aria-label="The FollowUpHub application, showing its sidebar of tools from Get Free AI and AI Suite through Sub-Accounts, Reselling and Add-Ons, with a new sub-account being created"
+            className="overflow-hidden rounded-2xl border border-line bg-white shadow-lift"
           >
-            <div aria-hidden="true">
-              {/* browser chrome */}
-              <div className="flex h-11 items-center gap-3 border-b border-line bg-sand px-4">
-                <div className="flex gap-1.5">
-                  <span className="size-2.5 rounded-full bg-[#e5867d]" />
-                  <span className="size-2.5 rounded-full bg-[#e8c07a]" />
-                  <span className="size-2.5 rounded-full bg-[#8fc4a8]" />
-                </div>
-                <div className="mx-auto flex h-7 w-full max-w-sm items-center gap-2 rounded-md border border-line bg-cream px-2.5 font-mono text-[11px] text-ink-soft">
-                  <Search className="size-3.5" />
-                  app.followuphub.ai/prohome-realty/dashboard
-                </div>
-              </div>
+            <div aria-hidden="true" className="flex min-h-[26rem]">
+              {/* ---------------- sidebar ---------------- */}
+              <aside className="hidden w-[13.5rem] shrink-0 flex-col bg-[#0d3b2d] py-4 sm:flex">
+                <img
+                  src={IMG.logoLight}
+                  alt=""
+                  width={701}
+                  height={153}
+                  loading="lazy"
+                  decoding="async"
+                  className="mx-4 h-6 w-auto self-start"
+                />
 
-              <div className="flex">
-                {/* rail */}
-                <aside className="hidden w-14 shrink-0 flex-col items-center gap-1.5 bg-teal-ink py-3 sm:flex">
-                  {sidebar.map((Icon, i) => (
+                {/* account switcher */}
+                <div className="mx-3 mt-4 flex items-center gap-2 rounded-lg bg-white/10 px-2.5 py-2 ring-1 ring-white/15">
+                  <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-white/15">
+                    <MousePointerClick className="size-3 text-white/80" />
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-[11.5px] font-semibold text-white">
+                    Click here to select
+                  </span>
+                  <ChevronsUpDown className="size-3 shrink-0 text-white/60" />
+                </div>
+
+                <nav className="mt-3 flex-1 space-y-0.5 px-2">
+                  {nav.map(({ icon: Icon, label, badge, active }) => (
+                    <span
+                      key={label}
+                      className={cx(
+                        "relative flex items-center gap-2.5 rounded-md px-2 py-[7px]",
+                        active ? "bg-white/10" : "",
+                      )}
+                    >
+                      <Icon className="size-3.5 shrink-0 text-white/70" />
+                      <span className="min-w-0 flex-1 truncate text-[11.5px] text-white/90">
+                        {label}
+                      </span>
+                      {badge && (
+                        <span className="rounded bg-[#e0a82e] px-1 py-px text-[9px] font-bold text-[#3b2a06]">
+                          {badge}
+                        </span>
+                      )}
+                      {active && (
+                        <span className="absolute -right-2 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-l bg-[#4ade80]" />
+                      )}
+                    </span>
+                  ))}
+                </nav>
+
+                <span className="mt-2 flex items-center gap-2.5 px-4 py-2">
+                  <Settings className="size-3.5 text-white/70" />
+                  <span className="text-[11.5px] text-white/90">Settings</span>
+                </span>
+              </aside>
+
+              {/* ---------------- main ---------------- */}
+              <div className="min-w-0 flex-1 bg-[#fbfaf7]">
+                {/* top bar */}
+                <div className="flex h-12 items-center justify-end gap-2 border-b border-line/70 bg-[#f5efe6] px-4">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11.5px] font-semibold text-ink shadow-sm ring-1 ring-black/5">
+                    <Sparkle className="size-3 text-teal" />
+                    Ask AI
+                  </span>
+                  {topActions.map(({ icon: Icon, className }, i) => (
                     <span
                       key={i}
                       className={cx(
-                        "flex size-9 items-center justify-center rounded-lg text-mist/60",
-                        i === 0 && "bg-cream/12 text-cream",
+                        "flex size-7 items-center justify-center rounded-full text-white",
+                        className,
                       )}
                     >
-                      <Icon className="size-[18px]" />
+                      <Icon className="size-3.5" />
                     </span>
                   ))}
-                  <span className="mt-auto flex size-9 items-center justify-center rounded-lg text-mist/60">
-                    <Bell className="size-[18px]" />
+                  <span className="size-7 rounded-full bg-[#1f2937]" />
+                </div>
+
+                {/* content */}
+                <div className="p-4 sm:p-6">
+                  <span className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-[#2563eb]">
+                    <ArrowLeft className="size-3.5" />
+                    Back to Map Search
                   </span>
-                </aside>
 
-                <div className="min-w-0 flex-1 p-4 sm:p-6">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-ink-faint">
-                        Prohome Realty
-                      </p>
-                      <p className="mt-0.5 text-[17px] font-extrabold text-ink">Team dashboard</p>
-                    </div>
-                    <span className="rounded-full bg-mist px-3 py-1 text-[11px] font-bold text-teal">
-                      Cycle on track
-                    </span>
-                  </div>
-
-                  {/* KPIs */}
-                  <motion.dl
-                    variants={stagger(0.06, 0.2)}
-                    className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5"
-                  >
-                    {kpis.map((k) => (
-                      <motion.div
-                        key={k.label}
-                        variants={{
-                          hidden: { opacity: 0, y: 10 },
-                          show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE_OUT } },
-                        }}
-                        className="rounded-xl border border-line bg-cream px-3.5 py-3"
-                      >
-                        <dd className="text-[22px] font-extrabold leading-none tracking-[-0.02em] text-ink">
-                          {k.n}
-                        </dd>
-                        <dt className="mt-1.5 text-[11.5px] text-ink-soft">{k.label}</dt>
-                      </motion.div>
-                    ))}
-                  </motion.dl>
-
-                  <div className="mt-5 grid gap-4 lg:grid-cols-[1.6fr_1fr]">
-                    {/* pipeline */}
-                    <div className="overflow-x-auto">
-                      <motion.div
-                        variants={stagger(0.07, 0.35)}
-                        className="grid min-w-[34rem] grid-cols-5 gap-2.5"
-                      >
-                        {columns.map((col) => (
-                          <motion.div
-                            key={col.title}
-                            variants={{
-                              hidden: { opacity: 0, y: 12 },
-                              show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_OUT } },
-                            }}
+                  <div className="mx-auto mt-4 max-w-md overflow-hidden rounded-lg border border-line bg-white">
+                    <p className="border-b border-line px-4 py-3 text-[13px] font-bold text-ink">
+                      Add Sub-Account
+                    </p>
+                    <div className="space-y-2.5 p-4">
+                      {fields.map((f) => (
+                        <div key={f.label}>
+                          <p className="text-[10.5px] font-medium text-ink-soft">
+                            {f.label}
+                            {f.required && <span className="ml-0.5 text-[#dc2626]">*</span>}
+                          </p>
+                          <div
+                            className={cx(
+                              "mt-1 flex h-7 items-center rounded-md border px-2.5 text-[11px]",
+                              f.value
+                                ? "border-[#2563eb] text-ink"
+                                : "border-line text-ink-faint",
+                            )}
                           >
-                            <p className="flex items-center gap-1.5 px-0.5 text-[11px] font-bold text-ink-soft">
-                              <span className={cx("size-1.5 rounded-full", col.tone)} />
-                              {col.title}
-                            </p>
-                            <div className="mt-2 space-y-2">
-                              {col.cards.map((c) => (
-                                <div
-                                  key={c}
-                                  className="rounded-lg border border-line bg-cream px-2.5 py-2 text-[11.5px] font-semibold text-ink"
-                                >
-                                  {c}
-                                </div>
-                              ))}
-                            </div>
-                          </motion.div>
-                        ))}
-                      </motion.div>
-                    </div>
-
-                    {/* leaderboard */}
-                    <div className="rounded-xl border border-line bg-cream p-4">
-                      <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-ink-faint">
-                        Team leaderboard
-                      </p>
-                      <ol className="mt-3 space-y-2.5">
-                        {leaderboard.map((l) => (
-                          <li key={l.pos} className="flex items-center gap-3 text-[12.5px]">
-                            <span className="flex size-6 items-center justify-center rounded-full bg-teal text-[11px] font-bold text-white">
-                              {l.pos}
-                            </span>
-                            <span className="flex-1 font-semibold text-ink">{l.name}</span>
-                            <span className="font-mono text-ink-soft">{l.deals} deals</span>
-                          </li>
-                        ))}
-                      </ol>
+                            {f.value ?? (f.select ? "" : f.label)}
+                            {f.select && (
+                              <ChevronsUpDown className="ml-auto size-3 text-ink-faint" />
+                            )}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

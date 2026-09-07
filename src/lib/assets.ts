@@ -19,7 +19,6 @@ export const LISTINGS = [
 ] as const;
 
 export const IMG = {
-  agentOnCall: "/images/agent-on-call.jpg",
   ogImage: "/images/og-image.jpg",
   logo: a("/__l5e/assets-v1/ade88837-8e3a-4579-94b6-3cffbea0c549/followuphub-logo.png"),
   logoLight: a("/__l5e/assets-v1/4a8a70d2-4ae5-4db3-ba46-1d79ae9cee23/followuphub-logo-light.png"),

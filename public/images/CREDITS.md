@@ -2,7 +2,7 @@
 
 ## Photography
 
-The four listing photographs and the agent-on-call photograph come from
+The four listing photographs come from
 [Pexels](https://www.pexels.com). The Pexels licence permits free use for
 commercial purposes, with modification, and does not require attribution.
 Credits are recorded here anyway so the sources stay traceable.
@@ -13,7 +13,6 @@ Credits are recorded here anyway so the sources stay traceable.
 | `listing-2.jpg` | https://www.pexels.com/photo/view-of-modern-suburban-detached-house-with-driveway-8583638/ |
 | `listing-3.jpg` | https://www.pexels.com/photo/white-and-blue-wooden-house-3958954/ |
 | `listing-4.jpg` | https://www.pexels.com/photo/gray-painted-house-209296/ |
-| `agent-on-call.jpg` | https://www.pexels.com/photo/an-agent-in-black-long-sleeves-standing-outside-a-house-while-having-a-phone-call-8482517/ |
 
 Each file was cropped and re-compressed for the layout it appears in, so the
 dimensions here do not match the originals.

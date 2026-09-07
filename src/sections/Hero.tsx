@@ -1,5 +1,5 @@
 import { motion, type Variants } from "framer-motion";
-import { Check, ShieldCheck } from "lucide-react";
+import { ArrowLeftRight, Check, ShieldCheck, Undo2 } from "lucide-react";
 import { EASE_OUT, fadeUp, stagger } from "../lib/motion";
 import { SITE } from "../lib/seo";
 import { Button, cx } from "../components/ui";
@@ -86,14 +86,21 @@ export function Hero() {
             </Button>
           </motion.div>
 
-          <motion.p variants={fadeUp} className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] font-medium text-ink-soft">
-            <span className="inline-flex items-center gap-1.5">
-              <ShieldCheck className="size-4 text-teal" aria-hidden="true" />
-              No credit card required
-            </span>
-            <span>Cancel anytime</span>
-            <span>Migration handled free</span>
-          </motion.p>
+          <motion.ul
+            variants={fadeUp}
+            className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] font-medium text-ink-soft"
+          >
+            {[
+              { icon: ShieldCheck, label: "No credit card required" },
+              { icon: Undo2, label: "Cancel anytime" },
+              { icon: ArrowLeftRight, label: "Migration handled free" },
+            ].map(({ icon: Icon, label }) => (
+              <li key={label} className="inline-flex items-center gap-1.5">
+                <Icon className="size-4 shrink-0 text-teal" aria-hidden="true" />
+                {label}
+              </li>
+            ))}
+          </motion.ul>
         </motion.div>
 
         {/* ------------- photograph + live demo overlay ------------- */}

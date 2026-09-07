@@ -14,8 +14,12 @@
     <noscript>
       <style>
         /* Framer Motion writes its pre-animation state inline during SSR.
-           Without JS there is nothing to animate it back, so reveal it. */
-        [style*="opacity:0"] { opacity: 1 !important; transform: none !important; }
+           Without JS there is nothing to animate it back, so reveal it and
+           reset anything left mid-transform, including the scroll-linked
+           zoom on the dashboard. */
+        [style*="opacity:0"],
+        [style*="scale("],
+        [style*="translateY"] { opacity: 1 !important; transform: none !important; }
       </style>
     </noscript>
     <!--app-head-->

@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import {
-  ArrowLeft,
   Bell,
   Camera,
   ChevronsUpDown,
@@ -19,9 +18,9 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
+import { useRef } from "react";
 import { SectionHeading, cx } from "../components/ui";
 import { IMG } from "../lib/assets";
-import { scaleIn, viewport } from "../lib/motion";
 
 /**
  * A faithful rendering of the FollowUpHub application shell: the same
@@ -34,22 +33,28 @@ const nav: { icon: LucideIcon; label: string; badge?: string; active?: boolean }
   { icon: Sparkles, label: "AI Suite", badge: "New" },
   { icon: Sparkle, label: "Ask AI" },
   { icon: MousePointerClick, label: "Launchpad" },
-  { icon: LayoutDashboard, label: "Agency Dashboard" },
+  { icon: LayoutDashboard, label: "Agency Dashboard", active: true },
   { icon: SlidersHorizontal, label: "SaaS Configurator" },
   { icon: Search, label: "Prospecting" },
-  { icon: Users, label: "Sub-Accounts", active: true },
+  { icon: Users, label: "Sub-Accounts" },
   { icon: Camera, label: "Account Snapshots" },
   { icon: Share2, label: "Reselling" },
   { icon: Package, label: "Add-Ons" },
 ];
 
-const fields = [
-  { label: "First Name", required: true, value: "John" },
-  { label: "Last Name", required: true },
-  { label: "Email", required: true },
-  { label: "Business Name", required: true },
-  { label: "Business Niche", select: true },
-  { label: "Business Phone", required: true },
+const summary = [
+  { n: "248", label: "Leads" },
+  { n: "156", label: "Contacted" },
+  { n: "64", label: "Showings" },
+  { n: "18", label: "Closed" },
+];
+
+const board: { stage: string; dot: string; cards: string[] }[] = [
+  { stage: "New lead", dot: "bg-[#2e90fa]", cards: ["Dana Whitfield", "R. Chen"] },
+  { stage: "Contacted", dot: "bg-teal", cards: ["M. Okoye", "T. Bergeron"] },
+  { stage: "Showing", dot: "bg-[#e0a82e]", cards: ["S. Patel"] },
+  { stage: "Offer", dot: "bg-[#f04438]", cards: ["J. Nakamura"] },
+  { stage: "Closed", dot: "bg-[#12b76a]", cards: ["A. Dubois"] },
 ];
 
 const topActions = [
@@ -59,6 +64,24 @@ const topActions = [
 ];
 
 export function Dashboard() {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+
+  // The app grows into place as the section arrives, rather than appearing at
+  // full size. Scale and offset only: it never animates opacity, so a stalled
+  // animation frame can leave it small but never invisible.
+  //
+  // Mapped straight off scroll position rather than through a spring: the
+  // motion tracks the scrollbar exactly, and it is guaranteed to reach full
+  // size instead of easing towards it and stopping short. It only ever scales
+  // up to 1, so it cannot overflow the page.
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "center center"],
+  });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [36, 0]);
+
   return (
     <section className="py-24 sm:py-28">
       <div className="container-x">
@@ -69,11 +92,9 @@ export function Dashboard() {
         />
 
         <motion.div
-          variants={scaleIn}
-          initial="hidden"
-          whileInView="show"
-          viewport={viewport}
-          className="mt-14"
+          ref={ref}
+          style={reduce ? undefined : { scale, y }}
+          className="mt-14 origin-top will-change-transform"
         >
           <div
             role="img"
@@ -158,35 +179,42 @@ export function Dashboard() {
                 </div>
 
                 {/* content */}
-                <div className="p-4 sm:p-6">
-                  <span className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-[#2563eb]">
-                    <ArrowLeft className="size-3.5" />
-                    Back to Map Search
-                  </span>
+                <div className="p-4 sm:p-5">
+                  <div className="flex items-center justify-between">
+                    <p className="text-[13px] font-bold text-ink">Dashboard</p>
+                    <span className="rounded-md border border-line bg-white px-2 py-1 text-[10.5px] font-medium text-ink-soft">
+                      This month
+                    </span>
+                  </div>
 
-                  <div className="mx-auto mt-4 max-w-md overflow-hidden rounded-lg border border-line bg-white">
-                    <p className="border-b border-line px-4 py-3 text-[13px] font-bold text-ink">
-                      Add Sub-Account
-                    </p>
-                    <div className="space-y-2.5 p-4">
-                      {fields.map((f) => (
-                        <div key={f.label}>
-                          <p className="text-[10.5px] font-medium text-ink-soft">
-                            {f.label}
-                            {f.required && <span className="ml-0.5 text-[#dc2626]">*</span>}
+                  <dl className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                    {summary.map((s) => (
+                      <div key={s.label} className="rounded-lg border border-line bg-white px-3 py-2.5">
+                        <dd className="text-[19px] font-extrabold leading-none tracking-[-0.02em] text-ink">
+                          {s.n}
+                        </dd>
+                        <dt className="mt-1 text-[10.5px] text-ink-soft">{s.label}</dt>
+                      </div>
+                    ))}
+                  </dl>
+
+                  <div className="mt-3 overflow-x-auto">
+                    <div className="grid min-w-[30rem] grid-cols-5 gap-2">
+                      {board.map((col) => (
+                        <div key={col.stage}>
+                          <p className="flex items-center gap-1.5 px-0.5 text-[10px] font-bold text-ink-soft">
+                            <span className={cx("size-1.5 rounded-full", col.dot)} />
+                            {col.stage}
                           </p>
-                          <div
-                            className={cx(
-                              "mt-1 flex h-7 items-center rounded-md border px-2.5 text-[11px]",
-                              f.value
-                                ? "border-[#2563eb] text-ink"
-                                : "border-line text-ink-faint",
-                            )}
-                          >
-                            {f.value ?? (f.select ? "" : f.label)}
-                            {f.select && (
-                              <ChevronsUpDown className="ml-auto size-3 text-ink-faint" />
-                            )}
+                          <div className="mt-1.5 space-y-1.5">
+                            {col.cards.map((c) => (
+                              <div
+                                key={c}
+                                className="rounded-md border border-line bg-white px-2 py-1.5 text-[10.5px] font-semibold text-ink"
+                              >
+                                {c}
+                              </div>
+                            ))}
                           </div>
                         </div>
                       ))}

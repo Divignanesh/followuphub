@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Pause, Play, Quote, TrendingUp } from "lucide-react";
+import { ChevronLeft, ChevronRight, Quote, TrendingUp } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { StatCounter } from "../components/StatCounter";
 import { Portrait, SectionHeading, cx } from "../components/ui";
@@ -78,20 +78,23 @@ const AUTO_MS = 8000;
 export function Results() {
   const reduce = useReducedMotion();
   const [index, setIndex] = useState(0);
-  const [playing, setPlaying] = useState(true);
   const [hovered, setHovered] = useState(false);
+  const [tookOver, setTookOver] = useState(false);
 
+  /** Manual navigation. Ends the automatic rotation for the rest of the visit. */
   const go = useCallback((next: number) => {
+    setTookOver(true);
     setIndex((next + stories.length) % stories.length);
   }, []);
 
-  // Auto-advance stops on hover, on keyboard focus inside the region, when the
-  // visitor presses pause, and whenever reduced motion is requested.
+  // Rotates on its own by default. Stops on hover, on keyboard focus inside
+  // the region, once the visitor navigates by hand, and under reduced motion —
+  // so there is always a way to hold a slide still without a pause button.
   useEffect(() => {
-    if (reduce || !playing || hovered) return;
+    if (reduce || tookOver || hovered) return;
     const t = window.setInterval(() => setIndex((i) => (i + 1) % stories.length), AUTO_MS);
     return () => window.clearInterval(t);
-  }, [reduce, playing, hovered]);
+  }, [reduce, tookOver, hovered]);
 
   const story = stories[index];
   const person = PEOPLE[story.who];
@@ -219,20 +222,6 @@ export function Results() {
               <ChevronRight className="size-5" aria-hidden="true" />
             </button>
 
-            {!reduce && (
-              <button
-                type="button"
-                onClick={() => setPlaying((p) => !p)}
-                aria-label={playing ? "Pause automatic rotation" : "Resume automatic rotation"}
-                className="ml-1 flex size-10 items-center justify-center rounded-full border border-line bg-card text-ink-soft transition-colors hover:border-teal/40 hover:text-teal"
-              >
-                {playing ? (
-                  <Pause className="size-4" aria-hidden="true" />
-                ) : (
-                  <Play className="size-4" aria-hidden="true" />
-                )}
-              </button>
-            )}
           </div>
 
           {/* announced to screen readers as the slide changes */}

@@ -32,10 +32,17 @@ function directoryIndexes() {
   };
 }
 
+/**
+ * Nothing here is bound to a fixed port: no OAuth callback, webhook or CORS
+ * origin depends on one. So honour an assigned PORT and let Vite pick another
+ * if that one is taken, rather than failing outright the way strictPort does.
+ */
+const assignedPort = Number(process.env.PORT) || undefined;
+
 export default defineConfig({
   plugins: [react(), tailwindcss(), directoryIndexes()],
   // Every route is prerendered to its own HTML file, so no SPA fallback.
   appType: "mpa",
-  server: { port: 5173, strictPort: true },
-  preview: { port: 4173, strictPort: true },
+  server: { port: assignedPort ?? 5173 },
+  preview: { port: assignedPort ?? 4173 },
 });

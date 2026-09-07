@@ -10,13 +10,24 @@ export function cx(...parts: Array<string | false | null | undefined>) {
 
 /* ----------------------------- brand mark ----------------------------- */
 
-export function Logo({ className, tone = "ink" }: { className?: string; tone?: "ink" | "cream" }) {
+export function Logo({
+  className,
+  tone = "ink",
+  eager = false,
+}: {
+  className?: string;
+  tone?: "ink" | "cream";
+  /** The masthead logo is above the fold; the footer one is not. */
+  eager?: boolean;
+}) {
   return (
     <img
       src={tone === "cream" ? IMG.logoLight : IMG.logo}
       alt="FollowUpHub"
       width={701}
       height={153}
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
       className={cx("h-9 w-auto", className)}
     />
   );

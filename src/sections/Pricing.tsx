@@ -58,7 +58,7 @@ export function Pricing() {
                       featured ? "text-cream" : "text-ink",
                     )}
                   >
-                    ${plan.price.toFixed(2)}
+                    {`$${plan.price.toFixed(2)}`}
                   </span>
                   <span className={cx("pb-1.5 text-[14px] font-medium", featured ? "text-mist/70" : "text-ink-soft")}>
                     /month {plan.currency}

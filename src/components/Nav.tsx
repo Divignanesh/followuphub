@@ -33,7 +33,7 @@ export function Nav() {
           )}
         >
           <a href="/" aria-label="FollowUpHub home" className="rounded-lg">
-            <Logo />
+            <Logo eager />
           </a>
 
           <ul className="hidden items-center gap-0.5 lg:flex">

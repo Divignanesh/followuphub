@@ -4,7 +4,6 @@ import { Comparison } from "../sections/Comparison";
 import { FAQ } from "../sections/FAQ";
 import { FinalCTA } from "../sections/FinalCTA";
 import { Pricing } from "../sections/Pricing";
-import { Testimonials } from "../sections/Testimonials";
 import { TrustBar } from "../sections/TrustBar";
 import { Button, Kicker, SectionHeading, cx } from "../components/ui";
 import { fadeUp, scaleIn, stagger, viewport } from "../lib/motion";
@@ -35,6 +34,25 @@ export const CRM_FAQS: readonly Faq[] = [
   {
     q: "Does FollowUpHub work for real estate teams and brokerages?",
     a: "Yes. Teams get shared conversation threads, agent performance tracking, team availability pooling and dynamic deal routing. More than 1,000 agents and 36 Canadian brokerages currently use the platform.",
+  },
+];
+
+const pricingFactors = [
+  {
+    term: "Per seat or flat rate",
+    body: "Most CRMs charge for every user, so the bill grows each time you add an agent. A flat monthly rate keeps the cost predictable as the team grows, which matters most for teams hiring through a good year.",
+  },
+  {
+    term: "Setup and onboarding",
+    body: "One-time implementation fees are common and are often quoted separately from the monthly price. Ask whether migration of your contacts, pipelines and history is included or billed as a project.",
+  },
+  {
+    term: "Add-ons that are not optional",
+    body: "Calling, texting, WhatsApp, websites and reputation tools are frequently sold as extras. Price the CRM with everything you actually intend to use switched on, not the entry tier.",
+  },
+  {
+    term: "Contract length",
+    body: "Annual commitments are usually cheaper per month but remove your ability to leave if the tool does not stick with the team. Month-to-month costs a little more and is worth it in the first year.",
   },
 ];
 
@@ -200,7 +218,46 @@ export function BestCrmForRealtors() {
       </section>
 
       <Comparison />
-      <Testimonials />
+
+      <section className="py-24 sm:py-28">
+        <div className="container-x">
+          <SectionHeading
+            align="split"
+            kicker="What it costs"
+            title="How real estate CRM pricing actually works"
+            lede="Advertised prices rarely match the invoice. These are the four things that move the real number."
+          />
+          <motion.ol
+            variants={stagger(0.08)}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewport}
+            className="mt-12 grid gap-5 md:grid-cols-2"
+          >
+            {pricingFactors.map(({ term, body }, i) => (
+              <motion.li
+                key={term}
+                variants={fadeUp}
+                className="rounded-2xl border border-line bg-card p-7 shadow-soft"
+              >
+                <span className="font-mono text-[12px] font-bold text-ink-faint">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-3 text-[18px] font-extrabold tracking-[-0.02em] text-ink">
+                  {term}
+                </h3>
+                <p className="mt-2 text-[14.5px] leading-[1.7] text-ink-soft">{body}</p>
+              </motion.li>
+            ))}
+          </motion.ol>
+          <p className="mx-auto mt-8 max-w-2xl text-center text-[14.5px] leading-[1.7] text-ink-soft">
+            Total the whole stack before comparing: the CRM, the dialer, the texting
+            credits, the email tool, the website and the onboarding fee. A platform that
+            looks dearer per month is often cheaper once those line items collapse into one.
+          </p>
+        </div>
+      </section>
+
       <Pricing />
       <FAQ faqs={CRM_FAQS} heading="Common questions about the best CRM for realtors" />
       <FinalCTA />

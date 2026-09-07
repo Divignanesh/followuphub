@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { Globe, LayoutGrid, Megaphone, PhoneCall, type LucideIcon } from "lucide-react";
+import { Globe, LayoutGrid, Mail, Megaphone, MessageSquare, PhoneCall, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { scaleIn, springSoft, stagger, viewport } from "../lib/motion";
-import { SectionHeading, cx } from "../components/ui";
+import { SectionHeading } from "../components/ui";
 import { LISTINGS } from "../lib/assets";
 
 /* ------------------------------ mini panels ------------------------------ */
@@ -38,23 +38,21 @@ function PipelineMini() {
 }
 
 const channels = [
-  { label: "Voice AI call", meta: "08:24 · positive", tone: "bg-mist text-teal" },
-  { label: "WhatsApp reply", meta: "2 min response", tone: "bg-[#f7ebe3] text-clay" },
-  { label: "Showing booked", meta: "Thu 4:00 PM", tone: "bg-[#f7f0dd] text-gold" },
+  { icon: PhoneCall, label: "Voice AI calling" },
+  { icon: MessageSquare, label: "SMS and WhatsApp" },
+  { icon: Mail, label: "Email nurture" },
 ];
 
 function ChannelMini() {
   return (
     <ul className="space-y-2">
-      {channels.map((c) => (
+      {channels.map(({ icon: Icon, label }) => (
         <li
-          key={c.label}
-          className="flex items-center justify-between rounded-lg border border-line bg-cream px-3 py-2.5"
+          key={label}
+          className="flex items-center gap-2.5 rounded-lg border border-line bg-cream px-3 py-2.5"
         >
-          <span className="text-[12.5px] font-semibold text-ink">{c.label}</span>
-          <span className={cx("rounded-md px-2 py-0.5 text-[10.5px] font-bold", c.tone)}>
-            {c.meta}
-          </span>
+          <Icon className="size-4 shrink-0 text-teal" aria-hidden="true" />
+          <span className="text-[12.5px] font-semibold text-ink">{label}</span>
         </li>
       ))}
     </ul>

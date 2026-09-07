@@ -1,6 +1,5 @@
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import { Check, PhoneCall, MessageSquare, CalendarCheck, ShieldCheck } from "lucide-react";
-import { useEffect, useState } from "react";
+import { motion, type Variants } from "framer-motion";
+import { Check, ShieldCheck } from "lucide-react";
 import { EASE_OUT, fadeUp, stagger } from "../lib/motion";
 import { SITE } from "../lib/seo";
 import { Button, cx } from "../components/ui";
@@ -113,7 +112,7 @@ export function Hero() {
                 height={1008}
                 fetchPriority="high"
                 decoding="async"
-                className="aspect-[5/4] w-full object-cover lg:aspect-[7/5]"
+                className="aspect-[5/4] w-full object-cover lg:aspect-[10/9]"
               />
             </div>
             <div
@@ -136,98 +135,9 @@ export function Hero() {
               </p>
             </motion.div>
 
-            {/* live follow-up, overlapping the lower-right corner */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.6 }}
-              className="relative z-10 -mt-10 px-3 sm:px-4 lg:absolute lg:inset-x-4 lg:-bottom-6 lg:mt-0 lg:px-0"
-            >
-              <SpeedToLeadPanel />
-            </motion.div>
           </div>
         </motion.div>
       </div>
     </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Speed-to-lead demonstration                                         */
-/* ------------------------------------------------------------------ */
-
-type Step = { icon: typeof PhoneCall; at: string; label: string; tone: "teal" | "clay" | "gold" };
-
-const steps: Step[] = [
-  { icon: MessageSquare, at: "0:04", label: "Text sent", tone: "teal" },
-  { icon: PhoneCall, at: "0:38", label: "Voice AI calls", tone: "clay" },
-  { icon: CalendarCheck, at: "2:15", label: "Showing booked", tone: "gold" },
-];
-
-const toneMap = {
-  teal: "bg-mist text-teal",
-  clay: "bg-[#f7ebe3] text-clay",
-  gold: "bg-[#f7f0dd] text-gold",
-};
-
-/**
- * A horizontal timeline rather than a stacked card: it carries the same
- * "form to booked in minutes" story while occupying a quarter of the
- * photograph instead of covering it.
- */
-export function SpeedToLeadPanel() {
-  const reduce = useReducedMotion();
-  const [visible, setVisible] = useState(reduce ? steps.length : 0);
-
-  useEffect(() => {
-    if (reduce) {
-      setVisible(steps.length);
-      return;
-    }
-    setVisible(0);
-    const timers = steps.map((_, i) => window.setTimeout(() => setVisible(i + 1), 800 + i * 700));
-    return () => timers.forEach(window.clearTimeout);
-  }, [reduce]);
-
-  return (
-    <div className="rounded-2xl border border-line bg-cream/95 p-3.5 shadow-lift backdrop-blur-sm">
-      <div className="flex items-center justify-between gap-3">
-        <p className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-teal">
-          <span className="relative flex size-1.5">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-teal opacity-60 motion-reduce:hidden" />
-            <span className="relative inline-flex size-1.5 rounded-full bg-teal" />
-          </span>
-          New lead · Dana Whitfield
-        </p>
-        <p className="font-mono text-[12px] font-bold text-ink">2m 15s</p>
-      </div>
-
-      <ol className="mt-3 grid grid-cols-3 gap-2">
-        {steps.map((s, i) => {
-          const Icon = s.icon;
-          const shown = i < visible;
-          return (
-            <motion.li
-              key={s.label}
-              initial={false}
-              animate={{ opacity: shown ? 1 : 0.3, y: shown ? 0 : 4 }}
-              transition={{ duration: 0.4, ease: EASE_OUT }}
-              className="rounded-lg border border-line bg-card px-2.5 py-2"
-            >
-              <span
-                className={cx(
-                  "flex size-6 items-center justify-center rounded-md",
-                  toneMap[s.tone],
-                )}
-              >
-                <Icon className="size-3.5" aria-hidden="true" />
-              </span>
-              <p className="mt-1.5 truncate text-[11.5px] font-bold text-ink">{s.label}</p>
-              <p className="font-mono text-[10px] text-ink-faint">{s.at}</p>
-            </motion.li>
-          );
-        })}
-      </ol>
-    </div>
   );
 }

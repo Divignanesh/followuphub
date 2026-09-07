@@ -99,7 +99,7 @@ export function AIEngine() {
 
             <div className="mt-4 flex items-baseline justify-between">
               <p className="text-[19px] font-bold text-cream">Dana Whitfield</p>
-              <p className="font-mono text-[13px] text-mist/70">01:12</p>
+              <p className="font-mono text-[12px] text-mist/60">Live</p>
             </div>
 
             {/* waveform */}
@@ -142,11 +142,10 @@ export function AIEngine() {
               ))}
             </ol>
 
-            <div className="mt-5 grid grid-cols-3 gap-2 border-t border-cream/12 pt-4 text-[11px]">
+            <div className="mt-5 grid grid-cols-2 gap-2 border-t border-cream/12 pt-4 text-[11px]">
               {[
                 ["Sentiment", "Positive"],
-                ["Outcome", "Booked"],
-                ["Duration", "3:41"],
+                ["Outcome", "Appointment booked"],
               ].map(([k, v]) => (
                 <div key={k}>
                   <p className="font-semibold uppercase tracking-wider text-mist/55">{k}</p>

@@ -5,7 +5,6 @@ import { FAQ } from "../sections/FAQ";
 import { FinalCTA } from "../sections/FinalCTA";
 import { Hero } from "../sections/Hero";
 import { Integrations } from "../sections/Integrations";
-import { LeadTimeline } from "../sections/LeadTimeline";
 import { Platform } from "../sections/Platform";
 import { Pricing } from "../sections/Pricing";
 import { Results } from "../sections/Results";
@@ -19,7 +18,6 @@ export function Home() {
     <>
       <Hero />
       <AIEngine />
-      <LeadTimeline />
       <Results />
       <Platform />
       <Dashboard />

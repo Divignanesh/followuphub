@@ -27,8 +27,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useRef, type ReactNode } from "react";
-import { SectionHeading, cx } from "../components/ui";
-import { IMG } from "../lib/assets";
+import { Logo, SectionHeading, cx } from "../components/ui";
 
 /**
  * A faithful rendering of the FollowUpHub application dashboard: the same
@@ -263,15 +262,9 @@ export function Dashboard() {
             <div aria-hidden="true" className="flex min-h-[26rem]">
               {/* ---------------- sidebar ---------------- */}
               <aside className="hidden w-[13.5rem] shrink-0 flex-col bg-[#0d3b2d] py-4 sm:flex">
-                <img
-                  src={IMG.logoLight}
-                  alt=""
-                  width={701}
-                  height={153}
-                  loading="lazy"
-                  decoding="async"
-                  className="mx-4 h-6 w-auto self-start"
-                />
+                <span className="mx-4 self-start">
+                  <Logo tone="cream" className="[&>span:last-child]:text-[15px] [&>svg]:size-5" />
+                </span>
 
                 {/* account switcher */}
                 <div className="mx-3 mt-4 flex items-center gap-2 rounded-lg bg-white/10 px-2.5 py-2 ring-1 ring-white/15">

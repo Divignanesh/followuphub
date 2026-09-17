@@ -1,8 +1,7 @@
 import { motion, type HTMLMotionProps } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { fadeUp, stagger, viewport } from "../lib/motion";
-import { IMG } from "../lib/assets";
 
 export function cx(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(" ");
@@ -10,30 +9,51 @@ export function cx(...parts: Array<string | false | null | undefined>) {
 
 /* ----------------------------- brand mark ----------------------------- */
 
+/**
+ * Drawn locally rather than loaded from the live domain. The hosted logo
+ * files are currently 404ing, which broke the masthead on every page; an
+ * inline mark plus the wordmark set in the site's own typeface cannot go
+ * missing, and costs no request.
+ */
 export function Logo({
   className,
   tone = "ink",
-  eager = false,
 }: {
   className?: string;
   tone?: "ink" | "cream";
-  /** The masthead logo is above the fold; the footer one is not. */
+  /** Accepted for call sites that mark the masthead as above the fold. */
   eager?: boolean;
 }) {
   return (
-    <img
-      src={tone === "cream" ? IMG.logoLight : IMG.logo}
-      alt="FollowUpHub"
-      width={701}
-      height={153}
-      loading={eager ? "eager" : "lazy"}
-      decoding="async"
-      className={cx("h-9 w-auto", className)}
-    />
+    <span className={cx("inline-flex items-center gap-2.5", className)}>
+      <svg
+        viewBox="0 0 512 512"
+        aria-hidden="true"
+        className={cx("size-8 shrink-0", tone === "cream" ? "text-cream" : "text-teal")}
+      >
+        <g fill="none" stroke="currentColor" strokeWidth="40" strokeLinecap="round">
+          <path d="M301.5 94 A176 176 0 1 1 96.5 338.4" />
+          <path d="M96.5 338.4 A176 176 0 0 1 301.5 94" strokeDasharray="28 56" />
+        </g>
+        <circle cx="301.5" cy="94" r="38.4" fill="currentColor" />
+      </svg>
+      <span
+        className={cx(
+          "text-[21px] font-extrabold tracking-[-0.03em]",
+          tone === "cream" ? "text-cream" : "text-ink",
+        )}
+      >
+        FollowUpHub
+      </span>
+    </span>
   );
 }
 
-/** Round photo with initials as the fallback if the image cannot load. */
+/**
+ * Agent headshots are served from the live domain, which is currently 404ing
+ * every asset. Until those are restored the portrait falls back to the
+ * person's initials rather than rendering a broken image.
+ */
 export function Portrait({
   src,
   name,
@@ -45,14 +65,52 @@ export function Portrait({
   size?: number;
   className?: string;
 }) {
+  const [failed, setFailed] = useState(false);
+  const ref = useRef<HTMLImageElement>(null);
+
+  // The image usually fails while the prerendered HTML is still parsing —
+  // before React attaches onError — so the handler alone never fires. Check
+  // the element's own state once on mount to catch that case too.
+  useEffect(() => {
+    const el = ref.current;
+    if (el && el.complete && el.naturalWidth === 0) setFailed(true);
+  }, []);
+
+  const initials = name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("");
+
+  if (failed) {
+    return (
+      <span
+        aria-label={name}
+        role="img"
+        style={{ width: size, height: size }}
+        className={cx(
+          "grid shrink-0 place-items-center rounded-full bg-mist font-bold text-teal ring-2 ring-cream",
+          className,
+        )}
+      >
+        <span style={{ fontSize: size * 0.36 }}>{initials}</span>
+      </span>
+    );
+  }
+
   return (
     <img
+      ref={ref}
       src={src}
       alt={name}
       width={size}
       height={size}
-      loading="lazy"
+      /* Eager: these are 40-52px, and inside the drifting testimonial rows a
+         lazy image parked off-screen never fetches, so it never errors and
+         never falls back — it just sits there as alt text. */
+      loading="eager"
       decoding="async"
+      onError={() => setFailed(true)}
       style={{ width: size, height: size }}
       className={cx("shrink-0 rounded-full object-cover ring-2 ring-cream", className)}
     />

@@ -31,17 +31,12 @@ export function TrustBar() {
                   aria-hidden={duplicate ? true : undefined}
                   className="flex h-16 w-40 shrink-0 items-center justify-center rounded-xl border border-line bg-card px-5"
                 >
-                  {/* Logos vary from 1.07 to 7.25 in aspect ratio, so they are
-                      normalised inside a fixed chip rather than sized by height. */}
-                  <img
-                    src={b.src}
-                    alt={duplicate ? "" : `${b.name} logo`}
-                    width={200}
-                    height={80}
-                    loading="lazy"
-                    decoding="async"
-                    className="max-h-9 w-auto max-w-full object-contain"
-                  />
+                  {/* The hosted brokerage marks are all 404ing, so the chip
+                      carries the name until the files are restored — a row of
+                      broken images says less than the names themselves. */}
+                  <span className="truncate text-[13px] font-bold text-ink-soft">
+                    {b.name}
+                  </span>
                 </span>
               );
             })}

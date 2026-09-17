@@ -5,11 +5,11 @@ import { FAQ } from "../sections/FAQ";
 import { FinalCTA } from "../sections/FinalCTA";
 import { Hero } from "../sections/Hero";
 import { Integrations } from "../sections/Integrations";
+import { LeadTimeline } from "../sections/LeadTimeline";
 import { Platform } from "../sections/Platform";
 import { Pricing } from "../sections/Pricing";
 import { Results } from "../sections/Results";
 import { Testimonials } from "../sections/Testimonials";
-import { TrustBar } from "../sections/TrustBar";
 import { WhatsIncluded } from "../sections/WhatsIncluded";
 import { Workflow } from "../sections/Workflow";
 import { FAQS } from "../lib/seo";
@@ -18,8 +18,8 @@ export function Home() {
   return (
     <>
       <Hero />
-      <TrustBar />
       <AIEngine />
+      <LeadTimeline />
       <Results />
       <Platform />
       <Dashboard />

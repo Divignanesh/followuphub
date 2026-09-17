@@ -1,4 +1,4 @@
-import { Mail, Phone } from "lucide-react";
+import { Mail } from "lucide-react";
 import { Logo } from "../components/ui";
 import { SITE } from "../lib/seo";
 
@@ -55,17 +55,8 @@ export function Footer() {
             <ul className="mt-5 space-y-2 text-[14px]">
               <li>
                 <a
-                  href={`tel:${SITE.phone}`}
-                  className="inline-flex items-center gap-2 font-semibold text-ink transition-colors hover:text-teal"
-                >
-                  <Phone className="size-4 text-teal" aria-hidden="true" />
-                  {SITE.phoneDisplay}
-                </a>
-              </li>
-              <li>
-                <a
                   href={`mailto:${SITE.email}`}
-                  className="inline-flex items-center gap-2 text-ink-soft transition-colors hover:text-teal"
+                  className="inline-flex items-center gap-2 font-semibold text-ink transition-colors hover:text-teal"
                 >
                   <Mail className="size-4 text-teal" aria-hidden="true" />
                   {SITE.email}

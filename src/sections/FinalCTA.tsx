@@ -35,9 +35,9 @@ export function FinalCTA() {
               </Button>
             </div>
             <p className="mt-6 text-[13.5px] text-mist/90">
-              Prefer to talk?{" "}
-              <a href={`tel:${SITE.phone}`} className="font-bold text-cream underline underline-offset-4">
-                {SITE.phoneDisplay}
+              Questions?{" "}
+              <a href={`mailto:${SITE.email}`} className="font-bold text-cream underline underline-offset-4">
+                {SITE.email}
               </a>
             </p>
           </div>

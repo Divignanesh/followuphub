@@ -45,6 +45,7 @@ The only requirement is that `/some-route` resolves to
 | `src/lib/assets.ts` | Image URLs and the people quoted in testimonials |
 | `src/index.css` | Brand tokens: colour, type and spacing |
 | `scripts/prerender.mjs` | Renders each route to HTML and writes the sitemap |
+| `scripts/generate-call-audio.sh` | Regenerates the AI engine's voice clips |
 
 ## Editing content
 
@@ -62,3 +63,16 @@ number.
 Colour pairs are checked to WCAG AA. Auto-advancing content (the customer
 carousel and the testimonial rows) pauses on hover and on keyboard focus,
 offers explicit controls, and stops entirely under `prefers-reduced-motion`.
+
+## The AI engine's call audio
+
+The call in the AI engine section plays three clips from `public/audio/`
+rather than browser speech synthesis, so every visitor hears the same voice
+instead of whatever their browser ships, and it still works where the speech
+API is unreliable. Words light up against the clip's real playback position.
+
+`scripts/generate-call-audio.sh` rebuilds them with macOS `say` voices, which
+were used only because they need no API key. For better audio, generate the
+same three lines with any service and save them to the same paths — the
+player needs no code change. Keep the wording in step with the transcript in
+`src/sections/AIEngine.tsx`, or the highlighting will drift from the audio.

@@ -19,11 +19,11 @@ export function Home() {
     <>
       <Hero />
       <TrustBar />
+      <AIEngine />
       <Results />
       <Platform />
       <Dashboard />
       <Workflow />
-      <AIEngine />
       <WhatsIncluded />
       <Testimonials />
       <Integrations />

@@ -25,7 +25,7 @@ export const CRM_FAQS: readonly Faq[] = [
   },
   {
     q: "How much does a real estate CRM cost?",
-    a: "Real estate CRMs typically range from $30 to $500 per user per month once add-ons are included. FollowUpHub is $49.99 per month for the Basic plan and $199.99 per month plus a one-time $299 setup fee for the Advanced plan, which adds the full Voice AI engine. Both include a 14-day free trial.",
+    a: "Real estate CRMs typically range from $30 to $500 per user per month once add-ons are included. FollowUpHub is $49.99 per month for the Basic plan, and the Advanced plan is the same $49.99 per month plus a one-time $299 setup fee, which adds the full Voice AI engine. Both include a 14-day free trial.",
   },
   {
     q: "Can I migrate from my current CRM?",

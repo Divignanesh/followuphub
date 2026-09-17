@@ -82,6 +82,18 @@
     background-size: 26px 26px;
   }
 
+  /*
+    The call waveform only moves while the transcript is playing. Bars carry
+    their own animation-delay inline, so the row ripples instead of pulsing
+    as one block. The reduced-motion rule in @layer base flattens it.
+  */
+  .wave-live > span { animation: fuh-wave 1s ease-in-out infinite; }
+
+  @keyframes fuh-wave {
+    0%, 100% { transform: scaleY(0.3); }
+    50%      { transform: scaleY(1); }
+  }
+
   .marquee-track { animation: fuh-marquee 46s linear infinite; }
   .marquee-track-reverse { animation: fuh-marquee-reverse 52s linear infinite; }
 

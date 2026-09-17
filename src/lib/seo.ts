@@ -12,8 +12,6 @@ export const SITE = {
   domain: "https://www.followuphub.ai",
   tagline: "The AI real estate operating system",
   email: "support@followuphub.ai",
-  phone: "+1-647-905-6400",
-  phoneDisplay: "+1 647-905-6400",
   app: "https://app.followuphub.ai",
   demo: "https://api.followuphub.ai/widget/bookings/discuss-crm-solution",
   city: "Toronto",
@@ -30,6 +28,11 @@ export const SITE = {
 /**
  * Checkout links, kept beside the prices they belong to so the two can
  * never drift apart the way they did on the previous build.
+ *
+ * `checkoutYearly` is null until annual payment links exist. While it is
+ * null the yearly toggle still shows annual pricing but its button falls
+ * back to the monthly link, so a yearly click would be billed monthly —
+ * fill these in before promoting annual billing.
  */
 export const PLANS = [
   {
@@ -37,11 +40,16 @@ export const PLANS = [
     name: "Basic",
     subtitle: "Complete Agent System",
     price: 49.99,
-    currency: "USD",
+    priceYearly: 499.9,
+    currency: "CAD",
     setup: null as number | null,
     billingNote: "14-day free trial · monthly billing · self-serve onboarding",
+    billingNoteYearly: "14-day free trial · billed annually · self-serve onboarding",
+    setupNote: null as string | null,
+    setupDetail: null as string | null,
     checkout: "https://api.followuphub.ai/payment-link/6a50b8cdc981f3feae6e866c",
-    cta: "Start free trial",
+    checkoutYearly: null as string | null,
+    cta: "Get started",
     summary:
       "The pre-built real estate follow-up system: funnels, conversational AI, pipeline and an omni-channel inbox.",
     features: [
@@ -60,12 +68,17 @@ export const PLANS = [
     id: "advanced",
     name: "Advanced",
     subtitle: "Full AI Engine",
-    price: 199.99,
-    currency: "USD",
+    price: 49.99,
+    priceYearly: 499.9,
+    currency: "CAD",
     setup: 299,
-    billingNote: "14-day free trial · $299 one-time setup · white-glove onboarding",
+    billingNote: "14-day free trial · monthly billing",
+    billingNoteYearly: "14-day free trial · billed annually",
+    setupNote: "$299 one-time setup",
+    setupDetail: "White-glove onboarding included",
     checkout: "https://api.followuphub.ai/payment-link/6a50ecd6a655fa0b802a3a0b",
-    cta: "Start free trial",
+    checkoutYearly: null as string | null,
+    cta: "Get started",
     recommended: true,
     summary:
       "Everything in Basic plus the Voice AI engine, six-month Smart Nurture AI and your own custom AI agents.",
@@ -96,7 +109,7 @@ export const FAQS: readonly Faq[] = [
   },
   {
     q: "How much does FollowUpHub cost?",
-    a: "FollowUpHub has two plans. Basic is $49.99 per month and includes the Complete Agent System. Advanced is $199.99 per month plus a one-time $299 setup fee, and adds the full Voice AI engine, six-month Smart Nurture AI and white-glove onboarding. Both plans include a 14-day free trial with no credit card required.",
+    a: "FollowUpHub has two plans. Basic is $49.99 per month and includes the Complete Agent System. Advanced is also $49.99 per month plus a one-time $299 setup fee, and adds the full Voice AI engine, six-month Smart Nurture AI and white-glove onboarding. Both plans include a 14-day free trial with no credit card required.",
   },
   {
     q: "Which CRMs does FollowUpHub replace?",
@@ -154,7 +167,6 @@ export function organizationSchema() {
       height: 512,
     },
     email: SITE.email,
-    telephone: SITE.phone,
     address: {
       "@type": "PostalAddress",
       addressLocality: SITE.city,
@@ -171,7 +183,6 @@ export function organizationSchema() {
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: SITE.phone,
         contactType: "sales",
         email: SITE.email,
         areaServed: ["CA", "US"],

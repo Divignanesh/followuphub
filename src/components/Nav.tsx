@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { Menu, Phone, X } from "lucide-react";
+import { Mail, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { EASE_OUT } from "../lib/motion";
 import { SITE } from "../lib/seo";
@@ -13,12 +13,21 @@ const links = [
   { label: "FAQ", href: "/#faq" },
 ];
 
-export function Nav() {
+/**
+ * `overDark` marks a page whose hero is a dark photograph — the home page.
+ * There the bar stays transparent at the top and letters itself in cream, so
+ * the photograph runs unbroken behind it. The article page opens on cream,
+ * where cream-on-cream would vanish, so it keeps dark lettering. Once the bar
+ * turns solid on scroll it is cream-backed on every page and the dark type
+ * comes back.
+ */
+export function Nav({ overDark = false }: { overDark?: boolean }) {
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 12));
   const solid = scrolled || open;
+  const onDark = overDark && !solid;
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 pt-3">
@@ -33,7 +42,7 @@ export function Nav() {
           )}
         >
           <a href="/" aria-label="FollowUpHub home" className="rounded-lg">
-            <Logo eager />
+            <Logo eager tone={onDark ? "cream" : "ink"} />
           </a>
 
           <ul className="hidden items-center gap-0.5 lg:flex">
@@ -41,7 +50,12 @@ export function Nav() {
               <li key={l.href}>
                 <a
                   href={l.href}
-                  className="rounded-full px-3.5 py-2 text-[14px] font-semibold text-ink-soft transition-colors duration-200 hover:bg-sand hover:text-ink"
+                  className={cx(
+                    "rounded-full px-3.5 py-2 text-[14px] font-semibold transition-colors duration-200",
+                    onDark
+                      ? "text-cream/90 hover:bg-cream/10 hover:text-cream"
+                      : "text-ink-soft hover:bg-sand hover:text-ink",
+                  )}
                 >
                   {l.label}
                 </a>
@@ -51,19 +65,25 @@ export function Nav() {
 
           <div className="hidden items-center gap-2 lg:flex">
             <a
-              href={`tel:${SITE.phone}`}
-              className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[14px] font-semibold text-ink-soft transition-colors hover:text-teal"
+              href={`mailto:${SITE.email}`}
+              className={cx(
+                "inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[14px] font-semibold transition-colors",
+                onDark ? "text-cream/90 hover:text-cream" : "text-ink-soft hover:text-teal",
+              )}
             >
-              <Phone className="size-4" aria-hidden="true" />
-              {SITE.phoneDisplay}
+              <Mail className="size-4" aria-hidden="true" />
+              {SITE.email}
             </a>
             <a
               href={SITE.app}
-              className="rounded-full px-3 py-2 text-[14px] font-semibold text-ink-soft transition-colors hover:text-ink"
+              className={cx(
+                "rounded-full px-3 py-2 text-[14px] font-semibold transition-colors",
+                onDark ? "text-cream/90 hover:text-cream" : "text-ink-soft hover:text-ink",
+              )}
             >
               Log in
             </a>
-            <Button href="/#pricing" size="sm">
+            <Button href="/#pricing" size="sm" variant={onDark ? "cream" : "primary"}>
               Start free trial
             </Button>
           </div>
@@ -74,7 +94,10 @@ export function Nav() {
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
-            className="flex size-11 items-center justify-center rounded-xl text-ink transition-colors hover:bg-sand lg:hidden"
+            className={cx(
+              "flex size-11 items-center justify-center rounded-xl transition-colors lg:hidden",
+              onDark ? "text-cream hover:bg-cream/10" : "text-ink hover:bg-sand",
+            )}
           >
             {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
           </button>
@@ -105,11 +128,11 @@ export function Nav() {
               </ul>
               <div className="mt-2 space-y-2 border-t border-line p-2 pt-4">
                 <a
-                  href={`tel:${SITE.phone}`}
+                  href={`mailto:${SITE.email}`}
                   className="flex items-center justify-center gap-2 text-[15px] font-semibold text-ink-soft"
                 >
-                  <Phone className="size-4" aria-hidden="true" />
-                  {SITE.phoneDisplay}
+                  <Mail className="size-4" aria-hidden="true" />
+                  {SITE.email}
                 </a>
                 <div className="grid grid-cols-2 gap-2">
                   <Button variant="secondary" href={SITE.app}>

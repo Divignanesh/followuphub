@@ -18,7 +18,8 @@ export default function App({ path }: { path: RoutePath }) {
       <a href="#main" className="skip-link fixed left-4 top-4 z-[60] rounded-full bg-teal px-4 py-2 text-sm font-bold text-white">
         Skip to content
       </a>
-      <Nav />
+      {/* Only the home page opens on the dark photographic hero. */}
+      <Nav overDark={path === "/"} />
       <main id="main">{path === "/best-crm-for-realtors" ? <BestCrmForRealtors /> : <Home />}</main>
       <Footer />
     </MotionConfig>

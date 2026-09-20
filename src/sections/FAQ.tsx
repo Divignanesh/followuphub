@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { EASE_OUT, fadeUp, springSnappy, stagger, viewport } from "../lib/motion";
@@ -10,6 +10,13 @@ import type { Faq } from "../lib/seo";
  * animates height only. Collapsed answers stay in the markup so search
  * crawlers and AI answer engines can read every one, which is what keeps
  * the visible content in sync with the FAQPage structured data.
+ *
+ * This is load-bearing, not a nicety. Google will only show FAQ rich results
+ * when the question and its answer are both in the page, and mounting the
+ * panel on expand meant nine of ten answers reached a crawler as nothing at
+ * all while the markup claimed them. `initial={false}` is what keeps it
+ * honest through SSR: the server renders the resting state, so a collapsed
+ * panel ships its text with a height of zero rather than not shipping at all.
  */
 export function FAQ({ faqs, heading }: { faqs: readonly Faq[]; heading?: string }) {
   const [open, setOpen] = useState<number | null>(0);
@@ -57,22 +64,17 @@ export function FAQ({ faqs, heading }: { faqs: readonly Faq[]; heading?: string 
                     </motion.span>
                   </button>
                 </h3>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      id={`${id}-panel`}
-                      role="region"
-                      aria-labelledby={`${id}-button`}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.28, ease: EASE_OUT }}
-                      className="overflow-hidden"
-                    >
-                      <p className="pb-5 pr-10 text-[15px] leading-[1.75] text-ink-soft">{f.a}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <motion.div
+                  id={`${id}-panel`}
+                  role="region"
+                  aria-labelledby={`${id}-button`}
+                  initial={false}
+                  animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+                  transition={{ duration: 0.28, ease: EASE_OUT }}
+                  className="overflow-hidden"
+                >
+                  <p className="pb-5 pr-10 text-[15px] leading-[1.75] text-ink-soft">{f.a}</p>
+                </motion.div>
               </motion.li>
             );
           })}

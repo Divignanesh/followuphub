@@ -235,6 +235,15 @@ export function softwareSchema() {
       "Reputation management",
       "Invoicing and payments",
     ],
+    /*
+      The price is the subscription and nothing else: $49.99 a month on both
+      plans. Advanced also carries a one-time $299 setup charge, and that is
+      deliberately not folded in here — it is an additional charge, not the
+      price of the offer, and putting it in `price` would have search and
+      answer engines quoting a number no one is ever billed monthly.
+      `referenceQuantity` is what makes the period explicit; without it a bare
+      "49.99" reads as a flat, one-off price.
+    */
     offers: PLANS.map((p) => ({
       "@type": "Offer",
       name: `${p.subtitle} — ${p.name}`,
@@ -242,6 +251,12 @@ export function softwareSchema() {
       priceCurrency: p.currency,
       availability: "https://schema.org/InStock",
       url: `${SITE.domain}/#pricing`,
+      priceSpecification: {
+        "@type": "UnitPriceSpecification",
+        price: p.price.toFixed(2),
+        priceCurrency: p.currency,
+        referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitCode: "MON" },
+      },
     })),
   };
 }

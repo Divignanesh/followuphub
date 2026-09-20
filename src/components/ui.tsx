@@ -46,18 +46,25 @@ export function Logo({
 }
 
 /**
- * Agent headshots are served from the live domain, which is currently 404ing
- * every asset. Until those are restored the portrait falls back to the
- * person's initials rather than rendering a broken image.
+ * A headshot that falls back to the person's initials if the file does not
+ * load, rather than leaving a broken image in the layout.
+ *
+ * Lazy by default, and it matters more than it looks: React hoists a
+ * `<link rel="preload" as="image">` for every non-lazy image it renders on
+ * the server, so an eager headshot far below the fold is fetched at top
+ * priority against the hero, the stylesheet and the fonts. Nothing on the
+ * page needs one above the fold, but `eager` is here if that changes.
  */
 export function Portrait({
   src,
   name,
   size = 44,
+  eager = false,
   className,
 }: {
   src: string;
   name: string;
+  eager?: boolean;
   size?: number;
   className?: string;
 }) {
@@ -101,10 +108,7 @@ export function Portrait({
       alt={name}
       width={size}
       height={size}
-      /* Eager: these are 40-52px, and inside the drifting testimonial rows a
-         lazy image parked off-screen never fetches, so it never errors and
-         never falls back — it just sits there as alt text. */
-      loading="eager"
+      loading={eager ? "eager" : "lazy"}
       decoding="async"
       onError={() => setFailed(true)}
       style={{ width: size, height: size }}

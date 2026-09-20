@@ -1,14 +1,33 @@
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform, type Variants } from "framer-motion";
+import { useRef } from "react";
 import { ArrowLeftRight, Check, ShieldCheck, Undo2 } from "lucide-react";
+import { RayField } from "../components/RayField";
+import { Button, cx } from "../components/ui";
+import { BROKERAGES } from "../lib/assets";
 import { EASE_OUT, fadeUp, stagger } from "../lib/motion";
 import { SITE } from "../lib/seo";
-import { Button, cx } from "../components/ui";
-import { IMG, PEOPLE } from "../lib/assets";
+
+/**
+ * One dark panel, everything centred inside it, closing on the brokerages.
+ *
+ * The panel is where the texture lives — the page above and below it is solid
+ * cream, so the rays read as a deliberate surface rather than wallpaper. The
+ * logo row sits inside the panel rather than in a strip beneath it, so the
+ * first screen answers what it is, what it does and who already uses it
+ * without the reader leaving the frame.
+ */
 
 const proofPoints = [
-  "Stop paying for ten disconnected apps",
-  "AI works every lead while you are in showings",
-  "One pipeline for your whole team",
+  "Stop switching between 10+ disconnected apps",
+  "AI handles follow-ups while you focus on clients",
+  "See your entire pipeline and team performance at a glance",
+  "Close more deals in less time",
+];
+
+const trust = [
+  { icon: ShieldCheck, label: "No credit card required" },
+  { icon: Undo2, label: "Cancel anytime" },
+  { icon: ArrowLeftRight, label: "Migration handled free" },
 ];
 
 const headlineClause: Variants = {
@@ -16,13 +35,6 @@ const headlineClause: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_OUT } },
 };
 
-/**
- * Animates the headline one clause at a time rather than one word at a time.
- * Word-splitting scatters the most important heading on the page across a
- * dozen nested spans; keeping whole phrases intact means anything parsing the
- * raw HTML reads them as written. Block-level so each clause owns its line
- * rather than wrapping inside its own box and breaking mid-phrase.
- */
 function Clause({ children, className }: { children: string; className?: string }) {
   return (
     <motion.span variants={headlineClause} className={cx("block", className)}>
@@ -32,26 +44,31 @@ function Clause({ children, className }: { children: string; className?: string 
 }
 
 export function Hero() {
-  return (
-    <section
-      className="hero-fit relative flex min-h-svh flex-col overflow-hidden pb-10 pt-24 sm:pb-12 sm:pt-28"
-      aria-labelledby="hero-title"
-    >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 grain [mask-image:radial-gradient(ellipse_60%_50%_at_20%_0%,black_20%,transparent_75%)]" />
-        <div className="absolute -right-40 -top-40 size-[36rem] rounded-full bg-[radial-gradient(closest-side,rgb(26_107_90/0.14),transparent)]" />
-      </div>
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const fade = useTransform(scrollYProgress, [0, 0.85], [1, 0.4]);
+  const lift = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
-      <div className="container-x grid w-full flex-1 items-center gap-10 lg:grid-cols-[1.12fr_1fr] lg:items-stretch lg:gap-12">
-        {/* ---------------- copy ---------------- */}
+  return (
+    <section ref={ref} aria-labelledby="hero-title">
+      <motion.div
+        initial={{ opacity: 0, y: 22 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: EASE_OUT }}
+        style={reduce ? undefined : { opacity: fade, y: lift }}
+        className="relative flex min-h-[100svh] w-full flex-col overflow-hidden"
+      >
+        <RayField />
+
         <motion.div
-          variants={stagger(0.07, 0.05)}
+          variants={stagger(0.07, 0.2)}
           initial="hidden"
           animate="show"
-          className="lg:flex lg:flex-col lg:justify-center"
+          className="container-x relative flex flex-1 flex-col items-center justify-center py-16 text-center sm:py-24"
         >
           <motion.div variants={fadeUp}>
-            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.14em] text-teal shadow-soft">
+            <span className="inline-flex items-center gap-2 rounded-full border border-cream/25 bg-cream/10 px-3.5 py-1.5 text-[11.5px] font-bold uppercase tracking-[0.14em] text-mist backdrop-blur-sm">
               <span className="size-1.5 rounded-full bg-clay" aria-hidden="true" />
               The real estate operating system
             </span>
@@ -59,110 +76,96 @@ export function Hero() {
 
           <motion.h1
             id="hero-title"
-            variants={stagger(0.12, 0.1)}
-            className="mt-5 text-[2.15rem] font-extrabold leading-[1.05] tracking-[-0.035em] text-ink sm:text-[2.9rem] lg:text-[3.3rem]"
+            variants={stagger(0.12, 0.28)}
+            className="mt-5 max-w-[17ch] text-[2.05rem] font-extrabold leading-[1.04] tracking-[-0.04em] text-cream sm:mt-7 sm:text-[3.4rem] lg:text-[4.1rem]"
           >
             <Clause>Every missed follow-up</Clause>
-            <Clause className="text-teal">is a lost commission.</Clause>
+            <Clause className="grad-cream">is a lost business.</Clause>
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
-            className="hero-lede mt-4 max-w-xl text-[17px] leading-[1.65] text-ink-soft"
+            className="mt-3.5 max-w-[52ch] text-[15px] font-bold leading-[1.4] text-mist sm:mt-5 sm:text-[18px] sm:leading-[1.45]"
           >
-            FollowUpHub is the AI real estate CRM that calls, texts, WhatsApps and emails every
-            lead within seconds, then keeps nurturing until they book. Pipeline, marketing and
-            client websites included. Built in Canada for agents and teams.
+            One system for the follow-up, the pipeline and the marketing.
           </motion.p>
 
-          <motion.ul variants={fadeUp} className="mt-5 space-y-2">
-            {proofPoints.map((p) => (
-              <li key={p} className="flex items-start gap-2.5 text-[15px] font-medium text-ink">
-                <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-mist">
-                  <Check className="size-3 text-teal" strokeWidth={3} aria-hidden="true" />
+          <motion.p
+            variants={fadeUp}
+            className="mt-3 max-w-[62ch] text-[13.5px] leading-[1.55] text-mist/75 sm:text-[15.5px] sm:leading-[1.6]"
+          >
+            The all-in-one real estate OS with AI follow-ups &mdash; your AI agent calls,
+            WhatsApp, texts, and nurtures every lead 24/7 &mdash; pipeline management, and
+            a full marketing suite. Built in Canada, built for growth.
+          </motion.p>
+
+          <motion.ul
+            variants={fadeUp}
+            className="mx-auto mt-5 hidden max-w-2xl gap-x-8 gap-y-2 text-left sm:mt-6 sm:grid sm:grid-cols-2"
+          >
+            {proofPoints.map((pt) => (
+              <li key={pt} className="flex items-center gap-2 text-[14px] font-medium text-mist/90">
+                <span className="flex size-4.5 shrink-0 items-center justify-center rounded-full bg-cream/15">
+                  <Check className="size-2.5 text-cream" strokeWidth={3.5} aria-hidden="true" />
                 </span>
-                {p}
+                {pt}
               </li>
             ))}
           </motion.ul>
 
-          <motion.div variants={fadeUp} className="mt-7 flex flex-col gap-3 sm:flex-row">
-            <Button href="/#pricing" size="lg" withArrow className="w-full sm:w-auto">
-              Start 14-day free trial
+          <motion.div variants={fadeUp} className="mt-6 flex w-full flex-col gap-2.5 sm:mt-7 sm:w-auto sm:flex-row sm:gap-3">
+            <Button href="/#pricing" size="lg" variant="cream" withArrow className="w-full sm:w-auto">
+              Start free trial
             </Button>
-            <Button href={SITE.demo} size="lg" variant="secondary" className="w-full sm:w-auto">
-              Book a 10-minute demo
+            <Button href={SITE.demo} size="lg" variant="ghost-cream" className="w-full sm:w-auto">
+              Schedule 10-min demo
             </Button>
           </motion.div>
 
           <motion.ul
             variants={fadeUp}
-            className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] font-medium text-ink-soft"
+            className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12.5px] font-medium text-mist/70"
           >
-            {[
-              { icon: ShieldCheck, label: "No credit card required" },
-              { icon: Undo2, label: "Cancel anytime" },
-              { icon: ArrowLeftRight, label: "Migration handled free" },
-            ].map(({ icon: Icon, label }) => (
+            {trust.map(({ icon: Icon, label }) => (
               <li key={label} className="inline-flex items-center gap-1.5">
-                <Icon className="size-4 shrink-0 text-teal" aria-hidden="true" />
+                <Icon className="size-3.5 shrink-0 text-mist/70" aria-hidden="true" />
                 {label}
               </li>
             ))}
           </motion.ul>
-        </motion.div>
 
-        {/* ------------- photograph + attributed result ------------- */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: EASE_OUT, delay: 0.25 }}
-          className="relative lg:mr-[calc(-1*(max(0px,(100vw-76rem)/2)+2rem))]"
-        >
-          <div className="relative h-full overflow-hidden rounded-[1.75rem] border border-line shadow-lift lg:rounded-r-none lg:border-r-0">
-            <img
-              src={IMG.hero}
-              alt="Four colleagues at a desk throwing their arms up to celebrate a deal closing"
-              width={1200}
-              height={960}
-              fetchPriority="high"
-              decoding="async"
-              className="aspect-[5/4] w-full object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
-            />
-          </div>
-          {/* only a light base gradient: the card carries its own background,
-              so the photograph never needed a wash across the whole frame */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 rounded-[1.75rem] bg-linear-to-t from-teal-ink/30 via-transparent to-transparent lg:rounded-r-none"
-          />
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE_OUT, delay: 1 }}
-            className="absolute left-4 top-4 max-w-[16.5rem] rounded-2xl bg-cream/95 p-3.5 shadow-lift backdrop-blur-sm"
+          {/* who already runs on it, inside the frame */}
+          <motion.p
+            variants={fadeUp}
+            className="mt-auto pt-8 text-[11px] font-bold uppercase tracking-[0.14em] text-mist/60 sm:pt-10 sm:text-[12px]"
           >
-            <p className="text-[26px] font-extrabold leading-none tracking-[-0.025em] text-teal">
-              +$155K GCI
-            </p>
-            <p className="mt-1.5 text-[12px] leading-snug text-ink-soft">
-              in the four months after switching.
-            </p>
-            {/* Attribution is text only: the headshots are served from the
-                live domain, which is currently 404ing every asset URL, and a
-                broken image icon in the hero is worse than no portrait. */}
-            <span className="mt-3 block border-t border-line pt-2.5">
-              <span className="block text-[11.5px] font-bold leading-tight text-ink">
-                {PEOPLE.grace.name}
-              </span>
-              <span className="block text-[10.5px] leading-tight text-ink-soft">
-                {PEOPLE.grace.role}
-              </span>
-            </span>
-          </motion.div>
+            Used by 1,000+ agents and 36 of Canada&rsquo;s top brokerages
+          </motion.p>
+
+          <motion.ul
+            variants={fadeUp}
+            className="mt-5 flex w-full flex-wrap items-center justify-center gap-2.5 sm:mt-6 sm:gap-3.5"
+          >
+            {BROKERAGES.slice(0, 6).map((b, i) => (
+              <li
+                key={b.name}
+                className={cx(
+                  "flex h-10 w-[6.25rem] items-center justify-center rounded-xl bg-cream/95 px-2.5 shadow-[0_6px_20px_-10px_rgb(13_44_38/0.6)] sm:h-12 sm:w-[7.5rem] sm:px-3",
+                  i > 3 && "hidden sm:flex",
+                )}
+              >
+                <img
+                  src={b.src}
+                  alt={b.name}
+                  loading="eager"
+                  decoding="async"
+                  className="max-h-6 w-auto max-w-full object-contain sm:max-h-7"
+                />
+              </li>
+            ))}
+          </motion.ul>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

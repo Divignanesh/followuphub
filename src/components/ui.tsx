@@ -1,7 +1,8 @@
-import { motion, type HTMLMotionProps } from "framer-motion";
+import { motion, useReducedMotion, type HTMLMotionProps } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { fadeUp, stagger, viewport } from "../lib/motion";
+import { IMG } from "../lib/assets";
 
 export function cx(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(" ");
@@ -15,37 +16,32 @@ export function cx(...parts: Array<string | false | null | undefined>) {
  * inline mark plus the wordmark set in the site's own typeface cannot go
  * missing, and costs no request.
  */
+/**
+ * The real brand lockup. The hand-drawn SVG that stood in for it had a 40-unit
+ * stroke, which read far heavier than the actual mark. Both files are live
+ * again (verified 200), so the site uses them rather than an approximation.
+ */
 export function Logo({
   className,
   tone = "ink",
+  eager = false,
 }: {
   className?: string;
   tone?: "ink" | "cream";
-  /** Accepted for call sites that mark the masthead as above the fold. */
+  /** Marks the masthead copy as above the fold. */
   eager?: boolean;
 }) {
   return (
-    <span className={cx("inline-flex items-center gap-2.5", className)}>
-      <svg
-        viewBox="0 0 512 512"
-        aria-hidden="true"
-        className={cx("size-8 shrink-0", tone === "cream" ? "text-cream" : "text-teal")}
-      >
-        <g fill="none" stroke="currentColor" strokeWidth="40" strokeLinecap="round">
-          <path d="M301.5 94 A176 176 0 1 1 96.5 338.4" />
-          <path d="M96.5 338.4 A176 176 0 0 1 301.5 94" strokeDasharray="28 56" />
-        </g>
-        <circle cx="301.5" cy="94" r="38.4" fill="currentColor" />
-      </svg>
-      <span
-        className={cx(
-          "text-[21px] font-extrabold tracking-[-0.03em]",
-          tone === "cream" ? "text-cream" : "text-ink",
-        )}
-      >
-        FollowUpHub
-      </span>
-    </span>
+    <img
+      src={tone === "cream" ? IMG.logoLight : IMG.logo}
+      alt="FollowUpHub"
+      width={701}
+      height={153}
+      fetchPriority={eager ? "high" : undefined}
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+      className={cx("h-8 w-auto shrink-0", className)}
+    />
   );
 }
 
@@ -299,6 +295,13 @@ export function Reveal({
   className?: string;
   delay?: number;
 }) {
+  const reduce = useReducedMotion();
+
+  // MotionConfig's reducedMotion="user" drops transforms but keeps opacity, so
+  // an entrance that starts at 0 and never fires leaves the content invisible.
+  // Under reduced motion this renders the resting state directly.
+  if (reduce) return <div className={className}>{children}</div>;
+
   return (
     <motion.div
       variants={fadeUp}

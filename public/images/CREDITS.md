@@ -14,6 +14,7 @@ Credits are recorded here anyway so the sources stay traceable.
 | `listing-3.jpg` | https://www.pexels.com/photo/white-and-blue-wooden-house-3958954/ |
 | `listing-4.jpg` | https://www.pexels.com/photo/gray-painted-house-209296/ |
 | `hero-team-celebrating.jpg` | https://www.pexels.com/photo/a-group-of-people-celebrating-7693713/ |
+| `agent-with-clients.jpg` | https://www.pexels.com/photo/a-woman-having-a-discussion-with-a-couple-7642122/ |
 
 Each file was cropped and re-compressed for the layout it appears in, so the
 dimensions here do not match the originals.

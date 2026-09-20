@@ -1,3 +1,4 @@
+import { PaperField } from "../components/PaperField";
 import { Mail } from "lucide-react";
 import { Logo } from "../components/ui";
 import { SITE } from "../lib/seo";
@@ -9,7 +10,7 @@ const groups = [
       { label: "Pipeline management", href: "/#platform" },
       { label: "AI calling and texting", href: "/#ai" },
       { label: "Marketing automation", href: "/#platform" },
-      { label: "Client IDX websites", href: "/#platform" },
+      { label: "Client websites", href: "/#platform" },
       { label: "Pricing", href: "/#pricing" },
     ],
   },
@@ -18,9 +19,9 @@ const groups = [
     links: [
       { label: "Best CRM for realtors", href: "/best-crm-for-realtors" },
       { label: "vs. other CRMs", href: "/#compare" },
-      { label: "Switch from Follow Up Boss", href: "/#compare" },
-      { label: "Switch from Lofty", href: "/#compare" },
-      { label: "Switch from CINC", href: "/#compare" },
+      { label: "Compare CRMs", href: "/#compare" },
+      { label: "What's included", href: "/#included" },
+      { label: "Migration and onboarding", href: "/#faq" },
     ],
   },
   {
@@ -43,8 +44,9 @@ const socialLabels: Record<string, string> = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-sand">
-      <div className="container-x py-14">
+    <footer className="relative border-t border-line bg-sand">
+      <PaperField />
+      <div className="relative container-x py-14">
         <div className="grid gap-10 lg:grid-cols-[1.5fr_repeat(3,1fr)]">
           <div>
             <Logo />
@@ -109,6 +111,47 @@ export function Footer() {
           </ul>
         </div>
       </div>
+
+      {/* The name at display scale, outlined rather than filled and sunk into
+          the bottom edge so the last fifth of the letterforms runs off the page.
+          The viewBox stops above the baseline, which does the cropping: the
+          glyphs are drawn at y=126 but only 0-104 is ever painted. */}
+      <div className="overflow-hidden border-t border-line/70 px-6 pt-8 sm:px-10 sm:pt-10">
+        <svg
+          viewBox="0 0 1000 104"
+          role="img"
+          aria-label="FollowUpHub"
+          className="mx-auto block w-full max-w-[72rem]"
+        >
+          <defs>
+            <linearGradient id="fuh-wordmark" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#1a6b5a" />
+              <stop offset="55%" stopColor="#2f8b74" />
+              <stop offset="100%" stopColor="#58a894" />
+            </linearGradient>
+          </defs>
+          <text
+            x="0"
+            y="126"
+            textLength="1000"
+            lengthAdjust="spacing"
+            fill="none"
+            stroke="url(#fuh-wordmark)"
+            strokeWidth="2.2"
+            strokeLinejoin="round"
+            strokeMiterlimit="2"
+            style={{
+              fontFamily: "var(--font-sans, 'Plus Jakarta Sans', system-ui)",
+              fontWeight: 400,
+              fontSize: "150px",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            FollowUpHub
+          </text>
+        </svg>
+      </div>
+
     </footer>
   );
 }

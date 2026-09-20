@@ -4,7 +4,7 @@
 > agents, teams and brokerages in Canada and the United States. It contacts every
 > new lead within seconds by voice AI, SMS, WhatsApp and email, then nurtures for
 > up to six months, and combines that with pipeline management, marketing
-> automation and IDX client websites in a single subscription.
+> automation and client websites in a single subscription.
 
 ## Key facts
 
@@ -15,7 +15,7 @@
 - Users: 1,000+ real estate agents and 36 Canadian brokerages
 - Free trial: 14 days, no credit card required
 - Migration: contacts, pipelines and history migrated free of charge
-- Commonly replaces: Follow Up Boss, Lofty, Bold Trail, CINC
+- Commonly replaces: a separate CRM, dialer, SMS and email platform, calendar and website builder
 
 ## Pricing
 
@@ -40,7 +40,7 @@
   offer, closed
 - Omni-channel shared team inbox with call recording and transcripts
 - Marketing automation: email campaigns, social scheduling, AI post ideas
-- IDX client websites and funnel builder, SEO-ready and mobile-first
+- Client websites and funnel builder, SEO-ready and mobile-first
 - Reputation management, invoicing and payments, 250+ lead source integrations
 
 ## Pages

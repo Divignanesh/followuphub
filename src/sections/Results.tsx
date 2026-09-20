@@ -24,7 +24,7 @@ const stories: Story[] = [
       { value: 8, label: "Deals per month, before" },
       { value: 15, label: "Deals per month, after" },
       { value: 6.2, decimals: 1, prefix: "$", suffix: "M", label: "Sales volume" },
-      { value: 155, prefix: "$", suffix: "K", label: "Gross commission income" },
+      { value: 116, prefix: "$", suffix: "K", label: "Gross commission income" },
     ],
   },
   {
@@ -100,11 +100,10 @@ export function Results() {
   const person = PEOPLE[story.who];
 
   return (
-    <section id="customers" className="py-24 sm:py-28">
+    <section id="customers" className="py-8 sm:py-10">
       <div className="container-x">
         <SectionHeading
-          kicker="Customer results"
-          title="Real numbers from real agents."
+          title={<>Real numbers from <span className="grad-teal">real agents</span>.</>}
           lede="Every figure here comes from the agent's own account of switching. Use the arrows to read more."
         />
 
@@ -205,7 +204,7 @@ export function Results() {
                     aria-label={`Show result ${i + 1} of ${stories.length}, ${PEOPLE[s.who].name}`}
                     aria-current={i === index ? "true" : undefined}
                     className={cx(
-                      "block h-2 rounded-full transition-all duration-300",
+                      "block h-2 rounded-full transition-[width,background-color] duration-300",
                       i === index ? "w-6 bg-teal" : "w-2 bg-line hover:bg-ink-faint",
                     )}
                   />

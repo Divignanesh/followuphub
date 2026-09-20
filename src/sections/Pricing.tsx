@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BadgeCheck, Check, Sparkles } from "lucide-react";
+import { ArrowRight, BadgeCheck, Check } from "lucide-react";
 import { useState } from "react";
 import { SectionHeading, cx } from "../components/ui";
 import { scaleIn, stagger, viewport } from "../lib/motion";
@@ -14,12 +14,12 @@ export function Pricing() {
   const yearly = billing === "yearly";
 
   return (
-    <section id="pricing" className="py-24 sm:py-28">
+    <section id="pricing" className="py-8 sm:py-10">
       <div className="container-x">
         <SectionHeading
           kicker="Pricing"
           title="Start with the system agents usually have to build themselves."
-          lede="Both plans include a 14-day free trial. Basic gives you the Complete Agent System. Advanced adds the full AI engine, 6-month Smart Nurture AI, and white-glove setup."
+          lede="Both plans include a 14-day free trial and free migration. Advanced adds the Voice AI engine and white-glove setup."
         />
 
         <div className="mt-10 flex justify-center">
@@ -31,7 +31,7 @@ export function Pricing() {
             {(
               [
                 ["monthly", "Monthly"],
-                ["yearly", "Yearly — 2 months free"],
+                ["yearly", "Yearly, 2 months free"],
               ] as const
             ).map(([key, label]) => (
               <button
@@ -71,127 +71,88 @@ export function Pricing() {
                 key={plan.id}
                 variants={scaleIn}
                 className={cx(
-                  "relative flex flex-col rounded-3xl border p-8",
+                  "relative flex flex-col gap-5 rounded-2xl p-6 sm:p-7",
                   featured
-                    ? "border-transparent bg-teal-ink text-cream shadow-teal lg:-my-3"
-                    : "border-line bg-card shadow-soft",
+                    ? "border-2 border-teal bg-card shadow-[0_18px_50px_-24px_rgb(26_107_90/0.45)]"
+                    : "border border-line bg-card shadow-soft",
                 )}
               >
                 {featured && (
-                  <span className="absolute -top-3 left-8 inline-flex items-center gap-1.5 rounded-full bg-clay px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-white">
-                    <Sparkles className="size-3" aria-hidden="true" />
+                  <span className="absolute -top-3 left-7 inline-flex items-center rounded-full bg-teal px-3 py-1 text-[10.5px] font-bold uppercase tracking-[0.14em] text-white">
                     Recommended
                   </span>
                 )}
 
-                <h3 className={cx("text-[13px] font-bold uppercase tracking-[0.14em]", featured ? "text-mist/70" : "text-teal")}>
-                  {plan.name} plan
-                </h3>
-                <p className={cx("mt-2 text-[21px] font-extrabold tracking-[-0.02em]", featured ? "text-cream" : "text-ink")}>
-                  {plan.subtitle}
-                </p>
-                <p className={cx("mt-2 text-[14.5px] leading-[1.65]", featured ? "text-mist/80" : "text-ink-soft")}>
-                  {plan.summary}
-                </p>
-
-                <p className="mt-7 flex items-end gap-2">
-                  <span
-                    className={cx(
-                      "text-[3rem] font-extrabold leading-none tracking-[-0.035em]",
-                      featured ? "text-cream" : "text-ink",
+                <div className="flex flex-col gap-1.5">
+                  {/* The setup fee is the first thing people ask about, so it
+                      shares the title row rather than sitting in small print. */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-teal">
+                        {plan.name} plan
+                      </p>
+                      <h3 className="mt-1.5 t-h3 text-ink">
+                        {plan.subtitle}
+                      </h3>
+                    </div>
+                    {plan.setupNote && (
+                      <span className="-mt-1 shrink-0 rounded-lg border border-teal/25 bg-mist px-3 py-1.5 text-right">
+                        <span className="flex items-center justify-end gap-1.5">
+                          <BadgeCheck className="size-4 shrink-0 text-teal" strokeWidth={2.4} aria-hidden="true" />
+                          <span className="text-[12.5px] font-extrabold leading-tight text-teal">
+                            {plan.setupNote}
+                          </span>
+                        </span>
+                        {plan.setupDetail && (
+                          <span className="block text-[10.5px] leading-tight text-ink-soft">
+                            {plan.setupDetail}
+                          </span>
+                        )}
+                      </span>
                     )}
-                  >
+                  </div>
+                  <p className="text-[14px] leading-[1.6] text-ink-soft">{plan.summary}</p>
+                </div>
+
+                <div className="flex items-baseline gap-2 border-y border-line py-4">
+                  <span className="text-[2.6rem] font-extrabold leading-none tracking-[-0.035em] text-ink">
                     ${price.toFixed(2)}
                   </span>
-                  <span className={cx("pb-1.5 text-[14px] font-medium", featured ? "text-mist/70" : "text-ink-soft")}>
-                    {yearly ? "/year" : "/month"} {plan.currency}
-                  </span>
-                </p>
-                {yearly && (
-                  <p className={cx("mt-1.5 text-[13px]", featured ? "text-mist/75" : "text-ink-soft")}>
-                    ${(plan.priceYearly / 12).toFixed(2)} per month, billed annually
-                  </p>
-                )}
-                <p className={cx("mt-2 text-[12.5px] font-semibold", featured ? "text-mist/65" : "text-ink-soft")}>
-                  {note}
-                </p>
+                  <span className="text-[14px] font-medium text-ink-soft">/month CAD</span>
+                </div>
 
-                {/* What the plan adds beyond the monthly price, given its
-                    own tile so it reads as part of the offer rather than
-                    small print under it. */}
-                {plan.setupNote && (
-                  <div
-                    className={cx(
-                      "mt-5 flex items-center gap-3.5 rounded-2xl p-4",
-                      featured
-                        ? "bg-cream/[0.09] ring-1 ring-cream/25"
-                        : "bg-teal/[0.06] ring-1 ring-teal/20",
-                    )}
-                  >
-                    <span
-                      className={cx(
-                        "grid size-11 shrink-0 place-items-center rounded-xl",
-                        featured ? "bg-clay text-white" : "bg-teal text-white",
-                      )}
-                    >
-                      <BadgeCheck className="size-[22px]" strokeWidth={2.2} aria-hidden="true" />
-                    </span>
-                    <span className="min-w-0">
-                      <span
-                        className={cx(
-                          "block text-[16px] font-extrabold tracking-[-0.015em]",
-                          featured ? "text-cream" : "text-ink",
-                        )}
-                      >
-                        {plan.setupNote}
-                      </span>
-                      {plan.setupDetail && (
-                        <span
-                          className={cx(
-                            "mt-0.5 block text-[13px] leading-snug",
-                            featured ? "text-mist/75" : "text-ink-soft",
-                          )}
-                        >
-                          {plan.setupDetail}
-                        </span>
-                      )}
-                    </span>
-                  </div>
-                )}
+                <p className="-mt-2 text-[13px] text-ink-soft">{note}</p>
+
+                <ul className="flex flex-col gap-2">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2.5 text-[13.5px] text-ink">
+                      <Check className="mt-1 size-3.5 shrink-0 text-teal" strokeWidth={3} aria-hidden="true" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
 
                 <a
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cx(
-                    "mt-7 inline-flex h-12 items-center justify-center rounded-full text-[15px] font-bold transition-colors duration-200",
+                    "mt-auto inline-flex h-12 w-full items-center justify-center gap-2 rounded-full text-[15px] font-bold transition-colors duration-200",
                     featured
-                      ? "bg-cream text-teal-ink hover:bg-white"
-                      : "bg-teal text-white hover:bg-teal-deep",
+                      ? "bg-teal text-white hover:bg-teal-deep"
+                      : "border border-line bg-card text-ink hover:bg-sand",
                   )}
                 >
                   {plan.cta}
+                  <ArrowRight className="size-4" aria-hidden="true" />
                 </a>
-
-                <ul className="mt-8 space-y-3">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-[14px]">
-                      <Check
-                        className={cx("mt-0.5 size-4 shrink-0", featured ? "text-mist" : "text-teal")}
-                        strokeWidth={3}
-                        aria-hidden="true"
-                      />
-                      <span className={featured ? "text-mist/90" : "text-ink"}>{f}</span>
-                    </li>
-                  ))}
-                </ul>
               </motion.li>
             );
           })}
         </motion.ul>
 
-        <p className="mt-8 text-center text-[13.5px] text-ink-soft">
-          Early access is limited and closes once we hit capacity.
+        <p className="mt-6 text-center text-[13px] text-ink-soft">
+          Cancel any time from your account. No contract, no cancellation fee.
         </p>
       </div>
     </section>

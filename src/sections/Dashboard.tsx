@@ -240,26 +240,37 @@ export function Dashboard() {
   const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
   const y = useTransform(scrollYProgress, [0, 1], [36, 0]);
 
+  /*
+    A wide, dense product mock. Below `md` it can only be shown shrunk to the
+    point where none of the numbers are readable, so the section is left out on
+    phones rather than reproduced badly.
+  */
   return (
-    <section className="py-24 sm:py-28">
-      <div className="container-x">
+    <section className="hidden py-8 sm:py-10 md:block">
+      <div className="mx-auto w-full max-w-[86rem] px-5 sm:px-8">
         <SectionHeading
-          kicker="One system"
           title="Every lead, every tool, working together in one place."
-          lede="More than a CRM. FollowUpHub is the central hub where you build the systems your business needs to grow, with every product sharing the same contact record."
+          lede="One place for the pipeline, the conversations and the reporting, with every product sharing one contact record."
         />
+
+        {/* The panel below shows one named workspace with exact figures. A
+            visitor has no way to tell a product mock from a real customer's
+            account unless the page says so, so it says so. */}
+        <p className="mt-6 text-center text-[13px] font-semibold text-ink-faint">
+          A sample workspace, showing the reports every account ships with.
+        </p>
 
         <motion.div
           ref={ref}
           style={reduce ? undefined : { scale, y }}
-          className="mt-14 origin-top will-change-transform"
+          className="mt-4 origin-top will-change-transform"
         >
           <div
             role="img"
-            aria-label="The FollowUpHub dashboard: a sidebar of tools from Ask AI and Conversations through Automation, Sites and Reputation, beside reports for opportunity status, opportunity value, conversion rate, a seven-stage listing funnel and stage distribution"
+            aria-label="Sample FollowUpHub dashboard: a sidebar of tools from Ask AI and Conversations through Automation, Sites and Reputation, beside reports for opportunity status, opportunity value, conversion rate, a seven-stage listing funnel and stage distribution"
             className="overflow-hidden rounded-2xl border border-line bg-white shadow-lift"
           >
-            <div aria-hidden="true" className="flex min-h-[26rem]">
+            <div aria-hidden="true" className="flex min-h-[22rem]">
               {/* ---------------- sidebar ---------------- */}
               <aside className="hidden w-[13.5rem] shrink-0 flex-col bg-[#0d3b2d] py-4 sm:flex">
                 <span className="mx-4 self-start">
@@ -384,7 +395,7 @@ export function Dashboard() {
 
                   {/* row 2 — funnel + stage distribution */}
                   <div className="grid flex-1 gap-2.5 lg:grid-cols-[1.35fr_1fr]">
-                    <Card title="Funnel" filter="1S.Free Home Evaluation">
+                    <Card title="Funnel" filter="Free Home Evaluation">
                       <div className="mt-2.5 flex items-center gap-2 pr-1 text-[9px] font-semibold text-ink-soft">
                         <span className="flex-1">Stage</span>
                         <span className="w-14 text-right">Cumulative</span>
@@ -417,7 +428,7 @@ export function Dashboard() {
                                 {pct(s.n, funnelTop)}
                               </span>
                               <span className="flex w-16 shrink-0 items-center justify-end text-[10px] font-semibold text-ink">
-                                {next ? pct(next.n, s.n) : "—"}
+                                {next ? pct(next.n, s.n) : "n/a"}
                               </span>
                             </li>
                           );
@@ -425,7 +436,7 @@ export function Dashboard() {
                       </ul>
                     </Card>
 
-                    <Card title="Stage distribution" filter="1S.Free Home Evaluation">
+                    <Card title="Stage distribution" filter="Free Home Evaluation">
                       {/* plain column chart: one column per funnel stage */}
                       <div className="mt-auto flex items-end gap-1.5 pt-4">
                         {funnel.map((s) => (
@@ -442,7 +453,7 @@ export function Dashboard() {
                         ))}
                       </div>
                       <p className="mt-2 border-t border-line pt-2 text-[10px] text-ink-soft">
-                        Stages 1–7 · <span className="font-bold text-ink">1S.Free Home Evaluation</span>
+                        Stages 1–7 · <span className="font-bold text-ink">Free Home Evaluation</span>
                       </p>
                     </Card>
                   </div>

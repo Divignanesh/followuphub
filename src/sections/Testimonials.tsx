@@ -123,10 +123,9 @@ function Row({
 
 export function Testimonials() {
   return (
-    <section aria-labelledby="testimonials-title" className="overflow-hidden py-24 sm:py-28">
+    <section aria-labelledby="testimonials-title" className="overflow-hidden py-8 sm:py-10">
       <div className="container-x">
         <SectionHeading
-          kicker="Loved by top producers"
           title={<span id="testimonials-title">Agents who switch don&rsquo;t switch back.</span>}
           lede="What teams tell us after their first quarter on the platform. Hover to pause."
         />

@@ -15,7 +15,7 @@ export function FAQ({ faqs, heading }: { faqs: readonly Faq[]; heading?: string 
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-24 sm:py-28">
+    <section id="faq" className="py-8 sm:py-10">
       <div className="container-x grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading

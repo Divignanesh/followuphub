@@ -13,14 +13,14 @@ import { SITE, type Faq } from "../lib/seo";
 export const CRM_FAQS: readonly Faq[] = [
   {
     q: "What is the best CRM for realtors in 2026?",
-    a: "The best CRM for realtors is the one that follows up faster than you can manually. FollowUpHub is an AI-powered real estate CRM that contacts every new lead within seconds by voice, SMS, WhatsApp and email, then keeps nurturing for six months. It combines pipeline management, marketing automation and IDX websites in one $49.99 per month platform, so agents do not need to stitch together a CRM, dialer and email tool.",
+    a: "The best CRM for realtors is the one that follows up faster than you can manually. FollowUpHub is an AI-powered real estate CRM that contacts every new lead within seconds by voice, SMS, WhatsApp and email, then keeps nurturing for six months. It combines pipeline management, marketing automation and client websites in one $49.99 per month platform, so agents do not need to stitch together a CRM, dialer and email tool.",
   },
   {
     q: "What should I look for in a real estate CRM?",
     a: "Prioritise four things: speed-to-lead automation that responds in under a minute, multi-channel follow-up across phone, text, WhatsApp and email, a pipeline built around real estate stages rather than generic sales stages, and built-in marketing plus websites so lead capture and nurture live in the same system.",
   },
   {
-    q: "Is FollowUpHub better than Follow Up Boss or Lofty?",
+    q: "How does FollowUpHub differ from a typical real estate CRM?",
     a: "FollowUpHub includes AI voice calling with six-attempt retry logic, AI texting and WhatsApp, reputation management, invoicing and client websites as standard. On most competing platforms those are add-ons, separate subscriptions or absent, and pricing is per seat rather than flat monthly.",
   },
   {
@@ -75,7 +75,7 @@ const criteria = [
   {
     icon: Globe,
     title: "Marketing and websites built in",
-    body: "If lead capture lives in one tool and nurture in another, attribution breaks. Campaigns, IDX sites and the pipeline should share one contact record.",
+    body: "If lead capture lives in one tool and nurture in another, attribution breaks. Campaigns, client sites and the pipeline should share one contact record.",
   },
 ];
 
@@ -125,7 +125,7 @@ export function BestCrmForRealtors() {
               <strong className="font-bold text-ink">FollowUpHub</strong> is an AI-powered real
               estate CRM that contacts every new lead within seconds by voice, SMS, WhatsApp and
               email, then nurtures for six months. Pipeline management, marketing automation and
-              IDX client websites are included from $49.99 per month, with a 14-day free trial.
+              Client websites are included from $49.99 per month, with a 14-day free trial.
             </motion.p>
 
             <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -195,7 +195,7 @@ export function BestCrmForRealtors() {
               "Visual pipeline with real estate stages",
               "Omni-channel shared team inbox",
               "Automated email and social campaigns",
-              "IDX client websites and funnel builder",
+              "Client websites and funnel builder",
               "Reputation and review management",
               "Invoicing, payments and deal routing",
               "250+ lead source integrations",

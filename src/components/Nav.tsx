@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { Mail, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { EASE_OUT } from "../lib/motion";
 import { SITE } from "../lib/seo";
@@ -51,10 +51,8 @@ export function Nav({ overDark = false }: { overDark?: boolean }) {
                 <a
                   href={l.href}
                   className={cx(
-                    "rounded-full px-3.5 py-2 text-[14px] font-semibold transition-colors duration-200",
-                    onDark
-                      ? "text-cream/90 hover:bg-cream/10 hover:text-cream"
-                      : "text-ink-soft hover:bg-sand hover:text-ink",
+                    "px-3.5 py-2 text-[14px] font-semibold transition-colors duration-200",
+                    onDark ? "text-cream/90 hover:text-cream" : "text-ink-soft hover:text-teal",
                   )}
                 >
                   {l.label}
@@ -65,20 +63,10 @@ export function Nav({ overDark = false }: { overDark?: boolean }) {
 
           <div className="hidden items-center gap-2 lg:flex">
             <a
-              href={`mailto:${SITE.email}`}
-              className={cx(
-                "inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[14px] font-semibold transition-colors",
-                onDark ? "text-cream/90 hover:text-cream" : "text-ink-soft hover:text-teal",
-              )}
-            >
-              <Mail className="size-4" aria-hidden="true" />
-              {SITE.email}
-            </a>
-            <a
               href={SITE.app}
               className={cx(
                 "rounded-full px-3 py-2 text-[14px] font-semibold transition-colors",
-                onDark ? "text-cream/90 hover:text-cream" : "text-ink-soft hover:text-ink",
+                onDark ? "text-cream/90 hover:text-cream" : "text-ink-soft hover:text-teal",
               )}
             >
               Log in
@@ -119,7 +107,7 @@ export function Nav({ overDark = false }: { overDark?: boolean }) {
                     <a
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className="block rounded-xl px-4 py-3 text-[15px] font-semibold transition-colors hover:bg-sand"
+                      className="block px-4 py-3 text-[15px] font-semibold transition-colors hover:text-teal"
                     >
                       {l.label}
                     </a>
@@ -127,13 +115,6 @@ export function Nav({ overDark = false }: { overDark?: boolean }) {
                 ))}
               </ul>
               <div className="mt-2 space-y-2 border-t border-line p-2 pt-4">
-                <a
-                  href={`mailto:${SITE.email}`}
-                  className="flex items-center justify-center gap-2 text-[15px] font-semibold text-ink-soft"
-                >
-                  <Mail className="size-4" aria-hidden="true" />
-                  {SITE.email}
-                </a>
                 <div className="grid grid-cols-2 gap-2">
                   <Button variant="secondary" href={SITE.app}>
                     Log in

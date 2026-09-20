@@ -47,9 +47,9 @@ export const ROUTES: RouteMeta[] = [
   {
     path: "/",
     out: "index.html",
-    title: "FollowUpHub — AI Real Estate CRM for Agents and Teams",
+    title: "FollowUpHub · AI Real Estate CRM for Agents and Teams",
     description:
-      "AI real estate CRM with voice AI calling, SMS, WhatsApp and email follow-up, visual pipeline, marketing automation and IDX websites. From $49.99/mo. 14-day free trial.",
+      "AI real estate CRM with voice AI calling, SMS, WhatsApp and email follow-up, visual pipeline, marketing automation and client websites. From $49.99/mo. 14-day free trial.",
     canonical: `${SITE.domain}/`,
     ogImageAlt: "FollowUpHub AI real estate CRM dashboard",
     priority: "1.0",

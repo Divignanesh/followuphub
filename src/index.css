@@ -74,6 +74,52 @@
 
 @layer utilities {
   .container-x { @apply mx-auto w-full max-w-[76rem] px-5 sm:px-8; }
+
+  /* A scroll rail keeps its own affordance (arrows plus a peeking card), so
+     the native bar would only add a grey line under the content. */
+  .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  /* ---------------------------------------------------------------------
+     One type scale for the whole site. Card titles were running at six
+     different sizes; they are one size now, and everything below the
+     heading has a named step so a new section cannot invent its own.
+     --------------------------------------------------------------------- */
+  .t-h2    { @apply text-[2rem] font-extrabold leading-[1.08] tracking-[-0.03em] sm:text-[2.6rem]; }
+  .t-h3    { @apply text-[19px] font-extrabold leading-tight tracking-[-0.02em]; }
+  .t-h4    { @apply text-[16px] font-extrabold leading-snug tracking-[-0.01em]; }
+  .t-lede  { @apply text-[17px] leading-[1.65]; }
+  .t-body  { @apply text-[15px] leading-[1.6]; }
+  .t-meta  { @apply text-[13px] leading-snug; }
+  .t-label { @apply text-[11px] font-bold uppercase tracking-[0.16em]; }
+
+  /* Highlight inside a heading. Gradient text needs a fallback colour, or it
+     renders invisible wherever background-clip:text is unsupported. */
+  .grad-teal {
+    color: var(--color-teal);
+    background-image: linear-gradient(96deg, var(--color-teal) 0%, #2f8b74 55%, #58a894 100%);
+  }
+  /* The same device on a dark ground: mist through to the mid teal. */
+  .grad-cream {
+    color: #e8f5f0;
+    background-image: linear-gradient(96deg, #ffffff 0%, #e8f5f0 40%, #58a894 100%);
+  }
+  @supports (-webkit-background-clip: text) or (background-clip: text) {
+    .grad-cream {
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  @supports (-webkit-background-clip: text) or (background-clip: text) {
+    .grad-teal {
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
   .container-narrow { @apply mx-auto w-full max-w-3xl px-5 sm:px-8; }
 
   .grain {

@@ -1,11 +1,11 @@
-import { Headphones, Leaf, Sparkles } from "lucide-react";
+import { AudioLines, Headphones, Leaf } from "lucide-react";
 import { BROKERAGES } from "../lib/assets";
 import { Reveal, cx } from "../components/ui";
 
 const badges = [
   { icon: Leaf, label: "Canadian-made" },
   { icon: Headphones, label: "7-day phone support" },
-  { icon: Sparkles, label: "AI-first platform" },
+  { icon: AudioLines, label: "Voice AI included" },
 ];
 
 export function TrustBar() {
@@ -31,12 +31,16 @@ export function TrustBar() {
                   aria-hidden={duplicate ? true : undefined}
                   className="flex h-16 w-40 shrink-0 items-center justify-center rounded-xl border border-line bg-card px-5"
                 >
-                  {/* The hosted brokerage marks are all 404ing, so the chip
-                      carries the name until the files are restored — a row of
-                      broken images says less than the names themselves. */}
-                  <span className="truncate text-[13px] font-bold text-ink-soft">
-                    {b.name}
-                  </span>
+                  {/* The hosted marks return 200 again (they were 404ing when
+                      this was written), so the row shows the actual logos. */}
+                  <img
+                    src={b.src}
+                    alt={duplicate ? "" : b.name}
+                    aria-hidden={duplicate ? true : undefined}
+                    loading="lazy"
+                    decoding="async"
+                    className="max-h-9 w-auto max-w-[7rem] object-contain opacity-80 transition-opacity duration-200 hover:opacity-100"
+                  />
                 </span>
               );
             })}

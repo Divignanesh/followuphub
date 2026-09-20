@@ -49,7 +49,7 @@ export const PLANS = [
     setupDetail: null as string | null,
     checkout: "https://api.followuphub.ai/payment-link/6a50b8cdc981f3feae6e866c",
     checkoutYearly: null as string | null,
-    cta: "Get started",
+    cta: "Start 14-day free trial",
     summary:
       "The pre-built real estate follow-up system: funnels, conversational AI, pipeline and an omni-channel inbox.",
     features: [
@@ -78,7 +78,7 @@ export const PLANS = [
     setupDetail: "White-glove onboarding included",
     checkout: "https://api.followuphub.ai/payment-link/6a50ecd6a655fa0b802a3a0b",
     checkoutYearly: null as string | null,
-    cta: "Get started",
+    cta: "Start 14-day free trial",
     recommended: true,
     summary:
       "Everything in Basic plus the Voice AI engine, six-month Smart Nurture AI and your own custom AI agents.",
@@ -113,7 +113,7 @@ export const FAQS: readonly Faq[] = [
   },
   {
     q: "Which CRMs does FollowUpHub replace?",
-    a: "Agents most often switch to FollowUpHub from Follow Up Boss, Lofty, Bold Trail and CINC. It is built to replace your CRM, dialer, SMS and email platform, calendar system and AI communication stack in a single subscription.",
+    a: "It is built to replace your CRM, dialer, SMS and email platform, calendar system and AI communication stack in a single subscription, so most agents cancel several tools in the first week.",
   },
   {
     q: "Will I lose control over my follow-up?",
@@ -224,14 +224,14 @@ export function softwareSchema() {
     inLanguage: "en",
     publisher: { "@id": ORG_ID },
     description:
-      "AI real estate CRM with voice AI calling, SMS, WhatsApp and email follow-up, visual pipeline management, marketing automation and IDX client websites.",
+      "AI real estate CRM with voice AI calling, SMS, WhatsApp and email follow-up, visual pipeline management, marketing automation and client websites.",
     featureList: [
       "AI voice calling with 6-attempt retry logic",
       "Conversational SMS, WhatsApp and email AI agents",
       "Visual real estate sales pipeline",
       "Omni-channel shared inbox",
       "Marketing automation and social scheduling",
-      "IDX client websites and funnel builder",
+      "Client websites and funnel builder",
       "Reputation management",
       "Invoicing and payments",
     ],

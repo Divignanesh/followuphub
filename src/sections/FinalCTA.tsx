@@ -1,23 +1,25 @@
 import { motion } from "framer-motion";
+import { RayField } from "../components/RayField";
 import { Button } from "../components/ui";
 import { scaleIn, viewport } from "../lib/motion";
 import { SITE } from "../lib/seo";
 
 export function FinalCTA() {
   return (
-    <section className="pb-24 sm:pb-28">
+    <section className="pb-16 sm:pb-20">
       <div className="container-x">
         <motion.div
           variants={scaleIn}
           initial="hidden"
           whileInView="show"
           viewport={viewport}
-          className="relative overflow-hidden rounded-[2rem] bg-teal px-6 py-16 text-center sm:px-12 sm:py-20"
+          className="relative overflow-hidden rounded-[2rem] bg-teal-deep px-6 py-16 text-center sm:px-12 sm:py-20"
         >
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-            <div className="absolute -left-24 -top-32 size-96 rounded-full bg-cream/10 blur-3xl" />
-            <div className="absolute -bottom-32 -right-20 size-[26rem] rounded-full bg-[#b3541e]/25 blur-3xl" />
-          </div>
+          {/* The Ribbon Field carries this panel instead of two blurred blobs.
+              A radial scrim keeps the field vivid at the edges and darkens only
+              the centre, where the copy sits. */}
+          <RayField />
+
           <div className="relative">
             <h2 className="mx-auto max-w-2xl text-[2rem] font-extrabold leading-[1.1] tracking-[-0.03em] text-cream sm:text-[2.75rem]">
               Reclaim 10+ hours a week, starting this one.

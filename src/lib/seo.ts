@@ -14,6 +14,13 @@ export const SITE = {
   email: "support@followuphub.ai",
   app: "https://app.followuphub.ai",
   demo: "https://api.followuphub.ai/widget/bookings/discuss-crm-solution",
+  /*
+    Kept as data but no longer published anywhere: not in visible copy, not in
+    the Organization schema, not in llms.txt. Removing the locality and region
+    costs some local-search signal for "real estate CRM Toronto" style
+    queries; restore them in organizationSchema() if that trade stops being
+    worth it.
+  */
   city: "Toronto",
   region: "ON",
   country: "CA",
@@ -167,10 +174,10 @@ export function organizationSchema() {
       height: 512,
     },
     email: SITE.email,
+    // Country only. The locality and region were removed at the client's
+    // request; see the note beside SITE.city.
     address: {
       "@type": "PostalAddress",
-      addressLocality: SITE.city,
-      addressRegion: SITE.region,
       addressCountry: SITE.country,
     },
     sameAs: [...SITE.social],

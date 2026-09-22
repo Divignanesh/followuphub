@@ -8,7 +8,7 @@
 
 ## Key facts
 
-- Company: FollowUpHub, Toronto, Ontario, Canada
+- Company: FollowUpHub, Canada
 - Category: Real estate CRM / AI sales automation software
 - Website: https://www.followuphub.ai
 - Contact: support@followuphub.ai
@@ -19,17 +19,18 @@
 
 ## Pricing
 
-- Basic — Complete Agent System: $49.99 CAD per month. Pre-built home evaluation
+- Basic, Complete Agent System: $49.99 CAD per month, or $499.90 CAD per year. Pre-built home evaluation
   funnel, conversational SMS and email AI agents, appointment reminders, visual
   pipeline management, omni-channel inbox, website and funnel builder, email
   campaigns and a social media planner.
-- Advanced — Full AI Engine: $49.99 CAD per month plus a one-time $299 setup fee.
+- Advanced, Full AI Engine: $49.99 CAD per month, or $499.90 CAD per year, plus a
+  one-time $299 setup fee.
   Everything in Basic plus the Voice AI engine with 6-attempt retry logic
-  (10 AM–9 PM), 6-month Smart Nurture AI with 24 touchpoints, visual workflow
+  (10am to 9pm), 6-month Smart Nurture AI with 24 touchpoints, visual workflow
   builder, custom AI agents, Reviews AI, AI Studio and white-glove onboarding
   with A2P registration handled.
-- No contract and no cancellation fee. Yearly billing is optional and gives two
-  months free.
+- Both plans include a 14-day free trial with no credit card.
+- No contract and no cancellation fee. Yearly billing gives two months free.
 
 ## Core capabilities
 

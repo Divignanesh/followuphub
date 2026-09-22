@@ -3,13 +3,20 @@ import { Nav } from "./components/Nav";
 import { Footer } from "./sections/Footer";
 import { Home } from "./pages/Home";
 import { BestCrmForRealtors } from "./pages/BestCrmForRealtors";
+import { NotFound } from "./pages/NotFound";
 
-export const ROUTE_PATHS = ["/", "/best-crm-for-realtors"] as const;
+export const ROUTE_PATHS = ["/", "/best-crm-for-realtors", "/404"] as const;
 export type RoutePath = (typeof ROUTE_PATHS)[number];
 
+/**
+ * Unknown paths resolve to "/404" rather than silently rendering the home
+ * page. Serving home content at a wrong URL is what produces a soft 404: the
+ * crawler gets HTTP 200 and real content, so the bad URL stays indexed and
+ * competes with the page it was pretending to be.
+ */
 export function normalisePath(pathname: string): RoutePath {
   const clean = pathname.replace(/\/+$/, "") || "/";
-  return (ROUTE_PATHS as readonly string[]).includes(clean) ? (clean as RoutePath) : "/";
+  return (ROUTE_PATHS as readonly string[]).includes(clean) ? (clean as RoutePath) : "/404";
 }
 
 export default function App({ path }: { path: RoutePath }) {
@@ -19,7 +26,9 @@ export default function App({ path }: { path: RoutePath }) {
         Skip to content
       </a>
       <Nav overDark={path === "/"} />
-      <main id="main">{path === "/best-crm-for-realtors" ? <BestCrmForRealtors /> : <Home />}</main>
+      <main id="main">
+        {path === "/404" ? <NotFound /> : path === "/best-crm-for-realtors" ? <BestCrmForRealtors /> : <Home />}
+      </main>
       <Footer />
     </MotionConfig>
   );

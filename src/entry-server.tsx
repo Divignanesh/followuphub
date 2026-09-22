@@ -22,9 +22,11 @@ export type RouteMeta = {
   canonical: string;
   ogImageAlt: string;
   schema: string;
-  /** Sitemap hints */
-  priority: string;
-  changefreq: string;
+  /** Sitemap hints. Omitted on routes that must not be listed. */
+  priority?: string;
+  changefreq?: string;
+  /** Keeps the route out of sitemap.xml and out of the index. */
+  noindex?: boolean;
 };
 
 // 1200x630 is the size every social platform crops to; serving it directly
@@ -79,6 +81,20 @@ export const ROUTES: RouteMeta[] = [
       CRM_FAQS,
     ),
   },
+  {
+    path: "/404",
+    out: "404.html",
+    title: "Page not found | FollowUpHub",
+    description:
+      "That page could not be found. Browse the FollowUpHub platform, pricing and AI calling demo, or head back to the home page.",
+    canonical: `${SITE.domain}/404`,
+    ogImageAlt: "FollowUpHub page not found",
+    // "follow" on purpose: the page is not worth indexing, but the links out
+    // of it are worth crawling, so authority pointed at a dead URL keeps
+    // flowing into the live pages.
+    noindex: true,
+    schema: graph([organizationSchema(), websiteSchema()]),
+  },
 ];
 
 const esc = (s: string) =>
@@ -89,7 +105,9 @@ export function renderHead(r: RouteMeta): string {
     `<title>${esc(r.title)}</title>`,
     `<meta name="description" content="${esc(r.description)}" />`,
     `<link rel="canonical" href="${r.canonical}" />`,
-    `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`,
+    r.noindex
+      ? `<meta name="robots" content="noindex, follow" />`
+      : `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`,
     `<meta name="theme-color" content="#faf7f2" />`,
     `<meta property="og:site_name" content="FollowUpHub" />`,
     `<meta property="og:type" content="website" />`,

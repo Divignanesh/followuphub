@@ -28,9 +28,13 @@ for (const route of ROUTES) {
 /* ---------------- sitemap.xml, generated from the same route table ------- */
 
 const today = new Date().toISOString().slice(0, 10);
+// Only indexable routes belong here. Listing a noindex page in a sitemap is a
+// crawl-budget error and Search Console reports it as a conflict.
+const INDEXABLE = ROUTES.filter((r) => !r.noindex);
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${ROUTES.map(
+${INDEXABLE.map(
   (r) => `  <url>
     <loc>${r.canonical}</loc>
     <lastmod>${today}</lastmod>
@@ -41,4 +45,4 @@ ${ROUTES.map(
 </urlset>
 `;
 writeFileSync(resolve(dist, "sitemap.xml"), sitemap, "utf8");
-console.log(`  wrote        sitemap.xml (${ROUTES.length} URLs)`);
+console.log(`  wrote        sitemap.xml (${INDEXABLE.length} URLs, ${ROUTES.length - INDEXABLE.length} noindex skipped)`);

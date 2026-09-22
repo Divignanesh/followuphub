@@ -19,6 +19,18 @@ import { RevealGroup, RevealItem, SectionHeading } from "../components/ui";
  * so the section has one axis instead of a centred title sitting on top of
  * four left-aligned blocks.
  *
+ * The four bodies are kept short enough to hold one line at every width the
+ * four-column grid is used at, and the narrowest of those is the tightest
+ * constraint in the section: at exactly 1024px the columns are 218px wide.
+ * Measured there, the four render at roughly 183 to 207px, so all of them
+ * clear it with room to spare.
+ *
+ * They used to run 39 to 59 characters, which wrapped two and left two short,
+ * and the rules beneath them only lined up because a two-line reserve held
+ * the gap open. That reserve then sat as dead space under whichever bodies
+ * fitted on one line, which is what the gap above each rule actually was.
+ * Matched lengths align the rules on their own, so the reserve is gone.
+ *
  * That costs the rail its easy anchor. With the disc centred the connector can
  * no longer just be the next flex child, so it is positioned from the disc's
  * own centre line: it starts 30px right of the column's midpoint and runs
@@ -35,28 +47,28 @@ const stages: Stage[] = [
     icon: Boxes,
     step: "01",
     title: "Organize",
-    body: "Every lead in one place, for the whole team.",
+    body: "Every lead in one shared place.",
     rows: ["Dana Whitfield · New lead", "Marcus Okoye · Contacted", "Priya Shah · Showing"],
   },
   {
     icon: Send,
     step: "02",
     title: "Engage",
-    body: "Emails, texts and calls run themselves.",
+    body: "Emails, texts and calls, handled.",
     rows: ["Day 0 · AI call attempt", "Day 1 · Text follow-up", "Day 3 · Market email"],
   },
   {
     icon: Sprout,
     step: "03",
     title: "Grow",
-    body: "Scheduling, campaigns and sites, feeding the same pipeline.",
+    body: "Marketing that feeds the pipeline.",
     rows: ["Instagram · Scheduled", "Email blast · 1,240 sent", "Open house · 38 RSVPs"],
   },
   {
     icon: BarChart3,
     step: "04",
     title: "Analyze",
-    body: "Agent performance, pipeline health and marketing return.",
+    body: "Performance, pipeline and ROI.",
     rows: ["Pipeline value · $12.4M", "Speed to lead · 42s", "Marketing ROI · 400%"],
   },
 ];
@@ -93,14 +105,9 @@ export function Workflow() {
                 <span className="mt-2 font-mono text-[12px] font-semibold text-ink-faint">{step}</span>
 
                 <h3 className="t-h3 mt-1.5 text-ink">{title}</h3>
-                {/* Two lines reserved from sm up, so the rule under each body lands
-                    on the same baseline across the row. Without it the bodies that
-                    wrap to one line pull their rule up and the row reads as
-                    misaligned. In one column there is no row to align to, so the
-                    reserve would only be dead space. */}
-                <p className="t-meta mt-1.5 max-w-[30ch] text-ink-soft sm:min-h-[2.6rem]">{body}</p>
+                <p className="t-meta mt-1.5 max-w-[30ch] text-ink-soft">{body}</p>
 
-                <ul className="mt-4 w-full space-y-1 border-t border-line pt-3" aria-hidden="true">
+                <ul className="mt-3 w-full space-y-1 border-t border-line pt-3" aria-hidden="true">
                   {rows.map((r) => (
                     <li key={r} className="truncate text-[12px] text-ink-faint">
                       {r}

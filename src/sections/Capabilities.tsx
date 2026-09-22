@@ -248,7 +248,9 @@ export function Capabilities() {
           align="split"
           title={
             <>
-              Four ways to <span className="grad-teal">work it.</span>
+              One platform.
+              <br />
+              <span className="grad-teal">Four ways to work it.</span>
             </>
           }
           lede="The modules behind the follow-up."

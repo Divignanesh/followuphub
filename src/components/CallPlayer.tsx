@@ -42,6 +42,9 @@ const LINES = transcript.map((l) => ({ ...l, words: wordsOf(l.text) }));
 
 const TICK_MS = 50;
 const GAP_MS = 260;
+/* Longer than the beat between lines, so a loop reads as the call starting
+   again rather than as a fourth line arriving late. */
+const LOOP_GAP_MS = 1600;
 
 export function CallPlayer({ className }: { className?: string }) {
   // active === -1 is the resting state, and it is what the prerendered HTML
@@ -56,8 +59,6 @@ export function CallPlayer({ className }: { className?: string }) {
   const lineRef = useRef(-1);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
-  /** The call has run to the end, so entering the section must not replay it. */
-  const completed = useRef(false);
   /** Set when the reader pauses by hand, which switches auto-play off for good. */
   const userPaused = useRef(false);
 
@@ -102,9 +103,12 @@ export function CallPlayer({ className }: { className?: string }) {
 
   function playFrom(i: number) {
     clearTimers();
+    // Past the last line the call starts over rather than stopping. The
+    // transcript is left fully spoken through the gap, so the loop reads as a
+    // replay rather than as the player resetting itself.
     if (i >= LINES.length) {
-      completed.current = true;
-      return reset();
+      gapRef.current = setTimeout(() => playFrom(0), LOOP_GAP_MS);
+      return;
     }
 
     const line = LINES[i];
@@ -152,7 +156,6 @@ export function CallPlayer({ className }: { className?: string }) {
   const toggle = () => {
     if (active < 0) {
       userPaused.current = false;
-      completed.current = false;
       return playFrom(0);
     }
     if (paused) {
@@ -175,12 +178,12 @@ export function CallPlayer({ className }: { className?: string }) {
    *
    * There is no "already tried" flag, deliberately. A blocked attempt resets
    * the player, which leaves lineRef at -1, so the next entry tries again —
-   * and by then the reader has usually clicked something and it works. Two
-   * conditions stop it instead, and both are about not being obnoxious:
-   * `completed` after the call has run to the end, so returning to the
-   * section does not replay it, and `userPaused` after a manual pause, which
-   * switches auto-play off for the rest of the visit. A part-played call
-   * resumes where it stopped rather than starting over.
+   * and by then the reader has usually clicked something and it works.
+   *
+   * A manual pause is the one thing that switches auto-play off for the rest
+   * of the visit. Since the call loops, leaving the section is the only thing
+   * that stops it, which is what keeps an indefinitely repeating clip from
+   * following the reader down the page.
    */
   useEffect(() => {
     const node = rootRef.current;
@@ -189,7 +192,7 @@ export function CallPlayer({ className }: { className?: string }) {
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          if (userPaused.current || completed.current) return;
+          if (userPaused.current) return;
           if (lineRef.current >= 0) resume();
           else playFrom(0);
         } else if (lineRef.current >= 0) {

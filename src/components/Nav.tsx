@@ -7,7 +7,7 @@ import { Button, Logo, PillCta, cx } from "./ui";
 
 const links = [
   { label: "Platform", href: "/#platform" },
-  { label: "AI engine", href: "/#ai" },
+  { label: "AI Engine", href: "/#ai" },
   { label: "Pricing", href: "/#pricing" },
   { label: "Compare", href: "/#compare" },
   { label: "FAQ", href: "/#faq" },

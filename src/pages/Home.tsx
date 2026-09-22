@@ -10,7 +10,7 @@ import { Platform } from "../sections/Platform";
 import { Pricing } from "../sections/Pricing";
 import { Results } from "../sections/Results";
 import { Testimonials } from "../sections/Testimonials";
-import { UseCases } from "../sections/UseCases";
+import { TrustBar } from "../sections/TrustBar";
 import { WhatsIncluded } from "../sections/WhatsIncluded";
 import { Workflow } from "../sections/Workflow";
 import { FAQS } from "../lib/seo";
@@ -19,10 +19,10 @@ export function Home() {
   return (
     <>
       <Hero />
+      <TrustBar />
       <Results />
       <AIEngine />
       <Platform />
-      <UseCases />
       <Capabilities />
       <Dashboard />
       <Workflow />

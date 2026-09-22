@@ -3,7 +3,7 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { EASE_OUT } from "../lib/motion";
 import { SITE } from "../lib/seo";
-import { Button, Logo, cx } from "./ui";
+import { Button, Logo, PillCta, cx } from "./ui";
 
 const links = [
   { label: "Platform", href: "/#platform" },
@@ -14,46 +14,45 @@ const links = [
 ];
 
 /**
- * `overDark` marks a page whose hero is a dark photograph — the home page.
- * There the bar stays transparent at the top and letters itself in cream, so
- * the photograph runs unbroken behind it. The article page opens on cream,
- * where cream-on-cream would vanish, so it keeps dark lettering. Once the bar
- * turns solid on scroll it is cream-backed on every page and the dark type
- * comes back.
+ * A floating pill, detached from the top edge, cream on every ground.
+ *
+ * The bar used to be transparent over the hero and letter itself in cream,
+ * then swap to a dark-on-cream solid once the page moved. That meant the
+ * masthead changed its entire treatment within the first wheel notch, and the
+ * logo swapped files while doing it. Holding one treatment throughout costs
+ * nothing and removes the flicker; scroll only deepens the shadow.
+ *
+ * `overDark` is kept in the signature because both pages pass it, but the bar
+ * no longer needs it. It is accepted and ignored rather than removed, so the
+ * two call sites do not have to change in lockstep with this file.
  */
-export function Nav({ overDark = false }: { overDark?: boolean }) {
+export function Nav({ overDark: _overDark = false }: { overDark?: boolean }) {
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 12));
-  const solid = scrolled || open;
-  const onDark = overDark && !solid;
+  const lifted = scrolled || open;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 pt-3">
-      <div className="container-x">
+    <header className="fixed inset-x-0 top-0 z-50 pt-4 sm:pt-6">
+      <div className="mx-auto w-full max-w-[72rem] px-4 sm:px-8">
         <nav
           aria-label="Primary"
           className={cx(
-            "flex h-16 items-center justify-between rounded-2xl border px-3 pl-4 transition-[background-color,border-color,box-shadow] duration-300",
-            solid
-              ? "border-line bg-cream/85 shadow-soft backdrop-blur-xl"
-              : "border-transparent bg-transparent",
+            "flex h-[68px] items-center justify-between rounded-full bg-card pl-6 pr-2.5 transition-shadow duration-300",
+            lifted ? "shadow-pill" : "shadow-card",
           )}
         >
           <a href="/" aria-label="FollowUpHub home" className="rounded-lg">
-            <Logo eager tone={onDark ? "cream" : "ink"} />
+            <Logo eager tone="ink" />
           </a>
 
-          <ul className="hidden items-center gap-0.5 lg:flex">
+          <ul className="hidden items-center gap-7 lg:flex">
             {links.map((l) => (
               <li key={l.href}>
                 <a
                   href={l.href}
-                  className={cx(
-                    "px-3.5 py-2 text-[14px] font-semibold transition-colors duration-200",
-                    onDark ? "text-cream/90 hover:text-cream" : "text-ink-soft hover:text-teal",
-                  )}
+                  className="text-[15px] font-medium tracking-[-0.02em] text-ink transition-colors duration-200 hover:text-teal"
                 >
                   {l.label}
                 </a>
@@ -61,19 +60,16 @@ export function Nav({ overDark = false }: { overDark?: boolean }) {
             ))}
           </ul>
 
-          <div className="hidden items-center gap-2 lg:flex">
+          <div className="hidden items-center gap-5 lg:flex">
             <a
               href={SITE.app}
-              className={cx(
-                "rounded-full px-3 py-2 text-[14px] font-semibold transition-colors",
-                onDark ? "text-cream/90 hover:text-cream" : "text-ink-soft hover:text-teal",
-              )}
+              className="text-[15px] font-medium tracking-[-0.02em] text-ink-soft transition-colors hover:text-teal"
             >
               Log in
             </a>
-            <Button href="/#pricing" size="sm" variant={onDark ? "cream" : "primary"}>
+            <PillCta href="/#pricing" size="md">
               Start free trial
-            </Button>
+            </PillCta>
           </div>
 
           <button
@@ -82,10 +78,7 @@ export function Nav({ overDark = false }: { overDark?: boolean }) {
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
-            className={cx(
-              "flex size-11 items-center justify-center rounded-xl transition-colors lg:hidden",
-              onDark ? "text-cream hover:bg-cream/10" : "text-ink hover:bg-sand",
-            )}
+            className="flex size-11 items-center justify-center rounded-full text-ink transition-colors hover:bg-sand lg:hidden"
           >
             {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
           </button>
@@ -99,7 +92,7 @@ export function Nav({ overDark = false }: { overDark?: boolean }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.22, ease: EASE_OUT }}
-              className="mt-2 rounded-2xl border border-line bg-card p-2 shadow-lift lg:hidden"
+              className="mt-2 rounded-[1.75rem] bg-card p-3 shadow-pill lg:hidden"
             >
               <ul>
                 {links.map((l) => (
@@ -107,22 +100,20 @@ export function Nav({ overDark = false }: { overDark?: boolean }) {
                     <a
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className="block px-4 py-3 text-[15px] font-semibold transition-colors hover:text-teal"
+                      className="block rounded-2xl px-4 py-3 text-[16px] font-medium tracking-[-0.02em] transition-colors hover:bg-sand hover:text-teal"
                     >
                       {l.label}
                     </a>
                   </li>
                 ))}
               </ul>
-              <div className="mt-2 space-y-2 border-t border-line p-2 pt-4">
-                <div className="grid grid-cols-2 gap-2">
-                  <Button variant="secondary" href={SITE.app}>
-                    Log in
-                  </Button>
-                  <Button href="/#pricing" onClick={() => setOpen(false)}>
-                    Start trial
-                  </Button>
-                </div>
+              <div className="mt-3 grid grid-cols-2 gap-2 border-t border-line pt-3">
+                <Button variant="secondary" href={SITE.app}>
+                  Log in
+                </Button>
+                <Button href="/#pricing" onClick={() => setOpen(false)}>
+                  Start trial
+                </Button>
               </div>
             </motion.div>
           )}

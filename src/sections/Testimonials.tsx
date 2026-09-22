@@ -6,57 +6,57 @@ const quotes = [
   {
     who: "grace",
     quote:
-      "With FollowUpHub, we went from 8 deals per month to 15. The automation handles 80% of our follow-ups while we focus on clients who are actually ready to transact.",
+      "We went from 8 deals a month to 15. The automation handles 80% of our follow-ups.",
   },
   {
     who: "mateo",
     quote:
-      "The AI calls warm leads before I even open my laptop. My speed-to-lead went from hours to under a minute, and my listing appointments doubled.",
+      "It calls warm leads before I open my laptop. My listing appointments doubled.",
   },
   {
     who: "rohan",
     quote:
-      "I cancelled four subscriptions the week I switched. Pipeline, texting, campaigns and my website now live in one place and actually talk to each other.",
+      "I cancelled four subscriptions the week I switched. Everything lives in one place now.",
   },
   {
     who: "amara",
     quote:
-      "Our database finally works for us. Old leads we had written off booked showings after one automated sequence — that alone paid for the year.",
+      "Old leads we had written off booked showings. That alone paid for the year.",
   },
   {
     who: "sanjay",
     quote:
-      "The business doesn't feel overwhelming anymore and the GCI keeps going up. The Advanced plan is best in class, with a great support system.",
+      "The business stopped feeling overwhelming and the GCI keeps going up.",
   },
   {
     who: "karen",
     quote:
-      "My team stopped guessing. We know who to call and when, and the AI has already warmed them up before we dial.",
+      "My team stopped guessing. The AI has warmed them up before we dial.",
   },
   {
     who: "elias",
     quote:
-      "Onboarding took a day. By week two the AI had booked me five appointments I would never have chased myself.",
+      "Onboarding took a day. By week two it had booked me five appointments.",
   },
   {
     who: "omar",
     quote:
-      "I can see my entire pipeline in one dashboard. Every conversation I used to lose track of now gets followed up automatically.",
+      "Every conversation I used to lose track of now gets followed up.",
   },
   {
     who: "marissa",
     quote:
-      "The WhatsApp and text follow-ups converted leads I honestly thought were dead. Two closings came straight out of my old database.",
+      "Two closings came straight out of leads I thought were dead.",
   },
   {
     who: "andre",
     quote:
-      "Speed to lead is everything, and this is the only system that actually delivers it while I'm out showing homes.",
+      "Speed to lead is everything, and this delivers it while I am out showing homes.",
   },
   {
     who: "daniel",
     quote:
-      "One platform replaced my CRM, dialer and email tool. My costs went down and my closings went up.",
+      "One platform replaced my CRM, dialer and email tool. Costs down, closings up.",
   },
 ] as const;
 
@@ -67,7 +67,7 @@ const rowTwo = quotes.slice(half);
 function Card({ who, quote }: { who: string; quote: string }) {
   const p = PEOPLE[who];
   return (
-    <figure className="flex h-full w-[21rem] shrink-0 flex-col rounded-2xl border border-line bg-card p-6 shadow-soft sm:w-[23rem]">
+    <figure className="flex h-full w-[21rem] shrink-0 flex-col rounded-[1rem] border border-line bg-card p-6 shadow-card sm:w-[23rem]">
       <div className="flex gap-0.5" role="img" aria-label="Rated 5 out of 5">
         {Array.from({ length: 5 }).map((_, i) => (
           <Star key={i} className="size-[15px] fill-gold text-gold" aria-hidden="true" />
@@ -127,7 +127,7 @@ export function Testimonials() {
       <div className="container-x">
         <SectionHeading
           title={<span id="testimonials-title">Agents who switch don&rsquo;t switch back.</span>}
-          lede="What teams tell us after their first quarter on the platform. Hover to pause."
+          lede="After their first quarter."
         />
       </div>
 

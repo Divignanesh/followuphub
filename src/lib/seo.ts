@@ -29,10 +29,10 @@ export const SITE = {
  * Checkout links, kept beside the prices they belong to so the two can
  * never drift apart the way they did on the previous build.
  *
- * `checkoutYearly` is null until annual payment links exist. While it is
- * null the yearly toggle still shows annual pricing but its button falls
- * back to the monthly link, so a yearly click would be billed monthly —
- * fill these in before promoting annual billing.
+ * All four are verified against the live site: each link was opened and the
+ * plan name and billing period on the checkout page were read back. Monthly
+ * and yearly are genuinely different links, so the yearly toggle no longer
+ * falls back to the monthly one and bills the wrong period.
  */
 export const PLANS = [
   {
@@ -47,11 +47,11 @@ export const PLANS = [
     billingNoteYearly: "14-day free trial · billed annually · self-serve onboarding",
     setupNote: null as string | null,
     setupDetail: null as string | null,
-    checkout: "https://api.followuphub.ai/payment-link/6a50b8cdc981f3feae6e866c",
-    checkoutYearly: null as string | null,
+    checkout: "https://api.followuphub.ai/payment-link/6a50ecd6a655fa0b802a3a0b",
+    checkoutYearly: "https://api.followuphub.ai/payment-link/6a50ecf6a655fa0b802a3a0c",
     cta: "Start 14-day free trial",
     summary:
-      "The pre-built real estate follow-up system: funnels, conversational AI, pipeline and an omni-channel inbox.",
+      "Funnels, conversational AI, pipeline and an omni-channel inbox.",
     features: [
       "Pre-built home evaluation funnel",
       "Conversational SMS and email AI agents",
@@ -76,15 +76,15 @@ export const PLANS = [
     billingNoteYearly: "14-day free trial · billed annually",
     setupNote: "$299 one-time setup",
     setupDetail: "White-glove onboarding included",
-    checkout: "https://api.followuphub.ai/payment-link/6a50ecd6a655fa0b802a3a0b",
-    checkoutYearly: null as string | null,
+    checkout: "https://api.followuphub.ai/payment-link/6a50b8cdc981f3feae6e866c",
+    checkoutYearly: "https://api.followuphub.ai/payment-link/6a50ecbba655fa0b802a3a0a",
     cta: "Start 14-day free trial",
     recommended: true,
     summary:
-      "Everything in Basic plus the Voice AI engine, six-month Smart Nurture AI and your own custom AI agents.",
+      "Basic plus the voice AI engine, Smart Nurture and your own agents.",
     features: [
       "Everything in Basic",
-      "Voice AI engine with 6-attempt retry, 10 AM–9 PM",
+      "Voice AI engine with 6-attempt retry, 10am to 9pm",
       "6-month Smart Nurture AI with 24 touchpoints",
       "Visual workflow builder",
       "Build your own AI agents",
@@ -246,7 +246,7 @@ export function softwareSchema() {
     */
     offers: PLANS.map((p) => ({
       "@type": "Offer",
-      name: `${p.subtitle} — ${p.name}`,
+      name: `${p.name}: ${p.subtitle}`,
       price: p.price.toFixed(2),
       priceCurrency: p.currency,
       availability: "https://schema.org/InStock",

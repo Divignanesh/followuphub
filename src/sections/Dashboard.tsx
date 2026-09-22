@@ -1,6 +1,5 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import {
-  BadgeCheck,
   BarChart3,
   Bot,
   Calendar,
@@ -8,7 +7,6 @@ import {
   ChevronsUpDown,
   CreditCard,
   Globe,
-  HardDrive,
   LayoutDashboard,
   MessageSquare,
   MousePointerClick,
@@ -19,7 +17,6 @@ import {
   Send,
   Settings,
   Sparkle,
-  Star,
   Target,
   Users,
   Wand2,
@@ -60,9 +57,6 @@ const navSecondary: NavItem[] = [
   { icon: Send, label: "Marketing" },
   { icon: Workflow, label: "Automation" },
   { icon: Globe, label: "Sites" },
-  { icon: BadgeCheck, label: "Memberships" },
-  { icon: HardDrive, label: "Media Storage" },
-  { icon: Star, label: "Reputation" },
   { icon: BarChart3, label: "Reporting" },
 ];
 
@@ -246,17 +240,17 @@ export function Dashboard() {
     phones rather than reproduced badly.
   */
   return (
-    <section className="hidden py-8 sm:py-10 md:block">
-      <div className="mx-auto w-full max-w-[86rem] px-5 sm:px-8">
+    <section className="hidden py-4 md:block">
+      <div className="mx-auto w-full max-w-[73rem] px-5 sm:px-8">
         <SectionHeading
-          title="Every lead, every tool, working together in one place."
-          lede="One place for the pipeline, the conversations and the reporting, with every product sharing one contact record."
+          title="Every tool in one place."
+          lede="Pipeline, conversations and reporting, on one contact record."
         />
 
         {/* The panel below shows one named workspace with exact figures. A
             visitor has no way to tell a product mock from a real customer's
             account unless the page says so, so it says so. */}
-        <p className="mt-6 text-center text-[13px] font-semibold text-ink-faint">
+        <p className="mt-3 text-center text-[12.5px] font-semibold text-ink-faint">
           A sample workspace, showing the reports every account ships with.
         </p>
 
@@ -267,8 +261,8 @@ export function Dashboard() {
         >
           <div
             role="img"
-            aria-label="Sample FollowUpHub dashboard: a sidebar of tools from Ask AI and Conversations through Automation, Sites and Reputation, beside reports for opportunity status, opportunity value, conversion rate, a seven-stage listing funnel and stage distribution"
-            className="overflow-hidden rounded-2xl border border-line bg-white shadow-lift"
+            aria-label="Sample FollowUpHub dashboard: a sidebar of tools from Ask AI and Conversations through Automation, Sites and Reporting, beside reports for opportunity status, opportunity value, conversion rate, a seven-stage listing funnel and stage distribution"
+            className="overflow-hidden rounded-[1rem] border border-line bg-white shadow-card"
           >
             <div aria-hidden="true" className="flex min-h-[22rem]">
               {/* ---------------- sidebar ---------------- */}
@@ -280,10 +274,10 @@ export function Dashboard() {
                 {/* account switcher */}
                 <div className="mx-3 mt-4 flex items-center gap-2 rounded-lg bg-white/10 px-2.5 py-2 ring-1 ring-white/15">
                   <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-white/15 text-[9px] font-bold text-white/90">
-                    MS
+                    NH
                   </span>
                   <span className="min-w-0 flex-1 truncate text-[11.5px] font-semibold text-white">
-                    MS Realty Stoney Creek
+                    Northbrook Homes Group
                   </span>
                   <ChevronsUpDown className="size-3 shrink-0 text-white/60" />
                 </div>
@@ -305,7 +299,21 @@ export function Dashboard() {
                   ))}
                 </nav>
 
-                <span className="mt-2 flex items-center gap-2.5 px-4 py-2">
+                {/* Who is signed in. An application shell without an account
+                    on it reads as a wireframe rather than a workspace. */}
+                <span className="mx-3 mt-2 flex items-center gap-2 rounded-lg bg-white/[0.07] px-2.5 py-2">
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-white/15 text-[9.5px] font-bold text-white/90">
+                    MV
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[11.5px] font-semibold text-white">
+                      Maya Villanueva
+                    </span>
+                    <span className="block truncate text-[10px] text-white/55">Team lead</span>
+                  </span>
+                </span>
+
+                <span className="mt-1 flex items-center gap-2.5 px-4 py-2">
                   <Settings className="size-3.5 text-white/70" />
                   <span className="text-[11.5px] text-white/90">Settings</span>
                 </span>

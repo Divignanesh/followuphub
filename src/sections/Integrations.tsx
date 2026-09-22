@@ -48,7 +48,7 @@ export function Integrations() {
               The same week, run <span className="grad-teal">two ways</span>.
             </>
           }
-          lede="What actually changes on the Monday after you switch."
+          lede="What changes on the Monday after you switch."
         />
 
         <motion.div
@@ -56,7 +56,7 @@ export function Integrations() {
           initial="hidden"
           whileInView="show"
           viewport={viewport}
-          className="mt-14 overflow-hidden rounded-2xl border border-line bg-card"
+          className="mt-14 overflow-hidden rounded-[1rem] border border-line bg-card"
         >
           <div className="grid md:grid-cols-2">
             {/* before */}

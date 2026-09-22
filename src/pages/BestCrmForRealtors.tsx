@@ -83,9 +83,6 @@ export function BestCrmForRealtors() {
   return (
     <>
       <section className="relative overflow-hidden pb-16 pt-32 sm:pt-40" aria-labelledby="crm-title">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute inset-0 grain [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,black_20%,transparent_75%)]" />
-        </div>
         <div className="container-x">
           <nav aria-label="Breadcrumb" className="mb-8">
             <ol className="flex items-center gap-2 text-[13px] text-ink-soft">
@@ -129,7 +126,7 @@ export function BestCrmForRealtors() {
             </motion.p>
 
             <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button href="/#pricing" size="lg" withArrow>
+              <Button href="/#pricing" size="lg">
                 Start 14-day free trial
               </Button>
               <Button href={SITE.demo} size="lg" variant="secondary">
@@ -175,7 +172,7 @@ export function BestCrmForRealtors() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-sand py-24 sm:py-28">
+      <section className="bg-sand py-24 sm:py-28">
         <div className="container-x">
           <SectionHeading
             kicker="Why agents rank it first"

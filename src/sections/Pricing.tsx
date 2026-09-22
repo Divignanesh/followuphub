@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, BadgeCheck, Check } from "lucide-react";
+import { BadgeCheck, Check } from "lucide-react";
 import { useState } from "react";
 import { SectionHeading, cx } from "../components/ui";
 import { scaleIn, stagger, viewport } from "../lib/motion";
@@ -14,15 +14,15 @@ export function Pricing() {
   const yearly = billing === "yearly";
 
   return (
-    <section id="pricing" className="py-8 sm:py-10">
+    <section id="pricing" className="py-6">
       <div className="container-x">
         <SectionHeading
           kicker="Pricing"
-          title="Start with the system agents usually have to build themselves."
-          lede="Both plans include a 14-day free trial and free migration. Advanced adds the Voice AI engine and white-glove setup."
+          title="Two plans. One price."
+          lede="Both include a free trial and free migration. Advanced adds the voice AI."
         />
 
-        <div className="mt-10 flex justify-center">
+        <div className="mt-8 flex justify-center">
           <div
             role="radiogroup"
             aria-label="Billing period"
@@ -56,7 +56,7 @@ export function Pricing() {
           initial="hidden"
           whileInView="show"
           viewport={viewport}
-          className="mx-auto mt-10 grid max-w-4xl gap-5 lg:grid-cols-2"
+          className="mx-auto mt-8 grid max-w-4xl gap-4 lg:grid-cols-2"
         >
           {PLANS.map((plan) => {
             const featured = "recommended" in plan && plan.recommended;
@@ -71,10 +71,10 @@ export function Pricing() {
                 key={plan.id}
                 variants={scaleIn}
                 className={cx(
-                  "relative flex flex-col gap-5 rounded-2xl p-6 sm:p-7",
+                  "relative flex flex-col gap-4 rounded-[1rem] p-6",
                   featured
                     ? "border-2 border-teal bg-card shadow-[0_18px_50px_-24px_rgb(26_107_90/0.45)]"
-                    : "border border-line bg-card shadow-soft",
+                    : "border border-line bg-card shadow-card",
                 )}
               >
                 {featured && (
@@ -114,16 +114,21 @@ export function Pricing() {
                   <p className="text-[14px] leading-[1.6] text-ink-soft">{plan.summary}</p>
                 </div>
 
-                <div className="flex items-baseline gap-2 border-y border-line py-4">
+                <div className="flex items-baseline gap-2 border-y border-line py-3">
                   <span className="text-[2.6rem] font-extrabold leading-none tracking-[-0.035em] text-ink">
                     ${price.toFixed(2)}
                   </span>
-                  <span className="text-[14px] font-medium text-ink-soft">/month CAD</span>
+                  {/* The period follows the toggle. It was hardcoded to "/month", so
+                      switching to yearly rendered "$499.90 /month CAD" beside a
+                      link that charges once a year. */}
+                  <span className="text-[14px] font-medium text-ink-soft">
+                    {yearly ? "/year CAD" : "/month CAD"}
+                  </span>
                 </div>
 
                 <p className="-mt-2 text-[13px] text-ink-soft">{note}</p>
 
-                <ul className="flex flex-col gap-2">
+                <ul className="flex flex-col gap-1.5">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-start gap-2.5 text-[13.5px] text-ink">
                       <Check className="mt-1 size-3.5 shrink-0 text-teal" strokeWidth={3} aria-hidden="true" />
@@ -144,14 +149,13 @@ export function Pricing() {
                   )}
                 >
                   {plan.cta}
-                  <ArrowRight className="size-4" aria-hidden="true" />
                 </a>
               </motion.li>
             );
           })}
         </motion.ul>
 
-        <p className="mt-6 text-center text-[13px] text-ink-soft">
+        <p className="mt-5 text-center text-[13px] text-ink-soft">
           Cancel any time from your account. No contract, no cancellation fee.
         </p>
       </div>

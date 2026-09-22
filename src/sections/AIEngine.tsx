@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { CallPlayer } from "../components/CallPlayer";
-import { RayField } from "../components/RayField";
 import { Button } from "../components/ui";
 import { fadeUp, stagger, viewport } from "../lib/motion";
 
@@ -13,10 +12,10 @@ import { fadeUp, stagger, viewport } from "../lib/motion";
  * third tall.
  */
 const capabilities = [
-  ["Natural voice, not a script", "It hears the objection and answers it."],
-  ["Six attempts, 10 AM to 9 PM", "Inside the windows you set, never outside them."],
-  ["Sentiment on every reply", "Calls, texts and WhatsApp scored as they arrive."],
-  ["Hand-off when they are ready", "A warm lead rings your phone, not a queue."],
+  ["Natural voice, not a script", "It answers the objection."],
+  ["Six attempts, 10am to 9pm", "Only inside your windows."],
+  ["Sentiment on every reply", "Scored as it arrives."],
+  ["Hand-off when they are ready", "A warm lead rings your phone."],
 ];
 
 const figures: [string, string][] = [
@@ -28,8 +27,7 @@ const figures: [string, string][] = [
 
 export function AIEngine() {
   return (
-    <section id="ai" className="relative overflow-hidden bg-teal-ink py-14 text-cream sm:py-16">
-      <RayField />
+    <section id="ai" className="wash-deep relative overflow-hidden py-14 text-cream sm:py-16">
 
       <div className="container-x relative grid items-center gap-10 lg:grid-cols-[0.98fr_1.02fr] lg:gap-14">
         <motion.div
@@ -51,18 +49,17 @@ export function AIEngine() {
             variants={fadeUp}
             className="t-h2 max-w-[18ch] text-cream"
           >
-            Your AI agent works the leads you{" "}
-            <span className="grad-cream">never get around to</span>.
+            It calls the leads you{" "}
+            <span className="grad-cream">never get to</span>.
           </motion.h2>
 
           <motion.p variants={fadeUp} className="t-body mt-4 max-w-[46ch] text-mist/80">
-            It dials warm leads before you open your laptop, handles the first
-            objection and books the appointment. It knows when to hand you the phone.
+            It dials, handles the first objection and books the appointment.
           </motion.p>
 
           <motion.dl
             variants={fadeUp}
-            className="mt-7 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-cream/12 sm:grid-cols-4"
+            className="mt-7 grid grid-cols-2 gap-px overflow-hidden rounded-[1rem] border border-cream/12 sm:grid-cols-4"
           >
             {figures.map(([n, l]) => (
               <div key={l} className="bg-cream/[0.06] p-4 backdrop-blur-sm">
@@ -90,8 +87,8 @@ export function AIEngine() {
           </motion.ul>
 
           <motion.div variants={fadeUp} className="mt-8">
-            <Button href="/#pricing" size="lg" variant="cream" withArrow>
-              Turn on the AI engine
+            <Button href="/#pricing" size="lg" variant="cream">
+              Start free trial
             </Button>
           </motion.div>
         </motion.div>

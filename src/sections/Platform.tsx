@@ -6,7 +6,6 @@ import { useRef } from "react";
 import { CalendarCheck, LayoutGrid, Mail, Megaphone, MessageSquare, PhoneCall } from "lucide-react";
 import { scaleIn, springSoft, stagger, viewport } from "../lib/motion";
 import { SectionHeading } from "../components/ui";
-import { LISTINGS } from "../lib/assets";
 
 /**
  * Uneven bento, built on the 21st.dev "Feature Bento" layout
@@ -27,7 +26,6 @@ const pipeline = [
   { stage: "New lead", n: 24, pct: 100, value: "$8.1M" },
   { stage: "Contacted", n: 15, pct: 63, value: "$5.2M" },
   { stage: "Showing", n: 10, pct: 42, value: "$3.4M" },
-  { stage: "Offer", n: 5, pct: 21, value: "$1.7M" },
 ];
 
 function PipelineCard() {
@@ -94,7 +92,7 @@ function PipelineCard() {
       variants={scaleIn}
       whileHover={{ y: -6 }}
       transition={springSoft}
-      className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-teal-deep p-6 text-cream shadow-teal sm:p-8 md:col-span-2 md:row-span-2"
+      className="group relative flex flex-col justify-between overflow-hidden rounded-[1rem] bg-teal-deep p-6 text-cream shadow-teal sm:p-7 md:col-span-2"
     >
       <span
         aria-hidden="true"
@@ -102,15 +100,15 @@ function PipelineCard() {
       />
 
       <div className="relative">
-        <span className="flex size-11 items-center justify-center rounded-xl bg-cream/15 text-cream">
+        <span className="flex size-9 items-center justify-center rounded-[0.6rem] bg-cream/15 text-cream">
           <LayoutGrid className="size-5" aria-hidden="true" />
         </span>
-        <h3 className="mt-6 text-[1.7rem] font-extrabold leading-[1.1] tracking-[-0.03em] text-cream sm:text-[2.2rem]">
+        <h3 className="mt-4 text-[1.45rem] font-semibold leading-[1.12] tracking-[-0.03em] text-cream sm:text-[1.8rem]">
           One pipeline your whole
           <br className="hidden sm:block" /> team can see.
         </h3>
-        <p className="mt-3 max-w-md text-[15px] leading-[1.65] text-cream/80">
-          Real estate stages and live team visibility. Every call writes back to the same record.
+        <p className="mt-2.5 max-w-md text-[14px] leading-[1.55] text-cream/80">
+          Real estate stages, live for the whole team.
         </p>
       </div>
 
@@ -121,7 +119,7 @@ function PipelineCard() {
           and the raw percentage is gone: these are the leads sitting in each
           stage, not a conversion rate, and a percent sign invited the wrong
           reading. */}
-      <ol className="relative mt-7 flex flex-1 flex-col justify-end gap-2.5" aria-hidden="true">
+      <ol className="relative mt-5 flex flex-1 flex-col justify-end gap-2" aria-hidden="true">
         <li className="grid grid-cols-[1fr_auto_auto] items-baseline gap-x-4 px-3.5 pb-0.5 sm:grid-cols-[8.5rem_1fr_auto_auto] sm:gap-x-5">
           <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-cream/45">Stage</span>
           <span className="hidden sm:block" />
@@ -137,7 +135,7 @@ function PipelineCard() {
           <li
             key={p.stage}
             data-flow-step
-            className="grid grid-cols-[1fr_auto_auto] items-center gap-x-4 gap-y-2.5 rounded-xl bg-cream/[0.07] p-3.5 ring-1 ring-cream/12 transition-colors duration-500 group-hover:bg-cream/[0.11] sm:grid-cols-[8.5rem_1fr_auto_auto] sm:gap-x-5"
+            className="grid grid-cols-[1fr_auto_auto] items-center gap-x-4 gap-y-2 rounded-[0.7rem] bg-cream/[0.07] p-2.5 ring-1 ring-cream/12 transition-colors duration-500 group-hover:bg-cream/[0.11] sm:grid-cols-[8.5rem_1fr_auto_auto] sm:gap-x-5"
             style={{ transitionDelay: `${i * 55}ms` }}
           >
             <span className="truncate text-[12.5px] font-bold uppercase tracking-[0.06em] text-cream/75">
@@ -162,12 +160,6 @@ function PipelineCard() {
           </li>
         ))}
 
-        <li className="mt-1 flex items-baseline justify-between px-1">
-          <span className="text-[10.5px] font-bold uppercase tracking-[0.1em] text-cream/50">
-            Open pipeline
-          </span>
-          <span className="font-mono text-[13px] font-bold text-cream">$18.4M</span>
-        </li>
       </ol>
     </motion.article>
   );
@@ -187,7 +179,7 @@ function ChannelsCard() {
       variants={scaleIn}
       whileHover={{ y: -6 }}
       transition={springSoft}
-      className="group flex flex-col justify-between rounded-2xl border border-line bg-cream p-6 shadow-soft transition-shadow duration-300 hover:shadow-lift"
+      className="group flex flex-col justify-between rounded-[1rem] border border-line bg-cream p-6 shadow-card transition-shadow duration-300 hover:shadow-card"
     >
       <div>
         <span className="flex size-10 items-center justify-center rounded-xl bg-teal text-white transition-transform duration-500 group-hover:scale-105">
@@ -197,7 +189,7 @@ function ChannelsCard() {
           AI calling, texting and WhatsApp
         </h3>
         <p className="mt-2 text-[13.5px] leading-[1.6] text-ink-soft">
-          Around the clock, with a hand-off the moment a lead is ready.
+          Around the clock. Hand-off when they are ready.
         </p>
       </div>
 
@@ -217,21 +209,35 @@ function ChannelsCard() {
 }
 
 function CampaignCard() {
-  const [lead, ...rest] = LISTINGS;
+  /*
+    The tile claims "campaigns and scheduling, attributed to the pipeline", so
+    it shows a schedule with its attribution.
+
+    Two attempts at photography preceded this. Listing photographs made the
+    strip read as a property gallery, and swapping them for the team made it
+    read as an about page. Neither is wrong imagery so much as wrong *kind*:
+    no photograph can depict scheduling, because scheduling is a shape in
+    time, not a thing you can point a camera at. The week, the outcome beside
+    each send, and the leads it produced is the whole claim in nine words.
+  */
+  const week = [
+    { day: "Mon", name: "Listing reel", result: "Posted" },
+    { day: "Wed", name: "Email blast", result: "1,240 sent" },
+    { day: "Fri", name: "Open house", result: "38 RSVPs" },
+  ];
+
   return (
     <motion.article
       variants={scaleIn}
       whileHover={{ y: -6 }}
       transition={springSoft}
-      className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-line bg-cream p-5 shadow-soft transition-shadow duration-300 hover:shadow-lift"
+      className="group flex flex-col justify-between overflow-hidden rounded-[1rem] border border-line bg-cream p-5 shadow-card transition-shadow duration-300 hover:shadow-card"
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="t-h3 text-ink">
-            Marketing automation
-          </h3>
+          <h3 className="t-h3 text-ink">Marketing automation</h3>
           <p className="mt-2 text-[13.5px] leading-[1.6] text-ink-soft">
-            Scheduling and campaigns from one dashboard, attributed to the pipeline.
+            Campaigns and scheduling, attributed to the pipeline.
           </p>
         </div>
         <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-teal text-white transition-transform duration-500 group-hover:scale-105">
@@ -239,49 +245,29 @@ function CampaignCard() {
         </span>
       </div>
 
-      {/* A listing reel is a listing. Showing the post rather than naming it
-          is what makes the tile read as the product. */}
       <figure className="mt-5 overflow-hidden rounded-xl border border-line bg-card" aria-hidden="true">
         <div className="flex items-center gap-2 border-b border-line px-3 py-2">
-          <span className="flex size-5 items-center justify-center rounded-full bg-mist font-mono text-[9px] font-bold text-teal">
-            Mon
-          </span>
-          <span className="truncate text-[12px] font-bold text-ink">Listing reel</span>
-          <span className="ml-auto flex items-center gap-1 text-[10.5px] font-semibold text-teal">
-            <CalendarCheck className="size-3" />
-            Scheduled
-          </span>
+          <CalendarCheck className="size-3.5 shrink-0 text-teal" />
+          <span className="truncate text-[12px] font-bold text-ink">This week</span>
+          <span className="ml-auto text-[10.5px] font-semibold text-teal">3 scheduled</span>
         </div>
-        <div className="flex gap-1 p-1.5">
-          <img
-            src={lead.src}
-            alt=""
-            width={640}
-            height={480}
-            loading="lazy"
-            decoding="async"
-            className="h-20 flex-[1.6] rounded-lg object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-          />
-          <div className="flex flex-1 flex-col gap-1">
-            {rest.slice(0, 2).map((l) => (
-              <img
-                key={l.src}
-                src={l.src}
-                alt=""
-                width={640}
-                height={480}
-                loading="lazy"
-                decoding="async"
-                className="h-[38px] w-full rounded-md object-cover"
-              />
-            ))}
-          </div>
-        </div>
+
+        <ul className="divide-y divide-line">
+          {week.map(({ day, name, result }) => (
+            <li key={day} className="flex items-center gap-2.5 px-3 py-2">
+              <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-mist font-mono text-[9px] font-bold text-teal">
+                {day}
+              </span>
+              <span className="truncate text-[12px] font-semibold text-ink">{name}</span>
+              <span className="ml-auto shrink-0 font-mono text-[11px] text-ink-faint">{result}</span>
+            </li>
+          ))}
+        </ul>
       </figure>
 
       <p className="mt-3 flex items-center gap-2 text-[12px] font-semibold text-ink-soft">
         <Mail className="size-3.5 text-teal" aria-hidden="true" />
-        Wed · email blast · 1,240 sent
+        14 leads attributed this week
       </p>
     </motion.article>
   );
@@ -322,7 +308,7 @@ function StatCard({
       variants={scaleIn}
       whileHover={{ y: -6 }}
       transition={springSoft}
-      className={`group relative flex flex-col overflow-hidden rounded-2xl p-5 sm:p-6 ${skin}`}
+      className={`group relative flex flex-col overflow-hidden rounded-[1rem] p-5 sm:p-6 ${skin}`}
     >
       <span
         aria-hidden="true"
@@ -393,33 +379,15 @@ function Bars() {
   );
 }
 
-/** Handled for you: four fifths of the row filled in. */
-function Blocks() {
-  return (
-    <div className="grid w-full grid-cols-5 gap-1.5">
-      {Array.from({ length: 10 }).map((_, i) => (
-        <motion.span
-          key={i}
-          className={`h-8 rounded ${i < 8 ? "bg-teal" : "bg-teal/15"}`}
-          initial={{ opacity: 0, scale: 0.6 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={viewport}
-          transition={{ duration: 0.35, delay: i * 0.04 }}
-        />
-      ))}
-    </div>
-  );
-}
-
 /* --------------------------------- section -------------------------------- */
 
 export function Platform() {
   return (
-    <section id="platform" className="border-y border-line bg-sand py-8 sm:py-10">
+    <section id="platform" className="bg-sand py-6">
       <div className="container-x">
         <SectionHeading
-          title="Everything an agent needs, in one subscription."
-          lede="Not a bundle. Every part writes to the same contact record, so nothing is ever re-entered."
+          title="Everything in one subscription."
+          lede="One contact record behind every part of it."
         />
 
         <motion.div
@@ -427,7 +395,7 @@ export function Platform() {
           initial="hidden"
           whileInView="show"
           viewport={viewport}
-          className="mt-11 grid gap-4 md:grid-cols-3 md:auto-rows-[minmax(268px,auto)]"
+          className="mt-9 grid gap-3.5 md:grid-cols-3 md:auto-rows-[minmax(214px,auto)]"
         >
           <PipelineCard />
           <ChannelsCard />
@@ -435,7 +403,7 @@ export function Platform() {
             tone="mint"
             value="42s"
             label="Speed to lead"
-            note="The industry average first reply is over five hours."
+            note="The industry average is over five hours."
             visual={<Dial />}
           />
           <CampaignCard />
@@ -443,15 +411,8 @@ export function Platform() {
             tone="teal"
             value="400%"
             label="Marketing ROI"
-            note="On paid leads, once follow-up runs automatically."
+            note="On paid leads, once follow-up is automatic."
             visual={<Bars />}
-          />
-          <StatCard
-            tone="paper"
-            value="80%"
-            label="Handled for you"
-            note="Of all follow-ups, without an agent touching them."
-            visual={<Blocks />}
           />
         </motion.div>
       </div>

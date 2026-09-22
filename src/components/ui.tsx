@@ -1,5 +1,4 @@
-import { motion, useReducedMotion, type HTMLMotionProps } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { motion, useReducedMotion, type HTMLMotionProps, type Variants } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { fadeUp, stagger, viewport } from "../lib/motion";
 import { IMG } from "../lib/assets";
@@ -122,7 +121,6 @@ export function Portrait({
 type ButtonProps = Omit<HTMLMotionProps<"a">, "children"> & {
   variant?: "primary" | "secondary" | "cream" | "ghost-cream";
   size?: "sm" | "md" | "lg";
-  withArrow?: boolean;
   children: ReactNode;
 };
 
@@ -142,7 +140,6 @@ const variants = {
 export function Button({
   variant = "primary",
   size = "md",
-  withArrow = false,
   className,
   children,
   href = "#",
@@ -161,12 +158,6 @@ export function Button({
       {...rest}
     >
       {children}
-      {withArrow && (
-        <ArrowRight
-          className="size-[18px] transition-transform duration-200 group-hover:translate-x-0.5"
-          aria-hidden="true"
-        />
-      )}
     </motion.a>
   );
 }
@@ -217,10 +208,7 @@ export function SectionHeading({
 }) {
   const heading = (
     <Tag
-      className={cx(
-        "text-[2rem] font-extrabold leading-[1.08] tracking-[-0.03em] sm:text-[2.6rem]",
-        tone === "cream" ? "text-cream" : "text-ink",
-      )}
+      className={cx("t-h2", tone === "cream" ? "text-cream" : "text-ink")}
     >
       {title}
     </Tag>
@@ -228,10 +216,7 @@ export function SectionHeading({
 
   const ledeEl = lede ? (
     <p
-      className={cx(
-        "text-[17px] leading-[1.7]",
-        tone === "cream" ? "text-mist/85" : "text-ink-soft",
-      )}
+      className={cx("t-lede", tone === "cream" ? "text-mist/85" : "text-ink-soft")}
     >
       {lede}
     </p>
@@ -322,3 +307,123 @@ export function Reveal({
 
 /* -------------------------------- misc -------------------------------- */
 
+
+/* ------------------------- humanto-shape CTA -------------------------- */
+
+/**
+ * The page's primary call to action.
+ *
+ * A plain pill. It carried a filled circular badge with an arrow in it, which
+ * is the shape the reference uses, but an arrow on a button that says "Start
+ * free trial" is decoration: the label already names what happens, and the
+ * glyph only repeats that something comes next.
+ *
+ * Three grounds: `ink` on light sections, `cream` on the dark ones, and
+ * `outline` for the secondary action that must not compete.
+ */
+export function PillCta({
+  href = "#",
+  tone = "ink",
+  size = "lg",
+  className,
+  children,
+}: {
+  href?: string;
+  tone?: "ink" | "cream" | "outline";
+  size?: "md" | "lg";
+  className?: string;
+  children: ReactNode;
+}) {
+  const big = size === "lg";
+  const skin =
+    tone === "ink"
+      ? "bg-teal-ink text-cream hover:bg-teal-deep"
+      : tone === "cream"
+        ? "bg-cream text-teal-ink hover:bg-white"
+        : "border border-ink/20 text-ink hover:border-ink/45 hover:bg-ink/[0.03]";
+
+  return (
+    <motion.a
+      href={href}
+      whileTap={{ scale: 0.98 }}
+      className={cx(
+        "group inline-flex items-center justify-center rounded-full font-semibold tracking-[-0.02em] transition-colors duration-200",
+        big ? "h-[60px] px-8 text-[16px]" : "h-[52px] px-6 text-[15px]",
+        tone !== "outline" && "shadow-pill",
+        skin,
+        className,
+      )}
+    >
+      {children}
+    </motion.a>
+  );
+}
+
+/* ------------------------------ reveal kit ---------------------------- */
+
+/**
+ * The scroll entrance used across the rebuilt page.
+ *
+ * One family, one distance, one easing, so the whole page moves the same way:
+ * 24px up over 0.7s on an expo-out curve. The reference staggers children of a
+ * group by about 80ms, which is what makes a row of cards read as one gesture
+ * rather than three separate animations, so `RevealGroup` orchestrates and
+ * `RevealItem` inherits.
+ *
+ * Both collapse to the resting state under reduced motion rather than
+ * animating a shorter distance: MotionConfig's `reducedMotion="user"` drops
+ * transforms but keeps opacity, so an entrance starting at 0 that never fires
+ * would leave the content invisible.
+ */
+export const revealUp: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+};
+
+export function RevealGroup({
+  children,
+  className,
+  stagger: each = 0.08,
+  delay = 0,
+  as: Tag = "div",
+}: {
+  children: ReactNode;
+  className?: string;
+  stagger?: number;
+  delay?: number;
+  as?: "div" | "ul" | "ol";
+}) {
+  const reduce = useReducedMotion();
+  const M = Tag === "ul" ? motion.ul : Tag === "ol" ? motion.ol : motion.div;
+  if (reduce) return <Tag className={className}>{children}</Tag>;
+  return (
+    <M
+      variants={{ hidden: {}, show: { transition: { staggerChildren: each, delayChildren: delay } } }}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-60px 0px -12% 0px" }}
+      className={className}
+    >
+      {children}
+    </M>
+  );
+}
+
+export function RevealItem({
+  children,
+  className,
+  as: Tag = "div",
+}: {
+  children: ReactNode;
+  className?: string;
+  as?: "div" | "li";
+}) {
+  const reduce = useReducedMotion();
+  const M = Tag === "li" ? motion.li : motion.div;
+  if (reduce) return <Tag className={className}>{children}</Tag>;
+  return (
+    <M variants={revealUp} className={className}>
+      {children}
+    </M>
+  );
+}

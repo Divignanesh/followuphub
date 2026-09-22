@@ -19,7 +19,7 @@ const stories: Story[] = [
     location: "Vancouver, BC",
     quote:
       "With FollowUpHub, we went from 8 deals per month to 15. The automation handles 80% of our follow-ups while we focus on clients who are actually ready to transact.",
-    takeaway: "Nearly double the monthly closings, with the same team size.",
+    takeaway: "Nearly double the closings, same team.",
     tiles: [
       { value: 8, label: "Deals per month, before" },
       { value: 15, label: "Deals per month, after" },
@@ -31,7 +31,7 @@ const stories: Story[] = [
     who: "mateo",
     quote:
       "The AI calls warm leads before I even open my laptop. My speed-to-lead went from hours to under a minute, and my listing appointments doubled.",
-    takeaway: "Warm leads answered before the working day even starts.",
+    takeaway: "Warm leads answered before the day starts.",
     tiles: [
       { value: 0, text: "Hours", label: "Speed to lead, before" },
       { value: 0, text: "Under 1 min", label: "Speed to lead, after" },
@@ -42,7 +42,7 @@ const stories: Story[] = [
     who: "rohan",
     quote:
       "I cancelled four subscriptions the week I switched. Pipeline, texting, campaigns and my website now live in one place and actually talk to each other.",
-    takeaway: "Four line items off the software bill in the first week.",
+    takeaway: "Four subscriptions gone in week one.",
     tiles: [
       { value: 4, label: "Subscriptions cancelled" },
       { value: 1, label: "Platform to run it all" },
@@ -53,7 +53,7 @@ const stories: Story[] = [
     who: "elias",
     quote:
       "Onboarding took a day. By week two the AI had booked me five appointments I would never have chased myself.",
-    takeaway: "Live in a day, booking appointments by the second week.",
+    takeaway: "Live in a day. Booking by week two.",
     tiles: [
       { value: 1, suffix: " day", label: "Onboarding time" },
       { value: 5, label: "Appointments booked" },
@@ -64,7 +64,7 @@ const stories: Story[] = [
     who: "marissa",
     quote:
       "The WhatsApp and text follow-ups converted leads I honestly thought were dead. Two closings came straight out of my old database.",
-    takeaway: "A dormant database turned back into commission.",
+    takeaway: "A dead database, back in commission.",
     tiles: [
       { value: 2, label: "Closings from old leads" },
       { value: 0, text: "WhatsApp + SMS", label: "Channels that converted" },
@@ -104,7 +104,7 @@ export function Results() {
       <div className="container-x">
         <SectionHeading
           title={<>Real numbers from <span className="grad-teal">real agents</span>.</>}
-          lede="Every figure here comes from the agent's own account of switching. Use the arrows to read more."
+          lede="Figures from their own accounts."
         />
 
         <div
@@ -117,7 +117,7 @@ export function Results() {
           onBlurCapture={() => setHovered(false)}
           className="mt-14"
         >
-          <div className="relative overflow-hidden rounded-3xl border border-line bg-card shadow-lift">
+          <div className="relative overflow-hidden rounded-[1.25rem] border border-line bg-card shadow-card">
             <AnimatePresence mode="wait" initial={false}>
               <motion.figure
                 key={story.who}
@@ -246,7 +246,7 @@ export function Results() {
             <motion.div
               key={s.label}
               variants={scaleIn}
-              className="rounded-2xl border border-line bg-card p-6 shadow-soft"
+              className="rounded-[1rem] border border-line bg-card p-6 shadow-card"
             >
               <dd className="text-[2.1rem] font-extrabold leading-none tracking-[-0.03em] text-ink">
                 <StatCounter

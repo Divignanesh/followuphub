@@ -171,10 +171,9 @@ export function WhatsIncluded() {
           align="split"
           title={
             <>
-              The full platform, from first lead to <span className="grad-teal">closed deal</span>.
+              Everything that <span className="grad-teal">comes with it</span>.
             </>
           }
-          lede="Every capability below is part of the subscription. Nothing here is a paid add-on."
         />
 
         <motion.div
@@ -182,7 +181,7 @@ export function WhatsIncluded() {
           initial="hidden"
           whileInView="show"
           viewport={viewport}
-          className="mt-14 grid overflow-hidden rounded-2xl border border-line bg-card md:grid-cols-3"
+          className="mt-14 grid overflow-hidden rounded-[1rem] border border-line bg-card md:grid-cols-3"
         >
           {groups.map((g, i) => (
             <Cell key={g.title} icon={g.icon} title={g.title} items={g.items} index={i} />

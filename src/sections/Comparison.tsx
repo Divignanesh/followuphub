@@ -16,11 +16,11 @@ const rows = [
 
 export function Comparison() {
   return (
-    <section id="compare" className="border-y border-line bg-sand py-8 sm:py-10">
+    <section id="compare" className="bg-sand py-8 sm:py-10">
       <div className="container-x">
         <SectionHeading
           title="FollowUpHub vs. a typical real estate CRM"
-          lede="What a typical real estate CRM leaves you to buy separately, and what is already here."
+          lede="What a typical CRM leaves you to buy separately."
         />
 
         <motion.div

@@ -29,7 +29,7 @@ export function FAQ({ faqs, heading }: { faqs: readonly Faq[]; heading?: string 
             align="left"
             kicker="FAQ"
             title={heading ?? "Questions agents ask before switching."}
-            lede="Straight answers about pricing, migration and what the AI actually does."
+            lede="Pricing, migration and what the AI does."
           />
         </div>
 
@@ -52,7 +52,7 @@ export function FAQ({ faqs, heading }: { faqs: readonly Faq[]; heading?: string 
                     aria-expanded={isOpen}
                     aria-controls={`${id}-panel`}
                     onClick={() => setOpen(isOpen ? null : i)}
-                    className="flex w-full items-center justify-between gap-6 py-5 text-left text-[16.5px] font-bold tracking-[-0.01em] text-ink transition-colors hover:text-teal"
+                    className="flex w-full items-center justify-between gap-6 py-4 text-left text-[16px] font-semibold tracking-[-0.015em] text-ink transition-colors hover:text-teal"
                   >
                     {f.q}
                     <motion.span
@@ -73,7 +73,7 @@ export function FAQ({ faqs, heading }: { faqs: readonly Faq[]; heading?: string 
                   transition={{ duration: 0.28, ease: EASE_OUT }}
                   className="overflow-hidden"
                 >
-                  <p className="pb-5 pr-10 text-[15px] leading-[1.75] text-ink-soft">{f.a}</p>
+                  <p className="pb-4 pr-10 text-[14.5px] leading-[1.65] text-ink-soft">{f.a}</p>
                 </motion.div>
               </motion.li>
             );

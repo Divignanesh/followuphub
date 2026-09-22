@@ -75,6 +75,73 @@
 @layer utilities {
   .container-x { @apply mx-auto w-full max-w-[76rem] px-5 sm:px-8; }
 
+  /* =====================================================================
+     Humanto-derived scale.
+
+     Measured off the reference rather than guessed: 60px display and 48px
+     section heads, both at line-height 1.17 and tracking -0.03em, both at
+     weight 600. The weight is the part that matters most. This page was
+     setting every heading at 800, and 800 at display size is what makes a
+     page shout; the reference reads expensive largely because it does not.
+
+     Body copy carries the same negative tracking, which is unusual and is
+     part of the look: it keeps 16px text feeling set rather than typed.
+     ===================================================================== */
+  .t-display { @apply text-[2.5rem] font-semibold leading-[1.1] tracking-[-0.03em] sm:text-[3.25rem] lg:text-[3.75rem] lg:leading-[1.17]; }
+  .t-h2      { @apply text-[2rem] font-semibold leading-[1.12] tracking-[-0.03em] sm:text-[2.6rem] lg:text-[3rem] lg:leading-[1.17]; }
+  .t-h3      { @apply text-[1.25rem] font-semibold leading-[1.2] tracking-[-0.025em] sm:text-[1.4rem]; }
+  .t-lede    { @apply text-[16px] leading-[1.5] tracking-[-0.03em] sm:text-[17px]; }
+  .t-body    { @apply text-[15px] leading-[1.55] tracking-[-0.02em]; }
+  .t-meta    { @apply text-[13.5px] leading-[1.5] tracking-[-0.01em]; }
+
+  /* Section rhythm. The reference runs 147px above the hero and roughly
+     150-200px between sections; two steps cover every case here. */
+  .section-y       { @apply py-[5.5rem] sm:py-[8rem] lg:py-[9.5rem]; }
+  .section-y-tight { @apply py-[3.5rem] sm:py-[5rem]; }
+
+  /* One contact shadow, tinted to the warm ink rather than pure black. The
+     reference uses a 3px contact shadow, not a 40px lift, which is why its
+     cards sit on the page instead of hovering above it. */
+  .shadow-card { box-shadow: 0 0 3px rgb(45 42 39 / 0.14), 0 1px 3px rgb(45 42 39 / 0.07); }
+  .shadow-pill { box-shadow: 0 1px 2px rgb(45 42 39 / 0.10), 0 6px 20px -8px rgb(45 42 39 / 0.18); }
+
+  /* The wash: the page ground falling into the brand accent at the foot of a
+     section. The reference does this in orange; ours is the house teal, which
+     is the one thing on the page that must not be borrowed. */
+  /*
+    The hero wash lands light, not deep.
+
+    The reference finishes on a mid orange that dark type still reads on, and
+    its checkmarks are set in near-black because of it. Running ours down to
+    the full brand teal forced the same copy into cream and left it at 3:1,
+    which is under the floor. Finishing on a light mint keeps the band clearly
+    coloured and puts ink back on it at better than 7:1.
+  */
+  .wash-teal {
+    background-image: linear-gradient(to bottom, var(--color-cream) 0%, #8fc9b7 100%);
+  }
+
+  /* The dark counterpart: the same fall, inverted, for panels that sit on
+     the deep end. This replaces the ray grid and the paper grid, which were
+     two more textures than the page needed. */
+  .wash-deep {
+    background-image: linear-gradient(to bottom, var(--color-teal-ink) 0%, var(--color-teal) 100%);
+  }
+
+  .wash-teal-soft {
+    background-image: linear-gradient(to bottom, var(--color-cream) 0%, var(--color-cream) 62%, color-mix(in oklab, var(--color-teal) 45%, var(--color-cream)) 100%);
+  }
+
+  /* The faint ruled grid the reference lays under its hero. Hairlines, not
+     dots: a dot grid is the texture every generated page reaches for. */
+  .bg-rule {
+    background-image:
+      linear-gradient(to right, rgb(45 42 39 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(45 42 39 / 0.045) 1px, transparent 1px);
+    background-size: 88px 88px;
+  }
+
+
   /* A scroll rail keeps its own affordance (arrows plus a peeking card), so
      the native bar would only add a grey line under the content. */
   .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
@@ -122,11 +189,6 @@
 
   .container-narrow { @apply mx-auto w-full max-w-3xl px-5 sm:px-8; }
 
-  .grain {
-    background-image:
-      radial-gradient(color-mix(in oklab, var(--color-teal) 12%, transparent) 1px, transparent 1px);
-    background-size: 26px 26px;
-  }
 
   /*
     The call waveform only moves while the transcript is playing. Bars carry

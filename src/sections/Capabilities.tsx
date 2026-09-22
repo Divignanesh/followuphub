@@ -28,18 +28,33 @@ type Card = {
 function Panel({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative min-h-[29rem] self-stretch overflow-hidden">
-      <span aria-hidden="true" className="absolute inset-0 bg-teal-deep" />
+      {/*
+        The panel ground, as a gradient rather than a flat fill with two
+        blurred circles parked on it. A blurred circle has no direction, so it
+        reads as an orb whatever colour it is given; a diagonal fall through
+        three teals gives the surface a light source, which is what makes the
+        white screen look like it is sitting on something.
+      */}
       <span
         aria-hidden="true"
-        className="absolute -right-20 -top-20 size-72 rounded-full bg-teal/45 blur-3xl"
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(145deg, #0d2c26 0%, #123f36 38%, #1a6b5a 78%, #2f8b74 100%)",
+        }}
       />
+      {/* one soft sheen across the top left, where the light is coming from */}
       <span
         aria-hidden="true"
-        className="absolute -bottom-24 -left-16 size-64 rounded-full bg-teal/25 blur-3xl"
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "radial-gradient(120% 90% at 8% 0%, rgb(232 245 240 / 0.16) 0%, transparent 58%)",
+        }}
       />
       {/* the screen floats on the panel rather than sitting inside a box on it */}
       <div className="relative flex h-full items-center p-6 sm:p-10">
-        <div className="flex w-full flex-col rounded-2xl bg-card p-4 shadow-[0_24px_60px_-20px_rgb(13_44_38/0.55)]">
+        <div className="flex w-full flex-col rounded-[1rem] bg-card p-4 shadow-[0_24px_60px_-20px_rgb(13_44_38/0.55)]">
           {children}
         </div>
       </div>
@@ -57,7 +72,7 @@ const CARDS: Card[] = [
     word: "INBOX",
     kicker: "One inbox",
     title: "Every channel, one thread",
-    body: "Calls, SMS, WhatsApp and email merge into a single thread per contact, so nothing is answered twice and nothing is missed.",
+    body: "Calls, SMS, WhatsApp and email in one thread per contact.",
     chips: ["SMS", "WhatsApp", "Email", "Voice"],
     panel: (
       <>
@@ -87,7 +102,7 @@ const CARDS: Card[] = [
     word: "PIPELINE",
     kicker: "Pipelines",
     title: "Stages you actually use",
-    body: "Custom stages per pipeline, the full contact record on every card, and reporting that shows conversion and where deals stall.",
+    body: "Custom stages, the full record on every card, and where deals stall.",
     chips: ["Custom stages", "Deal value", "Forecasting"],
     panel: (
       <>
@@ -118,7 +133,7 @@ const CARDS: Card[] = [
     word: "WORKFLOWS",
     kicker: "Workflows",
     title: "A trigger for every event",
-    body: "A new lead, a missed call, a booking, a no-show. Each one starts a sequence across voice, text and email without you wiring it.",
+    body: "A new lead, a missed call, a no-show. Each starts a sequence.",
     chips: ["Triggers", "6-attempt retry", "Smart Nurture"],
     panel: (
       <>
@@ -153,7 +168,7 @@ const CARDS: Card[] = [
     word: "PRESENCE",
     kicker: "Sites and reviews",
     title: "The front door, handled",
-    body: "A site and funnel builder with pre-built real estate templates, plus review campaigns that send under your own name.",
+    body: "Sites and funnels from real estate templates. Reviews in your name.",
     chips: ["Funnels", "Landing pages", "Google reviews"],
     panel: (
       <>
@@ -228,7 +243,7 @@ export function Capabilities() {
                 One platform. <span className="grad-teal">Four ways to work it.</span>
               </>
             }
-            lede="The modules behind the follow-up, and the screens they actually are."
+            lede="The modules behind the follow-up."
           />
 
           <div className="flex items-center gap-3">
@@ -263,7 +278,7 @@ export function Capabilities() {
         {CARDS.map((card) => (
           <article
             key={card.id}
-            className="grid w-[86vw] shrink-0 snap-center items-stretch overflow-hidden rounded-3xl border border-line bg-card shadow-soft sm:w-[76vw] lg:w-[70rem] lg:grid-cols-[0.92fr_1.08fr]"
+            className="grid w-[86vw] shrink-0 snap-center items-stretch overflow-hidden rounded-[1.25rem] border border-line bg-card shadow-card sm:w-[76vw] lg:w-[70rem] lg:grid-cols-[0.92fr_1.08fr]"
           >
             <div className="flex flex-col justify-center p-8 sm:p-11">
               <p className="t-label text-ink-faint">FollowUpHub for</p>
@@ -289,7 +304,6 @@ export function Capabilities() {
                 className="mt-7 inline-flex h-11 w-fit items-center gap-2 rounded-full bg-teal-ink px-6 text-[14px] font-bold text-cream transition-transform duration-200 hover:scale-[1.03]"
               >
                 Built for {card.kicker.toLowerCase()}
-                <ArrowRight className="size-4" aria-hidden="true" />
               </a>
             </div>
 

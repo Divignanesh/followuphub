@@ -15,10 +15,17 @@ import { RevealGroup, RevealItem, SectionHeading } from "../components/ui";
  * underneath. The rail is the whole mechanism: it reads left to right at a
  * glance and it costs no height.
  *
- * Below sm the rail has nowhere to run, so the four stack into one column and
- * centre. Left-aligned they read as a list that lost its bullets, with each
- * node adrift at the left edge of a full-width block; centred they read as
- * four steps in sequence, which is what they are.
+ * Every stage is centred on its own column, under a centred section heading,
+ * so the section has one axis instead of a centred title sitting on top of
+ * four left-aligned blocks.
+ *
+ * That costs the rail its easy anchor. With the disc centred the connector can
+ * no longer just be the next flex child, so it is positioned from the disc's
+ * own centre line: it starts 30px right of the column's midpoint and runs
+ * 36px short of the column's width, which lands it 8px clear of the next disc
+ * once the 24px column gap is counted. The step number moved below the disc
+ * for the same reason, because beside it the pair centres as a group and
+ * pulls the disc off the axis the line is measured from.
  */
 
 type Stage = { icon: LucideIcon; step: string; title: string; body: string; rows: string[] };
@@ -68,39 +75,32 @@ export function Workflow() {
           {stages.map(({ icon: Icon, step, title, body, rows }, i) => {
             const last = i === stages.length - 1;
             return (
-              <RevealItem as="li" key={title} className="relative">
-                {/* the rail: node, then the line that hands to the next stage */}
-                <div className="flex items-center justify-center gap-3 sm:justify-start">
-                  <span className="relative z-10 grid size-11 shrink-0 place-items-center rounded-full bg-teal text-cream">
-                    <Icon className="size-[18px]" aria-hidden="true" />
+              <RevealItem as="li" key={title} className="relative flex flex-col items-center text-center">
+                <span className="relative z-10 grid size-11 place-items-center rounded-full bg-teal text-cream">
+                  <Icon className="size-[18px]" aria-hidden="true" />
+                </span>
+
+                {/* the rail, measured from the disc's centre line */}
+                {!last && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-[calc(50%+30px)] top-[22px] hidden h-px w-[calc(100%-36px)] bg-teal/25 lg:block"
+                  >
+                    <span className="absolute -right-px -top-[3px] size-[7px] rotate-45 border-r border-t border-teal/45" />
                   </span>
+                )}
 
-                  <span className="font-mono text-[12px] font-semibold text-ink-faint">{step}</span>
+                <span className="mt-3 font-mono text-[12px] font-semibold text-ink-faint">{step}</span>
 
-                  {!last && (
-                    <span
-                      aria-hidden="true"
-                      className="relative hidden h-px flex-1 bg-teal/25 lg:block"
-                    >
-                      <span className="absolute -right-px -top-[3px] size-[7px] rotate-45 border-r border-t border-teal/45" />
-                    </span>
-                  )}
-                </div>
-
-                <h3 className="t-h3 mt-5 text-center text-ink sm:text-left">{title}</h3>
+                <h3 className="t-h3 mt-2 text-ink">{title}</h3>
                 {/* Two lines reserved from sm up, so the rule under each body lands
                     on the same baseline across the row. Without it the bodies that
                     wrap to one line pull their rule up and the row reads as
                     misaligned. In one column there is no row to align to, so the
                     reserve would only be dead space. */}
-                <p className="t-meta mx-auto mt-2 max-w-[30ch] text-center text-ink-soft sm:mx-0 sm:min-h-[2.6rem] sm:text-left">
-                  {body}
-                </p>
+                <p className="t-meta mt-2 max-w-[30ch] text-ink-soft sm:min-h-[2.6rem]">{body}</p>
 
-                <ul
-                  className="mt-5 space-y-1.5 border-t border-line pt-4 text-center sm:text-left"
-                  aria-hidden="true"
-                >
+                <ul className="mt-5 w-full space-y-1.5 border-t border-line pt-4" aria-hidden="true">
                   {rows.map((r) => (
                     <li key={r} className="truncate text-[12px] text-ink-faint">
                       {r}

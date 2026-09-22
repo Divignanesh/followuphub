@@ -243,7 +243,7 @@ export function Dashboard() {
     <section className="hidden py-4 md:block">
       <div className="mx-auto w-full max-w-[73rem] px-5 sm:px-8">
         <SectionHeading
-          title="Every tool in one place."
+          title="Every lead, every tool, connected in one place."
           lede="Pipeline, conversations and reporting, on one contact record."
         />
 

@@ -55,6 +55,12 @@ export function CallPlayer({ className }: { className?: string }) {
   const gapRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lineRef = useRef(-1);
 
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  /** The call has run to the end, so entering the section must not replay it. */
+  const completed = useRef(false);
+  /** Set when the reader pauses by hand, which switches auto-play off for good. */
+  const userPaused = useRef(false);
+
   /**
    * One element, reused for every line. Playback starts inside the click
    * handler, a real user gesture, so the browser always permits the sound —
@@ -96,7 +102,10 @@ export function CallPlayer({ className }: { className?: string }) {
 
   function playFrom(i: number) {
     clearTimers();
-    if (i >= LINES.length) return reset();
+    if (i >= LINES.length) {
+      completed.current = true;
+      return reset();
+    }
 
     const line = LINES[i];
     const len = line.text.length;
@@ -141,10 +150,59 @@ export function CallPlayer({ className }: { className?: string }) {
   };
 
   const toggle = () => {
-    if (active < 0) return playFrom(0);
-    if (paused) return resume();
+    if (active < 0) {
+      userPaused.current = false;
+      completed.current = false;
+      return playFrom(0);
+    }
+    if (paused) {
+      userPaused.current = false;
+      return resume();
+    }
+    userPaused.current = true;
     pause();
   };
+
+  /**
+   * Play when the call scrolls into view, stop when it scrolls out.
+   *
+   * Only the stopping half is guaranteed. Scrolling is not a user gesture, so
+   * every current browser refuses audio with sound until the reader has
+   * clicked or tapped something on the page; on a first visit that arrives by
+   * scroll, play() is rejected and playFrom's catch resets the player to its
+   * resting state, leaving the button to do the work. Where the reader has
+   * already interacted, it starts on its own.
+   *
+   * There is no "already tried" flag, deliberately. A blocked attempt resets
+   * the player, which leaves lineRef at -1, so the next entry tries again —
+   * and by then the reader has usually clicked something and it works. Two
+   * conditions stop it instead, and both are about not being obnoxious:
+   * `completed` after the call has run to the end, so returning to the
+   * section does not replay it, and `userPaused` after a manual pause, which
+   * switches auto-play off for the rest of the visit. A part-played call
+   * resumes where it stopped rather than starting over.
+   */
+  useEffect(() => {
+    const node = rootRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (userPaused.current || completed.current) return;
+          if (lineRef.current >= 0) resume();
+          else playFrom(0);
+        } else if (lineRef.current >= 0) {
+          pause();
+        }
+      },
+      { threshold: 0.55 },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+    // Mount only: the handlers it calls read their state through refs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(
     () => () => {
@@ -165,6 +223,7 @@ export function CallPlayer({ className }: { className?: string }) {
 
   return (
     <div
+      ref={rootRef}
       className={cx(
         "rounded-3xl border border-cream/20 bg-teal-ink/80 p-5 text-cream shadow-teal backdrop-blur-md sm:p-6",
         className,

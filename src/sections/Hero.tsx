@@ -3,11 +3,15 @@ import {
   AudioLines,
   BarChart3,
   Bot,
+  HandHelping,
   Headphones,
   Layers,
   Leaf,
+  MessagesSquare,
+  Smartphone,
   Star,
   TrendingUp,
+  Workflow,
 } from "lucide-react";
 import { PEOPLE } from "../lib/assets";
 import { EASE_OUT } from "../lib/motion";
@@ -19,8 +23,14 @@ import { PillCta, Portrait } from "../components/ui";
 /**
  * One screen, in the reference's order.
  *
- * Headline, the tagline, the four points that back the tagline up, the way
- * in, who already uses it, and a thin band of standing facts across the foot.
+ * An eyebrow naming the category, the headline, the tagline, the four points
+ * that back the tagline up, the way in, who already uses it, and a thin band
+ * of standing facts across the foot.
+ *
+ * The eyebrow is plain letterspaced caps rather than the pill-with-an-icon
+ * this slot usually gets, which is the version of it that reads as generated.
+ * It costs about 30px and the hero landed on exactly one screen without it,
+ * so the rhythm below is tightened to pay for it.
  *
  * The four points sit directly under the tagline because they are evidence
  * for it, and they are set small and light for the same reason: 13px medium
@@ -45,6 +55,10 @@ const badges = [
   { icon: Leaf, label: "Canadian-made" },
   { icon: Headphones, label: "7-day phone support" },
   { icon: AudioLines, label: "Voice AI included" },
+  { icon: Workflow, label: "Pre-built workflows" },
+  { icon: HandHelping, label: "Done for You" },
+  { icon: MessagesSquare, label: "Conversation AI" },
+  { icon: Smartphone, label: "WhatsApp, Email & SMS" },
 ];
 
 /* Set as text the three facts are narrower than they were as pills, so one
@@ -117,11 +131,15 @@ export function Hero() {
           animate="show"
           className="container-x flex flex-1 flex-col items-center justify-center text-center"
         >
-          <motion.h1 id="hero-title" custom={0} variants={rise} className="t-display max-w-[22ch] text-cream">
+          <motion.p custom={0} variants={rise} className="t-label mb-4 text-mint sm:mb-5">
+            The Real Estate Operating System
+          </motion.p>
+
+          <motion.h1 id="hero-title" custom={1} variants={rise} className="t-display max-w-[22ch] text-cream">
             Every missed <span className="whitespace-nowrap">follow-up</span> is a lost deal.
           </motion.h1>
 
-          <motion.p custom={1} variants={rise} className="t-lede hero-lede mt-5 max-w-[48ch] text-cream/85 sm:mt-6">
+          <motion.p custom={2} variants={rise} className="t-lede hero-lede mt-5 max-w-[48ch] text-cream/85 sm:mt-5">
             Your AI agent calls, texts and WhatsApps every new lead,{" "}
             <span className="font-semibold text-mint">24/7</span>.
           </motion.p>
@@ -140,7 +158,7 @@ export function Hero() {
             {proof.map(({ icon: Icon, text }, i) => (
               <motion.li
                 key={text}
-                custom={2 + i}
+                custom={3 + i}
                 variants={rise}
                 className="flex items-start gap-3 rounded-[0.875rem] border border-cream/[0.14] bg-cream/[0.07] px-4 py-3 backdrop-blur-md sm:py-3.5"
               >
@@ -157,7 +175,7 @@ export function Hero() {
           </motion.ul>
 
           <motion.div
-            custom={6}
+            custom={7}
             variants={rise}
             className="mt-7 flex w-full flex-col items-center gap-3 sm:mt-9 sm:w-auto sm:flex-row"
           >
@@ -169,7 +187,7 @@ export function Hero() {
             </PillCta>
           </motion.div>
 
-          <motion.div custom={7} variants={rise} className="mt-6 flex items-center gap-3 sm:mt-7">
+          <motion.div custom={8} variants={rise} className="mt-6 flex items-center gap-3 sm:mt-7">
             <ul className="flex -space-x-2.5">
               {["grace", "mateo", "elias", "marissa"].map((k) => (
                 <li key={k}>

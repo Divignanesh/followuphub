@@ -18,7 +18,6 @@ const groups = [
     links: [
       { label: "Best CRM for realtors", href: "/best-crm-for-realtors" },
       { label: "vs. other CRMs", href: "/#compare" },
-      { label: "Compare CRMs", href: "/#compare" },
       { label: "What's included", href: "/#included" },
       { label: "Migration and onboarding", href: "/#faq" },
     ],
@@ -30,6 +29,13 @@ const groups = [
       { label: "Book a demo", href: SITE.demo },
       { label: "Log in", href: SITE.app },
       { label: "Support", href: `mailto:${SITE.email}` },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy policy", href: "/privacy" },
+      { label: "Terms of service", href: "/terms" },
     ],
   },
 ];
@@ -45,7 +51,7 @@ export function Footer() {
   return (
     <footer className="bg-cream">
       <div className="container-x py-14">
-        <div className="grid gap-10 lg:grid-cols-[1.5fr_repeat(3,1fr)]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-[14px] leading-[1.7] text-ink-soft">

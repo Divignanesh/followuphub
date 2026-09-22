@@ -82,6 +82,30 @@ export const ROUTES: RouteMeta[] = [
     ),
   },
   {
+    path: "/privacy",
+    out: "privacy/index.html",
+    title: "Privacy policy | FollowUpHub",
+    description:
+      "How FollowUpHub collects, uses and protects personal information, written to meet PIPEDA, Quebec's Law 25 and CASL, including call recording and your access rights.",
+    canonical: `${SITE.domain}/privacy`,
+    ogImageAlt: "FollowUpHub privacy policy",
+    priority: "0.3",
+    changefreq: "yearly",
+    schema: graph([organizationSchema(), websiteSchema()]),
+  },
+  {
+    path: "/terms",
+    out: "terms/index.html",
+    title: "Terms of service | FollowUpHub",
+    description:
+      "The terms governing use of FollowUpHub, including subscription and billing, acceptable use, and the CASL and Do Not Call consent obligations you carry.",
+    canonical: `${SITE.domain}/terms`,
+    ogImageAlt: "FollowUpHub terms of service",
+    priority: "0.3",
+    changefreq: "yearly",
+    schema: graph([organizationSchema(), websiteSchema()]),
+  },
+  {
     path: "/404",
     out: "404.html",
     title: "Page not found | FollowUpHub",

@@ -4,8 +4,10 @@ import { Footer } from "./sections/Footer";
 import { Home } from "./pages/Home";
 import { BestCrmForRealtors } from "./pages/BestCrmForRealtors";
 import { NotFound } from "./pages/NotFound";
+import { Privacy } from "./pages/Privacy";
+import { Terms } from "./pages/Terms";
 
-export const ROUTE_PATHS = ["/", "/best-crm-for-realtors", "/404"] as const;
+export const ROUTE_PATHS = ["/", "/best-crm-for-realtors", "/privacy", "/terms", "/404"] as const;
 export type RoutePath = (typeof ROUTE_PATHS)[number];
 
 /**
@@ -27,7 +29,17 @@ export default function App({ path }: { path: RoutePath }) {
       </a>
       <Nav overDark={path === "/"} />
       <main id="main">
-        {path === "/404" ? <NotFound /> : path === "/best-crm-for-realtors" ? <BestCrmForRealtors /> : <Home />}
+        {path === "/404" ? (
+          <NotFound />
+        ) : path === "/privacy" ? (
+          <Privacy />
+        ) : path === "/terms" ? (
+          <Terms />
+        ) : path === "/best-crm-for-realtors" ? (
+          <BestCrmForRealtors />
+        ) : (
+          <Home />
+        )}
       </main>
       <Footer />
     </MotionConfig>

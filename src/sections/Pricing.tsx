@@ -19,7 +19,7 @@ export function Pricing() {
         <SectionHeading
           kicker="Pricing"
           title="Two plans. One price."
-          lede="Both include a free trial and free migration. Advanced adds the voice AI."
+          lede="Both include a free trial. Advanced includes a one-time setup fee."
         />
 
         <div className="mt-8 flex justify-center">

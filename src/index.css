@@ -27,6 +27,8 @@
   --color-teal: #1a6b5a;       /* 5.4:1 on cream, white on teal 5.6:1 */
   --color-teal-deep: #123f36;
   --color-teal-ink: #0d2c26;
+  --color-mint: #7fd3ae;       /* accents on the dark hero; 8.4:1 on teal-ink */
+  --color-gold-soft: #e3b64a;  /* the rating stars, where gold would go muddy */
   --color-clay: #a34a1a;       /* 5.0:1 on its tint, 5.9:1 under white */
   --color-gold: #8a6413;       /* 4.8:1 on its tint, 5.4:1 under white */
 

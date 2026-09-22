@@ -14,24 +14,28 @@ const links = [
 ];
 
 /**
- * A floating pill, detached from the top edge, cream on every ground.
+ * Blended into the hero at rest, a floating pill once the page moves.
  *
- * The bar used to be transparent over the hero and letter itself in cream,
- * then swap to a dark-on-cream solid once the page moved. That meant the
- * masthead changed its entire treatment within the first wheel notch, and the
- * logo swapped files while doing it. Holding one treatment throughout costs
- * nothing and removes the flicker; scroll only deepens the shadow.
+ * `overDark` marks a page whose first screen is dark enough to letter on
+ * directly, which is the home page and nothing else. There the bar starts
+ * with no pill and no shadow, then takes on its cream ground the moment the
+ * reader scrolls.
  *
- * `overDark` is kept in the signature because both pages pass it, but the bar
- * no longer needs it. It is accepted and ignored rather than removed, so the
- * two call sites do not have to change in lockstep with this file.
+ * An earlier version of this file dropped the two-state treatment because
+ * swapping the logo mid-transition flickered: the cream file was only fetched
+ * at the first wheel notch. Both files are rendered here instead, stacked and
+ * cross-faded, so each is in cache from load and the change is one opacity
+ * transition rather than a network request.
  */
-export function Nav({ overDark: _overDark = false }: { overDark?: boolean }) {
+export function Nav({ overDark = false }: { overDark?: boolean }) {
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 12));
   const lifted = scrolled || open;
+  // Opening the mobile panel lifts the bar too, so the panel never hangs off
+  // a transparent masthead.
+  const blended = overDark && !lifted;
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 pt-4 sm:pt-6">
@@ -39,12 +43,29 @@ export function Nav({ overDark: _overDark = false }: { overDark?: boolean }) {
         <nav
           aria-label="Primary"
           className={cx(
-            "flex h-[68px] items-center justify-between rounded-full bg-card pl-6 pr-2.5 transition-shadow duration-300",
-            lifted ? "shadow-pill" : "shadow-card",
+            "flex h-[68px] items-center justify-between rounded-full pl-6 pr-2.5",
+            "transition-[background-color,box-shadow] duration-300",
+            blended
+              ? "bg-transparent shadow-none"
+              : cx("bg-card", lifted ? "shadow-pill" : "shadow-card"),
           )}
         >
-          <a href="/" aria-label="FollowUpHub home" className="rounded-lg">
-            <Logo eager tone="ink" />
+          <a href="/" aria-label="FollowUpHub home" className="relative block rounded-lg">
+            <span
+              aria-hidden="true"
+              className={cx("block transition-opacity duration-300", blended && "opacity-0")}
+            >
+              <Logo eager tone="ink" />
+            </span>
+            <span
+              aria-hidden="true"
+              className={cx(
+                "absolute inset-0 transition-opacity duration-300",
+                blended ? "opacity-100" : "opacity-0",
+              )}
+            >
+              <Logo eager tone="cream" />
+            </span>
           </a>
 
           <ul className="hidden items-center gap-7 lg:flex">
@@ -52,7 +73,10 @@ export function Nav({ overDark: _overDark = false }: { overDark?: boolean }) {
               <li key={l.href}>
                 <a
                   href={l.href}
-                  className="text-[15px] font-medium tracking-[-0.02em] text-ink transition-colors duration-200 hover:text-teal"
+                  className={cx(
+                    "text-[15px] font-medium tracking-[-0.02em] transition-colors duration-200",
+                    blended ? "text-cream/90 hover:text-mint" : "text-ink hover:text-teal",
+                  )}
                 >
                   {l.label}
                 </a>
@@ -63,11 +87,14 @@ export function Nav({ overDark: _overDark = false }: { overDark?: boolean }) {
           <div className="hidden items-center gap-5 lg:flex">
             <a
               href={SITE.app}
-              className="text-[15px] font-medium tracking-[-0.02em] text-ink-soft transition-colors hover:text-teal"
+              className={cx(
+                "text-[15px] font-medium tracking-[-0.02em] transition-colors",
+                blended ? "text-cream/75 hover:text-cream" : "text-ink-soft hover:text-teal",
+              )}
             >
               Log in
             </a>
-            <PillCta href="/#pricing" size="md">
+            <PillCta href="/#pricing" size="md" tone={blended ? "cream" : "ink"}>
               Start free trial
             </PillCta>
           </div>
@@ -78,7 +105,10 @@ export function Nav({ overDark: _overDark = false }: { overDark?: boolean }) {
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
-            className="flex size-11 items-center justify-center rounded-full text-ink transition-colors hover:bg-sand lg:hidden"
+            className={cx(
+              "flex size-11 items-center justify-center rounded-full transition-colors lg:hidden",
+              blended ? "text-cream hover:bg-cream/15" : "text-ink hover:bg-sand",
+            )}
           >
             {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
           </button>

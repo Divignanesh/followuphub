@@ -329,7 +329,7 @@ export function PillCta({
   children,
 }: {
   href?: string;
-  tone?: "ink" | "cream" | "outline";
+  tone?: "ink" | "cream" | "outline" | "outline-light";
   size?: "md" | "lg";
   className?: string;
   children: ReactNode;
@@ -340,7 +340,9 @@ export function PillCta({
       ? "bg-teal-ink text-cream hover:bg-teal-deep"
       : tone === "cream"
         ? "bg-cream text-teal-ink hover:bg-white"
-        : "border border-ink/20 text-ink hover:border-ink/45 hover:bg-ink/[0.03]";
+        : tone === "outline-light"
+          ? "border border-cream/30 text-cream hover:border-cream/60 hover:bg-cream/[0.07]"
+          : "border border-ink/20 text-ink hover:border-ink/45 hover:bg-ink/[0.03]";
 
   return (
     <motion.a

@@ -235,18 +235,26 @@ export function Capabilities() {
   return (
     <section id="capabilities" className="overflow-hidden py-8 sm:py-10">
       <div className="container-x">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeading
-            align="left"
-            title={
-              <>
-                One platform. <span className="grad-teal">Four ways to work it.</span>
-              </>
-            }
-            lede="The modules behind the follow-up."
-          />
+        {/*
+          Split rather than left: the lede moves out of the stack and sits
+          across the row from the title, under one hairline, which is the
+          treatment the comparison section already uses.
 
-          <div className="flex items-center gap-3">
+          That takes the full width, so the rail's controls can no longer
+          share the row with the heading. They sit under it instead, on the
+          side they scroll towards.
+        */}
+        <SectionHeading
+          align="split"
+          title={
+            <>
+              Four ways to <span className="grad-teal">work it.</span>
+            </>
+          }
+          lede="The modules behind the follow-up."
+        />
+
+        <div className="mt-6 flex items-center justify-end gap-3">
             <button
               onClick={() => nudge(-1)}
               disabled={atStart}
@@ -263,7 +271,6 @@ export function Capabilities() {
             >
               <ArrowRight className="size-4 text-ink" aria-hidden="true" />
             </button>
-          </div>
         </div>
       </div>
 
@@ -273,7 +280,7 @@ export function Capabilities() {
         ref={rail}
         tabIndex={0}
         aria-label="Capabilities, scroll horizontally"
-        className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-2 px-[max(0.75rem,calc(50vw-44vw))] sm:px-[max(1.25rem,calc(50vw-38vw))] lg:px-[max(1.5rem,calc(50vw-35rem))]"
+        className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-2 px-[max(0.75rem,calc(50vw-44vw))] sm:px-[max(1.25rem,calc(50vw-38vw))] lg:px-[max(1.5rem,calc(50vw-35rem))]"
       >
         {CARDS.map((card) => (
           <article

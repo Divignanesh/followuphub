@@ -63,7 +63,7 @@ const stages: Stage[] = [
 
 export function Workflow() {
   return (
-    <section className="bg-sand pb-16 pt-10 sm:pb-20 sm:pt-12">
+    <section className="bg-sand pb-10 pt-10 sm:pb-12 sm:pt-12">
       <div className="container-x">
         <SectionHeading
           align="center"
@@ -71,7 +71,7 @@ export function Workflow() {
           lede="Nothing falls between tools. There is one tool."
         />
 
-        <RevealGroup as="ol" className="mt-12 grid gap-x-6 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
+        <RevealGroup as="ol" className="mt-10 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
           {stages.map(({ icon: Icon, step, title, body, rows }, i) => {
             const last = i === stages.length - 1;
             return (
@@ -90,17 +90,17 @@ export function Workflow() {
                   </span>
                 )}
 
-                <span className="mt-3 font-mono text-[12px] font-semibold text-ink-faint">{step}</span>
+                <span className="mt-2 font-mono text-[12px] font-semibold text-ink-faint">{step}</span>
 
-                <h3 className="t-h3 mt-2 text-ink">{title}</h3>
+                <h3 className="t-h3 mt-1.5 text-ink">{title}</h3>
                 {/* Two lines reserved from sm up, so the rule under each body lands
                     on the same baseline across the row. Without it the bodies that
                     wrap to one line pull their rule up and the row reads as
                     misaligned. In one column there is no row to align to, so the
                     reserve would only be dead space. */}
-                <p className="t-meta mt-2 max-w-[30ch] text-ink-soft sm:min-h-[2.6rem]">{body}</p>
+                <p className="t-meta mt-1.5 max-w-[30ch] text-ink-soft sm:min-h-[2.6rem]">{body}</p>
 
-                <ul className="mt-5 w-full space-y-1.5 border-t border-line pt-4" aria-hidden="true">
+                <ul className="mt-4 w-full space-y-1 border-t border-line pt-3" aria-hidden="true">
                   {rows.map((r) => (
                     <li key={r} className="truncate text-[12px] text-ink-faint">
                       {r}

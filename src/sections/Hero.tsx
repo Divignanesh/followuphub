@@ -1,5 +1,14 @@
 import { motion } from "framer-motion";
-import { AudioLines, Check, Headphones, Leaf, Star } from "lucide-react";
+import {
+  AudioLines,
+  BarChart3,
+  Bot,
+  Headphones,
+  Layers,
+  Leaf,
+  Star,
+  TrendingUp,
+} from "lucide-react";
 import { PEOPLE } from "../lib/assets";
 import { EASE_OUT } from "../lib/motion";
 import { SITE } from "../lib/seo";
@@ -8,11 +17,14 @@ import { PillCta, Portrait } from "../components/ui";
 /**
  * One screen, in the reference's order.
  *
- * Headline, subtext, the way in, who already uses it, a moving strip of
- * standing facts, and then the four things that change, sitting down in the
- * band. That sequence is lifted from the reference deliberately: it answers
- * what it is, what it does, who trusts it and what you get, in the order a
- * reader asks those questions.
+ * Headline, the tagline, the four points that back the tagline up, the way
+ * in, who already uses it, and a thin band of standing facts across the foot.
+ *
+ * The four points sit directly under the tagline because they are evidence
+ * for it, and they are set small and light for the same reason: 13px medium
+ * in soft ink against a 17px lede, so they read as support rather than as a
+ * second claim. All four icons are the one dark green: a single colour
+ * keeps the row calm, and the icons carry meaning by shape instead.
  *
  * Everything is one orchestrated entrance on load. Nothing here waits for a
  * scroll, because none of it needs to be scrolled to.
@@ -33,18 +45,21 @@ const badges = [
   { icon: AudioLines, label: "Voice AI included" },
 ];
 
-/* Three pills is roughly 620px of track, nowhere near enough to cross a wide
-   screen, so the strip is laid down until one pass clears it. Same reasoning
-   as the brokerage row: derive the count rather than write it down, and the
+/* Set as text the three facts are narrower than they were as pills, so one
+   pass has to be laid down more times to cross a wide screen before the -50%
+   translate can look continuous. Derived rather than written down, so the
    strip keeps working if a fourth fact is added. */
-const PASS = Math.max(1, Math.ceil(12 / badges.length));
+const PASS = Math.max(1, Math.ceil(15 / badges.length));
 const BADGE_RUN = Array.from({ length: PASS }, () => badges).flat();
 
+/* One colour for all four. Each icon is picked to say what its point says:
+   stacked layers for the apps you drop, a bot for the work that runs itself,
+   a chart for what you can see, a rising line for what closes. */
 const proof = [
-  "Stop switching between 10+ disconnected apps",
-  "AI handles follow-ups while you focus on clients",
-  "See your entire pipeline and team performance at a glance",
-  "Close more deals in less time",
+  { icon: Layers, text: "Stop switching between 10+ disconnected apps" },
+  { icon: Bot, text: "AI handles follow-ups while you focus on clients" },
+  { icon: BarChart3, text: "See your entire pipeline and team performance at a glance" },
+  { icon: TrendingUp, text: "Close more deals in less time" },
 ];
 
 export function Hero() {
@@ -78,7 +93,7 @@ export function Hero() {
         className="bg-rule pointer-events-none absolute inset-x-0 top-0 h-[55%] [mask-image:linear-gradient(to_bottom,black,transparent)]"
       />
 
-      <div className="relative flex flex-1 flex-col pb-12 pt-[7.5rem] sm:pb-14 sm:pt-[8.5rem]">
+      <div className="hero-fit relative flex flex-1 flex-col pb-8 pt-[6rem] sm:pb-12 sm:pt-[8.5rem]">
         <motion.div
           initial="hidden"
           animate="show"
@@ -88,15 +103,45 @@ export function Hero() {
             Every missed <span className="whitespace-nowrap">follow-up</span> is a lost deal.
           </motion.h1>
 
-          <motion.p custom={1} variants={rise} className="t-lede mt-6 max-w-[48ch] text-ink-soft">
+          <motion.p custom={1} variants={rise} className="t-lede hero-lede mt-5 max-w-[48ch] text-ink-soft sm:mt-6">
             Your AI agent calls, texts and WhatsApps every new lead,{" "}
             <span className="font-semibold text-teal">24/7</span>.
           </motion.p>
 
+          {/*
+            Two by two rather than four across: at four columns each point got
+            a 10em measure and broke into three ragged lines, and the row read
+            as a feature strip. Paired, each one holds a single line at the
+            width the hero already uses.
+
+            Translucent fill over the wash rather than an opaque card, so the
+            boxes sit in the gradient instead of punching holes in it, and a
+            hairline instead of a shadow for the same reason.
+          */}
+          <motion.ul className="mt-6 grid w-full max-w-[44rem] gap-2.5 text-left sm:mt-8 sm:grid-cols-2 sm:gap-3">
+            {proof.map(({ icon: Icon, text }, i) => (
+              <motion.li
+                key={text}
+                custom={2 + i}
+                variants={rise}
+                className="flex items-start gap-3 rounded-[0.875rem] border border-ink/[0.08] bg-card/55 px-4 py-3 backdrop-blur-sm sm:py-3.5"
+              >
+                <Icon
+                  className="mt-[0.1em] size-[18px] shrink-0 text-teal-deep"
+                  strokeWidth={2.2}
+                  aria-hidden="true"
+                />
+                <span className="text-[13px] font-medium leading-[1.45] tracking-[-0.01em] text-ink-soft">
+                  {text}
+                </span>
+              </motion.li>
+            ))}
+          </motion.ul>
+
           <motion.div
-            custom={2}
+            custom={6}
             variants={rise}
-            className="mt-9 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row"
+            className="mt-7 flex w-full flex-col items-center gap-3 sm:mt-9 sm:w-auto sm:flex-row"
           >
             <PillCta href="/#pricing" className="w-full justify-between sm:w-auto sm:justify-start">
               Start free trial
@@ -106,7 +151,7 @@ export function Hero() {
             </PillCta>
           </motion.div>
 
-          <motion.div custom={3} variants={rise} className="mt-7 flex items-center gap-3">
+          <motion.div custom={7} variants={rise} className="mt-6 flex items-center gap-3 sm:mt-7">
             <ul className="flex -space-x-2.5">
               {["grace", "mateo", "elias", "marissa"].map((k) => (
                 <li key={k}>
@@ -125,49 +170,38 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Full-bleed, so the strip runs off both edges rather than stopping
-            inside the column. Only the first real pass is announced. */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.32 }}
-          className="marquee relative mt-9 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_7%,black_93%,transparent)]"
-        >
-          <ul className="marquee-track flex w-max items-center gap-3 pr-3">
-            {[...BADGE_RUN, ...BADGE_RUN].map(({ icon: Icon, label }, i) => (
-              <li
-                key={`${label}-${i}`}
-                aria-hidden={i < badges.length ? undefined : true}
-                className="inline-flex shrink-0 items-center gap-2.5 rounded-full border border-ink/10 bg-card/80 px-4 py-2.5 backdrop-blur-sm"
-              >
-                <Icon className="size-4 shrink-0 text-teal" aria-hidden="true" />
-                <span className="whitespace-nowrap text-[13.5px] font-semibold tracking-[-0.01em] text-ink">
-                  {label}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-
-        {/* The band: the tick sits above its line rather than beside it, which
-            is what lets four sentences of different lengths line up. */}
-        <motion.ul
-          initial="hidden"
-          animate="show"
-          className="container-x mt-10 grid w-full gap-x-8 gap-y-7 text-left sm:grid-cols-2 lg:grid-cols-4"
-        >
-          {proof.map((pt, i) => (
-            <motion.li key={pt} custom={5 + i} variants={rise}>
-              <span className="grid size-7 place-items-center rounded-full bg-teal text-cream">
-                <Check className="size-4" strokeWidth={3} aria-hidden="true" />
-              </span>
-              <p className="mt-3 max-w-[26ch] text-[15px] font-semibold leading-snug tracking-[-0.02em] text-ink">
-                {pt}
-              </p>
-            </motion.li>
-          ))}
-        </motion.ul>
       </div>
+
+      {/*
+        The standing facts, set as a running band across the foot of the hero
+        rather than as pills sitting inside it.
+
+        Flush to the section edge and outside the padded column on purpose: a
+        thin full-bleed strip closes the screen off, where three capsules
+        floating inside it read as another row of content competing with the
+        four points. Only the first real pass is announced.
+      */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.55 }}
+        className="marquee relative border-t border-ink/10 py-3.5 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
+      >
+        <ul className="marquee-track flex w-max items-center">
+          {[...BADGE_RUN, ...BADGE_RUN].map(({ icon: Icon, label }, i) => (
+            <li
+              key={`${label}-${i}`}
+              aria-hidden={i < badges.length ? undefined : true}
+              className="flex shrink-0 items-center gap-2.5 px-7"
+            >
+              <Icon className="size-3.5 shrink-0 text-teal-deep" aria-hidden="true" />
+              <span className="whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.1em] text-ink">
+                {label}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
     </section>
   );
 }

@@ -1,4 +1,15 @@
-import { Bullets, Clause, Defs, LegalPage, ReviewNotice } from "../components/Legal";
+import {
+  Bullets,
+  Clause,
+  Defs,
+  Fill,
+  LegalPage,
+  Related,
+  ReviewNotice,
+  SubprocessorTable,
+  legalLink,
+} from "../components/Legal";
+import { LEGAL, RETENTION } from "../lib/legal";
 import { SITE } from "../lib/seo";
 
 const M = `mailto:${SITE.email}`;
@@ -13,29 +24,58 @@ const M = `mailto:${SITE.email}`;
  * information about those customers' *leads*. Those are different legal
  * postures with different rights attached, and a lead who asks FollowUpHub to
  * delete their record has to be routed to the agent who collected it.
+ *
+ * Facts a lawyer has to confirm are not written inline. They come from
+ * src/lib/legal.ts so there is one place to correct them.
  */
 export function Privacy() {
   return (
     <LegalPage
       title="Privacy policy"
-      updated="22 September 2026"
+      updated={LEGAL.effective}
       intro={
         <>
           This policy explains what personal information FollowUpHub collects, why we collect it,
           who we share it with and how you exercise your rights. It is written to meet the federal{" "}
           <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA), Quebec&rsquo;s
-          Law 25, and the provincial privacy acts of Alberta and British Columbia.
+          Law 25, and the provincial privacy acts of Alberta and British Columbia. Your agreement
+          with us is set out separately in our{" "}
+          <a className={legalLink} href="/terms">terms of service</a>.
         </>
       }
+      notice={<ReviewNotice />}
+      related={
+        <Related
+          items={[
+            {
+              href: "/terms",
+              label: "Terms of service",
+              note: "The agreement that governs your account, and the consent obligations you carry.",
+            },
+            {
+              href: M,
+              label: "Contact our Privacy Officer",
+              note: `Access, correction and deletion requests go to ${SITE.email}.`,
+            },
+            {
+              href: "/",
+              label: "FollowUpHub",
+              note: "Back to the platform, the plans and what the product does.",
+            },
+          ]}
+        />
+      }
     >
-      <div className="pb-2">
-        <ReviewNotice />
-      </div>
-
-      <Clause id="roles" heading="1. Two different roles, and why it matters">
+      <Clause id="who" heading="1. Who we are, and the two roles we hold">
         <p>
-          FollowUpHub holds personal information in two distinct capacities, and your rights differ
-          depending on which applies to you.
+          This policy is issued by <strong className="font-semibold text-ink"><Fill value={LEGAL.entity} /></strong>,
+          which operates FollowUpHub from <Fill value={LEGAL.address} />. You can reach us about
+          anything in this policy at{" "}
+          <a className={legalLink} href={M}>{SITE.email}</a>.
+        </p>
+        <p>
+          We hold personal information in two distinct capacities, and your rights differ depending
+          on which one applies to you.
         </p>
         <Defs
           items={[
@@ -52,7 +92,7 @@ export function Privacy() {
         <p>
           If you are a lead who has been contacted through FollowUpHub and you want your information
           corrected or deleted, the fastest route is the agent or brokerage that contacted you. You
-          can also write to us at <a className="font-semibold text-teal underline underline-offset-4" href={M}>{SITE.email}</a>{" "}
+          can also write to us at <a className={legalLink} href={M}>{SITE.email}</a>{" "}
           and we will identify the customer responsible and pass your request to them.
         </p>
       </Clause>
@@ -92,7 +132,7 @@ export function Privacy() {
           We rely on your express consent where the information is sensitive or the purpose would not
           be obvious, and on implied consent where it plainly follows from the service you asked for.
           You can withdraw consent at any time, subject to legal and contractual limits, by writing to{" "}
-          <a className="font-semibold text-teal underline underline-offset-4" href={M}>{SITE.email}</a>. Withdrawing
+          <a className={legalLink} href={M}>{SITE.email}</a>. Withdrawing
           consent for something the service depends on may mean we can no longer provide it.
         </p>
         <p>
@@ -101,7 +141,8 @@ export function Privacy() {
           message, every message must identify you and carry a working unsubscribe, and under
           Canada&rsquo;s telemarketing rules you are responsible for the National Do Not Call List and for
           calling only within permitted hours. FollowUpHub gives you the controls; the consent
-          obligation stays with you.
+          obligation stays with you, and it is set out in full in{" "}
+          <a className={legalLink} href="/terms#consent">section 6 of our terms</a>.
         </p>
       </Clause>
 
@@ -130,29 +171,31 @@ export function Privacy() {
         <p>
           Where Law 25 applies, you may ask us to confirm that a decision was made by automated means,
           to tell you what personal information was used, and to have the decision reviewed by a
-          person. Write to <a className="font-semibold text-teal underline underline-offset-4" href={M}>{SITE.email}</a>.
+          person. Write to <a className={legalLink} href={M}>{SITE.email}</a>.
         </p>
       </Clause>
 
       <Clause id="sharing" heading="7. Who we share it with">
         <p>
-          We share personal information only with service providers who need it to deliver the
-          platform, under contracts that limit them to our instructions and to a comparable standard
-          of protection. Those categories are telecommunications and messaging carriers, speech and
-          language processing providers, cloud hosting, payment processing, and email delivery.
+          We share personal information only with the service providers below, each under a contract
+          that limits them to our instructions and to a comparable standard of protection. We update
+          this list when a provider changes.
         </p>
+        <SubprocessorTable />
         <p>
-          We will also disclose information where the law requires it, to enforce our terms, or to
-          protect the rights and safety of any person. If FollowUpHub is ever involved in a merger or
-          sale, information may transfer as part of that transaction, and you will be told.
+          We will also disclose information where the law requires it, to enforce{" "}
+          <a className={legalLink} href="/terms">our terms</a>, or to protect the rights and safety of
+          any person. If FollowUpHub is ever involved in a merger or sale, information may transfer as
+          part of that transaction, and you will be told.
         </p>
       </Clause>
 
       <Clause id="transfers" heading="8. Where your information is processed">
         <p>
-          FollowUpHub is operated from Canada. Some of our service providers process information in
-          the United States and elsewhere. While it is in another country, that information is subject
-          to the laws of that country and may be accessible to its courts and public authorities.
+          FollowUpHub is operated from Canada. As the table above shows, several of our service
+          providers process information in the United States. While it is in another country, that
+          information is subject to the laws of that country and may be accessible to its courts and
+          public authorities.
         </p>
         <p>
           PIPEDA permits these transfers provided we remain accountable for the information and use
@@ -166,14 +209,7 @@ export function Privacy() {
           We keep personal information only as long as it serves the purpose it was collected for, or
           as long as the law requires.
         </p>
-        <Defs
-          items={[
-            ["Customer content", "For the life of your account. On closure it is deleted within 90 days unless you ask for export first, which we will provide in a structured, commonly used format."],
-            ["Billing records", "Seven years, as Canadian tax law requires."],
-            ["Call recordings and transcripts", "For the life of your account, or until you delete them."],
-            ["Backups", "Purged on a rolling cycle, at most 35 days behind live data."],
-          ]}
-        />
+        <Defs items={RETENTION} />
       </Clause>
 
       <Clause id="safeguards" heading="10. How we protect it">
@@ -203,7 +239,7 @@ export function Privacy() {
           ]}
         />
         <p>
-          Write to <a className="font-semibold text-teal underline underline-offset-4" href={M}>{SITE.email}</a>. We
+          Write to <a className={legalLink} href={M}>{SITE.email}</a>. We
           respond within 30 days and will tell you in advance if we need an extension. There is no
           charge for a reasonable request. We may need to verify your identity before we act.
         </p>
@@ -228,9 +264,11 @@ export function Privacy() {
 
       <Clause id="complaints" heading="14. Accountability and complaints">
         <p>
-          Our Privacy Officer is accountable for compliance with this policy and can be reached at{" "}
-          <a className="font-semibold text-teal underline underline-offset-4" href={M}>{SITE.email}</a>. Please raise
-          any concern with us first, so we can investigate and respond.
+          Our {LEGAL.officerTitle} is <Fill value={LEGAL.officer} />, who is accountable for
+          compliance with this policy. Reach them at{" "}
+          <a className={legalLink} href={M}>{SITE.email}</a>, or in writing at{" "}
+          <Fill value={LEGAL.address} />. Please raise any concern with us first, so we can
+          investigate and respond.
         </p>
         <p>
           If you are not satisfied, you may complain to the Office of the Privacy Commissioner of

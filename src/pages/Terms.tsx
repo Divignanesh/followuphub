@@ -1,4 +1,14 @@
-import { Bullets, Clause, Defs, LegalPage, ReviewNotice } from "../components/Legal";
+import {
+  Bullets,
+  Clause,
+  Defs,
+  Fill,
+  LegalPage,
+  Related,
+  ReviewNotice,
+  legalLink,
+} from "../components/Legal";
+import { LEGAL } from "../lib/legal";
 import { SITE } from "../lib/seo";
 
 const M = `mailto:${SITE.email}`;
@@ -11,28 +21,57 @@ const M = `mailto:${SITE.email}`;
  * the contacts they load. A platform that dials and messages on instruction
  * has to say plainly whose obligation that is, because the penalties under
  * CASL run to millions and the customer is the one who holds the consent.
+ *
+ * Facts a lawyer has to confirm are not written inline. They come from
+ * src/lib/legal.ts so there is one place to correct them.
  */
 export function Terms() {
   return (
     <LegalPage
       title="Terms of service"
-      updated="22 September 2026"
+      updated={LEGAL.effective}
       intro={
         <>
           These terms govern your use of FollowUpHub. By opening an account or using the platform you
-          agree to them. Please read section 6, which sets out the consent obligations you carry when
-          you contact people through the platform.
+          agree to them. Please read <a className={legalLink} href="#consent">section 6</a>, which sets
+          out the consent obligations you carry when you contact people through the platform. How we
+          handle personal information is set out separately in our{" "}
+          <a className={legalLink} href="/privacy">privacy policy</a>.
         </>
       }
+      notice={<ReviewNotice />}
+      related={
+        <Related
+          items={[
+            {
+              href: "/privacy",
+              label: "Privacy policy",
+              note: "What we collect, who processes it, where it goes and how you exercise your rights.",
+            },
+            {
+              href: M,
+              label: "Contact us",
+              note: `Questions about these terms go to ${SITE.email}.`,
+            },
+            {
+              href: "/#pricing",
+              label: "Plans and pricing",
+              note: "The current plans, what each includes and the 14-day free trial.",
+            },
+          ]}
+        />
+      }
     >
-      <div className="pb-2">
-        <ReviewNotice />
-      </div>
-
       <Clause id="definitions" heading="1. Definitions">
         <Defs
           items={[
-            ["FollowUpHub, we, us", "FollowUpHub, operating in Canada."],
+            [
+              "FollowUpHub, we, us",
+              <>
+                <Fill value={LEGAL.entity} />, of <Fill value={LEGAL.address} />, which operates the
+                FollowUpHub platform.
+              </>,
+            ],
             ["You, the customer", "The individual or business that opens an account."],
             ["Platform", "The FollowUpHub software, its websites, APIs and related services."],
             ["Customer content", "Everything you put into the platform: contacts, conversations, pipelines, campaigns, files and settings."],
@@ -46,7 +85,7 @@ export function Terms() {
           You must be at least 18 and able to enter a contract. You are responsible for the accuracy
           of your account details, for everything done under your credentials, and for keeping those
           credentials secure. Tell us promptly at{" "}
-          <a className="font-semibold text-teal underline underline-offset-4" href={M}>{SITE.email}</a> if you
+          <a className={legalLink} href={M}>{SITE.email}</a> if you
           believe your account has been compromised.
         </p>
       </Clause>
@@ -55,7 +94,8 @@ export function Terms() {
         <p>
           Both plans include a 14-day free trial with no card required. If you do not continue, the
           account pauses at the end of the trial. Your data stays exportable either way for the
-          period set out in our privacy policy.
+          period set out in our{" "}
+          <a className={legalLink} href="/privacy#retention">privacy policy</a>.
         </p>
       </Clause>
 
@@ -136,7 +176,8 @@ export function Terms() {
             <>
               <strong className="font-semibold text-ink">Privacy.</strong> You are the organization
               accountable to your contacts under PIPEDA, and you must have given them the notice and
-              choices the law requires.
+              choices the law requires. Our role as your service provider is described in{" "}
+              <a className={legalLink} href="/privacy#who">our privacy policy</a>.
             </>,
           ]}
         />
@@ -151,11 +192,13 @@ export function Terms() {
           You own your customer content. You grant us the limited licence needed to host, process,
           transmit and display it in order to run the platform for you, and for no other purpose. We
           process personal information within it as your service provider, on your documented
-          instructions, as described in our privacy policy.
+          instructions, as described in our{" "}
+          <a className={legalLink} href="/privacy#who">privacy policy</a>. The providers who process
+          it on our behalf are <a className={legalLink} href="/privacy#sharing">named there</a>.
         </p>
         <p>
-          You may export your content at any time. On termination we retain and then delete it on the
-          schedule in our privacy policy.
+          You may export your content at any time. On termination we retain and then delete it on the{" "}
+          <a className={legalLink} href="/privacy#retention">schedule in our privacy policy</a>.
         </p>
       </Clause>
 
@@ -234,17 +277,22 @@ export function Terms() {
 
       <Clause id="law" heading="15. Governing law">
         <p>
-          These terms are governed by the laws of the Province of Ontario and the federal laws of
-          Canada that apply there. The courts of Ontario have jurisdiction, and each party submits to
-          them, except that consumers may bring proceedings in the courts of their own province where
-          the law gives them that right.
+          These terms are governed by the laws of the Province of {LEGAL.province} and the federal
+          laws of Canada that apply there. The courts of {LEGAL.province} have jurisdiction, and each
+          party submits to them, except that consumers may bring proceedings in the courts of their
+          own province where the law gives them that right.
         </p>
       </Clause>
 
       <Clause id="contact" heading="16. Contact">
         <p>
           Questions about these terms go to{" "}
-          <a className="font-semibold text-teal underline underline-offset-4" href={M}>{SITE.email}</a>.
+          <a className={legalLink} href={M}>{SITE.email}</a>, or in writing to{" "}
+          <Fill value={LEGAL.entity} /> at <Fill value={LEGAL.address} />.
+        </p>
+        <p>
+          Privacy questions go to our {LEGAL.officerTitle}, whose details are in the{" "}
+          <a className={legalLink} href="/privacy#complaints">privacy policy</a>.
         </p>
       </Clause>
     </LegalPage>

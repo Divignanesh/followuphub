@@ -13,8 +13,12 @@ import { RevealGroup, RevealItem, SectionHeading } from "../components/ui";
  * So the numbers sit on a rail. Each node is joined to the one after it by a
  * line that ends in an arrow, the last node closes the run, and the copy hangs
  * underneath. The rail is the whole mechanism: it reads left to right at a
- * glance, it costs no height, and it stacks into a vertical spine on a phone
- * where a horizontal flow would not fit.
+ * glance and it costs no height.
+ *
+ * Below sm the rail has nowhere to run, so the four stack into one column and
+ * centre. Left-aligned they read as a list that lost its bullets, with each
+ * node adrift at the left edge of a full-width block; centred they read as
+ * four steps in sequence, which is what they are.
  */
 
 type Stage = { icon: LucideIcon; step: string; title: string; body: string; rows: string[] };
@@ -66,7 +70,7 @@ export function Workflow() {
             return (
               <RevealItem as="li" key={title} className="relative">
                 {/* the rail: node, then the line that hands to the next stage */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center gap-3 sm:justify-start">
                   <span className="relative z-10 grid size-11 shrink-0 place-items-center rounded-full bg-teal text-cream">
                     <Icon className="size-[18px]" aria-hidden="true" />
                   </span>
@@ -83,13 +87,20 @@ export function Workflow() {
                   )}
                 </div>
 
-                <h3 className="t-h3 mt-5 text-ink">{title}</h3>
-                {/* Two lines reserved, so the rule under each body lands on the same
-                    baseline across all four. Without it the bodies that wrap to
-                    one line pull their rule up and the row reads as misaligned. */}
-                <p className="t-meta mt-2 min-h-[2.6rem] max-w-[30ch] text-ink-soft">{body}</p>
+                <h3 className="t-h3 mt-5 text-center text-ink sm:text-left">{title}</h3>
+                {/* Two lines reserved from sm up, so the rule under each body lands
+                    on the same baseline across the row. Without it the bodies that
+                    wrap to one line pull their rule up and the row reads as
+                    misaligned. In one column there is no row to align to, so the
+                    reserve would only be dead space. */}
+                <p className="t-meta mx-auto mt-2 max-w-[30ch] text-center text-ink-soft sm:mx-0 sm:min-h-[2.6rem] sm:text-left">
+                  {body}
+                </p>
 
-                <ul className="mt-5 space-y-1.5 border-t border-line pt-4" aria-hidden="true">
+                <ul
+                  className="mt-5 space-y-1.5 border-t border-line pt-4 text-center sm:text-left"
+                  aria-hidden="true"
+                >
                   {rows.map((r) => (
                     <li key={r} className="truncate text-[12px] text-ink-faint">
                       {r}

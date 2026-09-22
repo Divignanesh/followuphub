@@ -111,10 +111,6 @@ export type Faq = { q: string; a: string };
 
 export const FAQS: readonly Faq[] = [
   {
-    q: "Is FollowUpHub just another real estate CRM?",
-    a: "No. A typical CRM gives you a place to store leads. FollowUpHub ships with real estate follow-up systems already built and mapped to how buyer and seller leads actually behave, including AI calling, texting, WhatsApp and email sequences that run without you configuring them first.",
-  },
-  {
     q: "How much does FollowUpHub cost?",
     a: "FollowUpHub has two plans. Basic is $49.99 per month and includes the Complete Agent System. Advanced is also $49.99 per month plus a one-time $299 setup fee, and adds the full Voice AI engine, six-month Smart Nurture AI and white-glove onboarding. Both plans include a 14-day free trial with no credit card required.",
   },

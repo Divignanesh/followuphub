@@ -89,7 +89,11 @@
      Body copy carries the same negative tracking, which is unusual and is
      part of the look: it keeps 16px text feeling set rather than typed.
      ===================================================================== */
-  .t-display { @apply text-[2.5rem] font-semibold leading-[1.1] tracking-[-0.03em] sm:text-[3.25rem] lg:text-[3.75rem] lg:leading-[1.17]; }
+  /* Display sizes are the earlier scale plus 10%, at 700 rather than 600,
+     with the leading pulled in to match. The two moves roughly cancel in
+     height: 2 lines at 60px/1.17 was 140px, 2 at 66px/1.05 is 139px, so the
+     bigger headline does not cost the hero its single screen. */
+  .t-display { @apply text-[2.75rem] font-bold leading-[1.02] tracking-[-0.03em] sm:text-[3.575rem] lg:text-[4.125rem] lg:leading-[1.05]; }
   .t-h2      { @apply text-[2rem] font-semibold leading-[1.12] tracking-[-0.03em] sm:text-[2.6rem] lg:text-[3rem] lg:leading-[1.17]; }
   .t-h3      { @apply text-[1.25rem] font-semibold leading-[1.2] tracking-[-0.025em] sm:text-[1.4rem]; }
   .t-lede    { @apply text-[16px] leading-[1.5] tracking-[-0.03em] sm:text-[17px]; }
@@ -237,10 +241,10 @@
   */
   @media (min-width: 1024px) and (max-height: 800px) {
     .hero-fit { padding-top: 4.75rem; padding-bottom: 1.5rem; }
-    .hero-fit h1 { font-size: 3rem; line-height: 1.04; }
+    .hero-fit h1 { font-size: 3.3rem; line-height: 1.0; }
     .hero-fit .hero-lede { font-size: 16px; line-height: 1.6; }
   }
   @media (min-width: 1024px) and (max-height: 700px) {
-    .hero-fit h1 { font-size: 2.6rem; }
+    .hero-fit h1 { font-size: 2.86rem; }
   }
 }

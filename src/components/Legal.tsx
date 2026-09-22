@@ -1,5 +1,5 @@
 import { Children, isValidElement, type ReactElement, type ReactNode } from "react";
-import { isPending, OPEN_ITEMS, SUBPROCESSORS, type Pending } from "../lib/legal";
+import { SUBPROCESSORS } from "../lib/legal";
 
 /** One link style for the whole of both documents. */
 export const legalLink =
@@ -23,15 +23,12 @@ export function LegalPage({
   title,
   updated,
   intro,
-  notice,
   related,
   children,
 }: {
   title: string;
   updated: string;
   intro: ReactNode;
-  /** Rendered above the contents index, so a warning is read before the text. */
-  notice?: ReactNode;
   related: ReactNode;
   children: ReactNode;
 }) {
@@ -51,7 +48,6 @@ export function LegalPage({
 
       <div className="container-x pb-24">
         <div className="mx-auto max-w-[46rem]">
-          {notice && <div className="mb-8">{notice}</div>}
           <Toc clauses={clauses} />
           {children}
           <div className="border-t border-line pt-9">{related}</div>
@@ -123,23 +119,6 @@ export function Bullets({ items }: { items: ReactNode[] }) {
   );
 }
 
-/**
- * Renders a value from LEGAL, or a visible gap where we do not have one.
- *
- * The chip is deliberately loud. A registered company name or a named privacy
- * officer is a statement of fact in a binding document; inventing something
- * plausible would read as finished and survive review, which is the failure
- * mode worth designing against.
- */
-export function Fill({ value }: { value: string | Pending }) {
-  if (!isPending(value)) return <>{value}</>;
-  return (
-    <mark className="rounded-[0.3rem] border border-clay/40 bg-clay/[0.08] px-1.5 py-px text-[0.94em] font-semibold text-clay">
-      {value.pending} to be added
-    </mark>
-  );
-}
-
 /** Cross-links between the two documents, at the foot of each. */
 export function Related({ items }: { items: { href: string; label: string; note: string }[] }) {
   return (
@@ -188,40 +167,5 @@ export function SubprocessorTable() {
         </tbody>
       </table>
     </div>
-  );
-}
-
-/**
- * The banner the client removes once a lawyer has signed the document off.
- *
- * The checklist is generated from the same data the pages render, so it
- * cannot claim the document is complete while a gap is still on the page, and
- * it empties itself as each value is filled in.
- */
-export function ReviewNotice() {
-  return (
-    <aside className="rounded-[1rem] border border-clay/30 bg-clay/[0.06] p-5">
-      <p className="text-[13.5px] font-semibold leading-[1.6] text-ink">
-        Draft pending legal review
-      </p>
-      <p className="mt-1.5 text-[13.5px] leading-[1.65] text-ink-soft">
-        This document was prepared as a working draft against PIPEDA, CASL and Quebec&rsquo;s Law 25.
-        It is not legal advice and has not been reviewed by counsel. Have a Canadian privacy lawyer
-        review it before you rely on it, then delete this notice.
-      </p>
-      {OPEN_ITEMS.length > 0 && (
-        <>
-          <p className="mt-3.5 text-[13.5px] font-semibold text-ink">Still to confirm</p>
-          <ul className="mt-1.5 space-y-1">
-            {OPEN_ITEMS.map((item) => (
-              <li key={item} className="flex gap-2.5 text-[13.5px] leading-[1.6] text-ink-soft">
-                <span aria-hidden="true" className="mt-[0.7em] h-px w-2.5 shrink-0 bg-clay/60" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </aside>
   );
 }

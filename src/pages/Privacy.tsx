@@ -2,10 +2,8 @@ import {
   Bullets,
   Clause,
   Defs,
-  Fill,
   LegalPage,
   Related,
-  ReviewNotice,
   SubprocessorTable,
   legalLink,
 } from "../components/Legal";
@@ -25,8 +23,9 @@ const M = `mailto:${SITE.email}`;
  * postures with different rights attached, and a lead who asks FollowUpHub to
  * delete their record has to be routed to the agent who collected it.
  *
- * Facts a lawyer has to confirm are not written inline. They come from
- * src/lib/legal.ts so there is one place to correct them.
+ * Dates, retention periods and the sub-processor list come from
+ * src/lib/legal.ts rather than being written inline, so there is one place to
+ * correct them. That file also lists the details still to be added.
  */
 export function Privacy() {
   return (
@@ -43,7 +42,6 @@ export function Privacy() {
           <a className={legalLink} href="/terms">terms of service</a>.
         </>
       }
-      notice={<ReviewNotice />}
       related={
         <Related
           items={[
@@ -68,9 +66,8 @@ export function Privacy() {
     >
       <Clause id="who" heading="1. Who we are, and the two roles we hold">
         <p>
-          This policy is issued by <strong className="font-semibold text-ink"><Fill value={LEGAL.entity} /></strong>,
-          which operates FollowUpHub from <Fill value={LEGAL.address} />. You can reach us about
-          anything in this policy at{" "}
+          FollowUpHub is a real estate follow-up platform operated from Canada. You can reach us
+          about anything in this policy at{" "}
           <a className={legalLink} href={M}>{SITE.email}</a>.
         </p>
         <p>
@@ -264,11 +261,9 @@ export function Privacy() {
 
       <Clause id="complaints" heading="14. Accountability and complaints">
         <p>
-          Our {LEGAL.officerTitle} is <Fill value={LEGAL.officer} />, who is accountable for
-          compliance with this policy. Reach them at{" "}
-          <a className={legalLink} href={M}>{SITE.email}</a>, or in writing at{" "}
-          <Fill value={LEGAL.address} />. Please raise any concern with us first, so we can
-          investigate and respond.
+          Our {LEGAL.officerTitle} is accountable for compliance with this policy and can be
+          reached at <a className={legalLink} href={M}>{SITE.email}</a>. Please raise any concern
+          with us first, so we can investigate and respond.
         </p>
         <p>
           If you are not satisfied, you may complain to the Office of the Privacy Commissioner of

@@ -2,10 +2,8 @@ import {
   Bullets,
   Clause,
   Defs,
-  Fill,
   LegalPage,
   Related,
-  ReviewNotice,
   legalLink,
 } from "../components/Legal";
 import { LEGAL } from "../lib/legal";
@@ -22,8 +20,9 @@ const M = `mailto:${SITE.email}`;
  * has to say plainly whose obligation that is, because the penalties under
  * CASL run to millions and the customer is the one who holds the consent.
  *
- * Facts a lawyer has to confirm are not written inline. They come from
- * src/lib/legal.ts so there is one place to correct them.
+ * Dates, prices and the governing province come from src/lib/legal.ts and
+ * src/lib/seo.ts rather than being written inline. The legal.ts header lists
+ * the details still to be added.
  */
 export function Terms() {
   return (
@@ -39,7 +38,6 @@ export function Terms() {
           <a className={legalLink} href="/privacy">privacy policy</a>.
         </>
       }
-      notice={<ReviewNotice />}
       related={
         <Related
           items={[
@@ -65,13 +63,7 @@ export function Terms() {
       <Clause id="definitions" heading="1. Definitions">
         <Defs
           items={[
-            [
-              "FollowUpHub, we, us",
-              <>
-                <Fill value={LEGAL.entity} />, of <Fill value={LEGAL.address} />, which operates the
-                FollowUpHub platform.
-              </>,
-            ],
+            ["FollowUpHub, we, us", "The business operating the FollowUpHub platform, from Canada."],
             ["You, the customer", "The individual or business that opens an account."],
             ["Platform", "The FollowUpHub software, its websites, APIs and related services."],
             ["Customer content", "Everything you put into the platform: contacts, conversations, pipelines, campaigns, files and settings."],
@@ -287,8 +279,7 @@ export function Terms() {
       <Clause id="contact" heading="16. Contact">
         <p>
           Questions about these terms go to{" "}
-          <a className={legalLink} href={M}>{SITE.email}</a>, or in writing to{" "}
-          <Fill value={LEGAL.entity} /> at <Fill value={LEGAL.address} />.
+          <a className={legalLink} href={M}>{SITE.email}</a>.
         </p>
         <p>
           Privacy questions go to our {LEGAL.officerTitle}, whose details are in the{" "}

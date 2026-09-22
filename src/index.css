@@ -238,13 +238,19 @@
     Short laptop screens (roughly 1280x720 and 13" panels with browser chrome)
     could not fit the hero in one viewport. Tighten its rhythm there rather
     than shrinking it for everyone.
+
+    The floor on padding-top is the masthead, not taste. The bar is fixed and
+    its pill ends 92px down the page, so anything below that puts the first
+    thing in the hero behind it. At 4.75rem the eyebrow capsule cleared it by
+    -1px at 1280x720 and sat 16px behind it at 1280x650. 6.5rem leaves 12px,
+    and the headline gives most of the difference back.
   */
   @media (min-width: 1024px) and (max-height: 800px) {
-    .hero-fit { padding-top: 4.75rem; padding-bottom: 1.5rem; }
-    .hero-fit h1 { font-size: 3.3rem; line-height: 1.0; }
+    .hero-fit { padding-top: 6.5rem; padding-bottom: 1rem; }
+    .hero-fit h1 { font-size: 3.05rem; line-height: 1.0; }
     .hero-fit .hero-lede { font-size: 16px; line-height: 1.6; }
   }
   @media (min-width: 1024px) and (max-height: 700px) {
-    .hero-fit h1 { font-size: 2.86rem; }
+    .hero-fit h1 { font-size: 2.7rem; }
   }
 }

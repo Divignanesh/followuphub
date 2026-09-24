@@ -9,7 +9,8 @@ const rows = [
   ["Pre-built real estate workflows", "Generic, or you build them yourself", "Ready out of the box"],
   ["Visual sales pipeline", "Basic or generic stages", "Real estate stages"],
   ["Agent websites and funnels", "Add-on or a separate tool", "Included"],
-  ["Reputation management", "Rarely included", "Built in"],
+  ["Reputation and community management", "Rarely included", "Built in"],
+  ["Social apps integration", "Usually a separate tool", "Built in"],
   ["Invoicing and payments", "Usually separate", "Built in"],
   ["Pricing model", "Per seat, plus add-ons", "Flat monthly"],
 ];

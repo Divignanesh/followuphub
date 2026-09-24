@@ -1,4 +1,5 @@
 import { MotionConfig } from "framer-motion";
+import { BackToTop } from "./components/BackToTop";
 import { Nav } from "./components/Nav";
 import { Footer } from "./sections/Footer";
 import { Home } from "./pages/Home";
@@ -42,6 +43,7 @@ export default function App({ path }: { path: RoutePath }) {
         )}
       </main>
       <Footer />
+      <BackToTop />
     </MotionConfig>
   );
 }

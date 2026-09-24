@@ -150,7 +150,7 @@ export function Hero() {
           </motion.h1>
 
           <motion.p custom={2} variants={rise} className="t-lede hero-lede mt-5 max-w-[48ch] text-cream/85 sm:mt-5">
-            Your AI agent calls, texts and WhatsApps every new lead,{" "}
+            Your AI agent calls, texts, emails and WhatsApps every new lead,{" "}
             <span className="font-semibold text-mint">24/7</span>.
           </motion.p>
 

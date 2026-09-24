@@ -11,6 +11,7 @@ const rows = [
   ["Agent websites and funnels", "Add-on or a separate tool", "Included"],
   ["Reputation and community management", "Rarely included", "Built in"],
   ["Social apps integration", "Usually a separate tool", "Built in"],
+  ["Meta and Google lead generation integration", "Often via a paid connector", "Built in"],
   ["Invoicing and payments", "Usually separate", "Built in"],
   ["Pricing model", "Per seat, plus add-ons", "Flat monthly"],
 ];

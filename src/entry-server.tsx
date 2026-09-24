@@ -1,6 +1,7 @@
 import { renderToString } from "react-dom/server";
 import App, { type RoutePath } from "./App";
 import { CRM_FAQS, GUIDE_DATES } from "./pages/BestCrmForRealtors";
+import { COMPARE_DATES, COMPARE_SLUGS, COMPETITORS, comparePath } from "./lib/competitors";
 import {
   FAQS,
   SITE,
@@ -90,6 +91,38 @@ export const ROUTES: RouteMeta[] = [
       CRM_FAQS,
     ),
   },
+  ...COMPARE_SLUGS.map((slug): RouteMeta => {
+    const c = COMPETITORS[slug];
+    const path = comparePath(slug);
+    const url = `${SITE.domain}${path}`;
+    const headline = `FollowUpHub vs ${c.name}`;
+    return {
+      path,
+      out: `${path.slice(1)}/index.html`,
+      title: `FollowUpHub vs ${c.name}: 2026 CRM Comparison`,
+      description: c.summary,
+      canonical: url,
+      ogImageAlt: `Feature and pricing comparison of FollowUpHub and ${c.name}`,
+      priority: "0.8",
+      changefreq: "monthly",
+      schema: pageSchema(
+        [
+          articleSchema({
+            url,
+            headline,
+            description: c.summary,
+            image: OG_IMAGE,
+            ...COMPARE_DATES,
+          }),
+          breadcrumbSchema([
+            { name: "Home", url: `${SITE.domain}/` },
+            { name: headline, url },
+          ]),
+        ],
+        c.faqs,
+      ),
+    };
+  }),
   {
     path: "/privacy",
     out: "privacy/index.html",

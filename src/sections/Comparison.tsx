@@ -3,7 +3,7 @@ import { Check, Minus } from "lucide-react";
 import { SectionHeading } from "../components/ui";
 import { fadeUp, stagger, viewport } from "../lib/motion";
 
-const rows = [
+const defaultRows = [
   ["AI calling with multiple voice options", "Usually an add-on, or missing", "Built in"],
   ["AI texting and WhatsApp follow-up", "Limited, or a third-party bolt-on", "Built in"],
   ["Pre-built real estate workflows", "Generic, or you build them yourself", "Ready out of the box"],
@@ -14,16 +14,31 @@ const rows = [
   ["Meta and Google lead generation integration", "Often via a paid connector", "Built in"],
   ["Invoicing and payments", "Usually separate", "Built in"],
   ["Pricing model", "Per seat, plus add-ons", "Flat monthly"],
-];
+] as const;
 
-export function Comparison() {
+/**
+ * Defaults to FollowUpHub against a generic CRM. The head-to-head pages pass
+ * a named competitor's rows, title and column label instead.
+ */
+export function Comparison({
+  rows = defaultRows,
+  otherLabel = "Other CRMs",
+  title = "FollowUpHub vs. a typical real estate CRM",
+  lede = "What a typical CRM leaves you to buy separately.",
+  kicker,
+  caption = "Feature comparison between FollowUpHub and other real estate CRMs",
+}: {
+  rows?: readonly (readonly [string, string, string])[];
+  otherLabel?: string;
+  title?: string;
+  lede?: string;
+  kicker?: string;
+  caption?: string;
+}) {
   return (
     <section id="compare" className="bg-sand py-8 sm:py-10">
       <div className="container-x">
-        <SectionHeading
-          title="FollowUpHub vs. a typical real estate CRM"
-          lede="What a typical CRM leaves you to buy separately."
-        />
+        <SectionHeading kicker={kicker} title={title} lede={lede} />
 
         <motion.div
           variants={stagger(0.05)}
@@ -34,11 +49,11 @@ export function Comparison() {
         >
           <table className="w-full min-w-[42rem] border-separate border-spacing-0 text-left">
             <caption className="sr-only">
-              Feature comparison between FollowUpHub and other real estate CRMs
+              {caption}
             </caption>
             <thead>
               <tr>
-                {["Capability", "Other CRMs", "FollowUpHub"].map((h, i) => (
+                {["Capability", otherLabel, "FollowUpHub"].map((h, i) => (
                   <th
                     key={h}
                     scope="col"

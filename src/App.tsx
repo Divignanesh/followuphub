@@ -4,11 +4,20 @@ import { Nav } from "./components/Nav";
 import { Footer } from "./sections/Footer";
 import { Home } from "./pages/Home";
 import { BestCrmForRealtors } from "./pages/BestCrmForRealtors";
+import { CompareCrm } from "./pages/CompareCrm";
+import { COMPARE_PATHS, competitorForPath } from "./lib/competitors";
 import { NotFound } from "./pages/NotFound";
 import { Privacy } from "./pages/Privacy";
 import { Terms } from "./pages/Terms";
 
-export const ROUTE_PATHS = ["/", "/best-crm-for-realtors", "/privacy", "/terms", "/404"] as const;
+export const ROUTE_PATHS = [
+  "/",
+  "/best-crm-for-realtors",
+  ...COMPARE_PATHS,
+  "/privacy",
+  "/terms",
+  "/404",
+] as const;
 export type RoutePath = (typeof ROUTE_PATHS)[number];
 
 /**
@@ -23,6 +32,7 @@ export function normalisePath(pathname: string): RoutePath {
 }
 
 export default function App({ path }: { path: RoutePath }) {
+  const competitor = competitorForPath(path);
   return (
     <MotionConfig reducedMotion="user">
       <a href="#main" className="skip-link fixed left-4 top-4 z-[60] rounded-full bg-teal px-4 py-2 text-sm font-bold text-white">
@@ -38,6 +48,8 @@ export default function App({ path }: { path: RoutePath }) {
           <Terms />
         ) : path === "/best-crm-for-realtors" ? (
           <BestCrmForRealtors />
+        ) : competitor ? (
+          <CompareCrm competitor={competitor} />
         ) : (
           <Home />
         )}

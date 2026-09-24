@@ -1,6 +1,7 @@
 import { Mail } from "lucide-react";
 import { Logo, external } from "../components/ui";
 import { SITE } from "../lib/seo";
+import { COMPARE_SLUGS, COMPETITORS, comparePath } from "../lib/competitors";
 
 const groups = [
   {
@@ -21,6 +22,13 @@ const groups = [
       { label: "What's included", href: "/#included" },
       { label: "Migration and onboarding", href: "/#faq" },
     ],
+  },
+  {
+    title: "Head to head",
+    links: COMPARE_SLUGS.map((s) => ({
+      label: `vs. ${COMPETITORS[s].name}`,
+      href: comparePath(s),
+    })),
   },
   {
     title: "Company",
@@ -51,7 +59,7 @@ export function Footer() {
   return (
     <footer className="bg-cream">
       <div className="container-x py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(5,1fr)]">
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-[14px] leading-[1.7] text-ink-soft">

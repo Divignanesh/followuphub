@@ -8,6 +8,7 @@ import { TrustBar } from "../sections/TrustBar";
 import { Button, Kicker, SectionHeading, cx } from "../components/ui";
 import { fadeUp, scaleIn, stagger, viewport } from "../lib/motion";
 import { SITE, type Faq } from "../lib/seo";
+import { CompareLinks } from "./CompareCrm";
 
 /**
  * Feeds both the visible "Updated" line and the Article schema, so the two
@@ -233,6 +234,7 @@ export function BestCrmForRealtors() {
       </section>
 
       <Comparison />
+      <CompareLinks />
 
       <section className="py-24 sm:py-28">
         <div className="container-x">

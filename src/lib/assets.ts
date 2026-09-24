@@ -3,26 +3,9 @@
  * be hotlinked from the previous site on www.followuphub.ai, and all of them
  * went 404 the moment the domain was pointed at this build.
  */
-/**
- * Self-hosted photography. The production CSP is `img-src 'self'`, so any
- * external stock URL would be blocked in the browser — these are served from
- * our own /images directory instead. Sources are listed in
- * public/images/CREDITS.md.
- */
-export const LISTINGS = [
-  { src: "/images/listing-1.jpg", alt: "Red brick two-storey home with a manicured front lawn" },
-  { src: "/images/listing-2.jpg", alt: "Detached family home with a covered porch and wide driveway" },
-  { src: "/images/listing-3.jpg", alt: "Two-storey home with blue shingle gable and double garage" },
-  { src: "/images/listing-4.jpg", alt: "Suburban house with a large lawn and mature trees" },
-] as const;
-
 export const IMG = {
-  ogImage: "/images/og-image.jpg",
   logo: "/images/brand/followuphub-logo.png",
   logoLight: "/images/brand/followuphub-logo-light.png",
-  hero: "/images/hero-team-celebrating.jpg",
-  agent: "/images/agent-with-clients.jpg",
-  close: "/images/agent-at-close.jpg",
 } as const;
 
 export const BROKERAGES = [

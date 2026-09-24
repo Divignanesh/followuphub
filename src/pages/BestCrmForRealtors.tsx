@@ -205,7 +205,7 @@ export function BestCrmForRealtors() {
             className="mx-auto mt-12 grid max-w-4xl gap-3 sm:grid-cols-2"
           >
             {[
-              "AI voice calling with 6-attempt retry logic",
+              "AI calling with multiple voice options",
               "Conversational SMS, WhatsApp and email agents",
               "Visual pipeline with real estate stages",
               "Omni-channel shared team inbox",

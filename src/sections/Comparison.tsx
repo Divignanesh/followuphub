@@ -4,7 +4,7 @@ import { SectionHeading } from "../components/ui";
 import { fadeUp, stagger, viewport } from "../lib/motion";
 
 const rows = [
-  ["AI voice calling with 6-attempt retry", "Usually an add-on, or missing", "Built in"],
+  ["AI calling with multiple voice options", "Usually an add-on, or missing", "Built in"],
   ["AI texting and WhatsApp follow-up", "Limited, or a third-party bolt-on", "Built in"],
   ["Pre-built real estate workflows", "Generic, or you build them yourself", "Ready out of the box"],
   ["Visual sales pipeline", "Basic or generic stages", "Real estate stages"],

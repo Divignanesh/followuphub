@@ -220,7 +220,7 @@ export function softwareSchema() {
     description:
       "AI real estate CRM with voice AI calling, SMS, WhatsApp and email follow-up, visual pipeline management, marketing automation and client websites.",
     featureList: [
-      "AI voice calling with 6-attempt retry logic",
+      "AI voice calling with multiple voice options",
       "Conversational SMS, WhatsApp and email AI agents",
       "Visual real estate sales pipeline",
       "Omni-channel shared inbox",

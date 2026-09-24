@@ -34,8 +34,9 @@
 
 ## Core capabilities
 
-- Voice AI calling with natural conversation, objection handling, sentiment
-  analysis and 6-attempt retry logic inside respectful calling windows
+- Voice AI calling with multiple voice options, natural conversation, objection
+  handling, sentiment analysis and 6-attempt retry logic inside respectful
+  calling windows
 - Conversational AI across SMS, WhatsApp and email using funnel context
 - Visual sales pipeline with real estate stages: new lead, contacted, showing,
   offer, closed

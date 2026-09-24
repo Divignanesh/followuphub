@@ -134,13 +134,13 @@ export function Hero() {
         >
           {/*
             The capsule carries its own dark fill rather than sitting straight
-            on the ground. Mint at 11px is small text, so it owes 4.5:1, and on
+            on the ground. Mint at 13–14px is small text, so it owes 4.5:1, and on
             the lightest ground the drift puts behind the top of the hero it
             measures about 3.4:1 unaided. Backing it with teal-ink takes that
             to roughly 6:1 and the fill reads as the highlight anyway.
           */}
           <motion.p custom={0} variants={rise} className="mb-4 sm:mb-5">
-            <span className="t-label inline-flex items-center rounded-full border border-mint/35 bg-teal-ink/55 px-4 py-1.5 text-mint backdrop-blur-sm sm:py-2">
+            <span className="inline-flex items-center rounded-full border border-mint/35 font-bold uppercase tracking-[0.16em] bg-teal-ink/55 px-5 py-2 text-[13px] text-mint backdrop-blur-sm sm:px-6 sm:py-2.5 sm:text-[14px]">
               The Real Estate Operating System
             </span>
           </motion.p>

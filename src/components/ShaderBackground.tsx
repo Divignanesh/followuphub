@@ -326,9 +326,24 @@ const UNIFORMS = {
 
 const pendingContextReleases = new WeakMap<HTMLCanvasElement, number>();
 
-export function ShaderBackground({ className }: { className?: string }) {
+/**
+ * The canvas starts transparent and fades in once its first frame is drawn,
+ * so the ground behind it never gets swapped out abruptly. `onFallback` fires
+ * when the shader will not run at all (reduced motion, no WebGL, a failed
+ * link), which is the only case where the drawn fallback should show.
+ */
+export function ShaderBackground({
+  className,
+  onFallback,
+}: {
+  className?: string;
+  onFallback?: () => void;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [reduced, setReduced] = useState(false);
+  const [painted, setPainted] = useState(false);
+  const fallbackRef = useRef(onFallback);
+  fallbackRef.current = onFallback;
 
   // Read the preference after mount so the server and the first client render
   // agree, then follow it if the reader changes it while the page is open.
@@ -341,7 +356,10 @@ export function ShaderBackground({ className }: { className?: string }) {
   }, []);
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced) {
+      fallbackRef.current?.();
+      return;
+    }
     const el = canvasRef.current;
     if (!el) return;
     // Same reason as gl below: render() is hoisted, so the narrowing from the
@@ -351,7 +369,10 @@ export function ShaderBackground({ className }: { className?: string }) {
     if (pendingRelease !== undefined) window.clearTimeout(pendingRelease);
     pendingContextReleases.delete(canvas);
     const context = canvas.getContext("webgl", { antialias: false });
-    if (!context) return;
+    if (!context) {
+      fallbackRef.current?.();
+      return;
+    }
     // Aliased with an explicit non-null type rather than relying on the guard
     // above: render() is a hoisted function declaration, and TypeScript will
     // not carry a narrowing into one of those.
@@ -371,6 +392,11 @@ export function ShaderBackground({ className }: { className?: string }) {
     gl.linkProgram(program);
     gl.deleteShader(vertexShader);
     gl.deleteShader(fragmentShader);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      gl.deleteProgram(program);
+      fallbackRef.current?.();
+      return;
+    }
     gl.useProgram(program);
 
     const buf = gl.createBuffer();
@@ -516,6 +542,7 @@ export function ShaderBackground({ className }: { className?: string }) {
     };
     document.addEventListener("visibilitychange", onVisibilityChange);
 
+    let paintedOnce = false;
     function render(now: number) {
       raf = 0;
       if (disposed || !visible || !inView) return;
@@ -544,6 +571,10 @@ export function ShaderBackground({ className }: { className?: string }) {
         UNIFORMS.cursorRadius,
       );
       gl.drawArrays(gl.TRIANGLES, 0, 3);
+      if (!paintedOnce) {
+        paintedOnce = true;
+        setPainted(true);
+      }
       const pointerSettling =
         Math.abs(targetX - mouseX) > 0.001 ||
         Math.abs(targetY - mouseY) > 0.001 ||
@@ -584,7 +615,13 @@ export function ShaderBackground({ className }: { className?: string }) {
       ref={canvasRef}
       aria-hidden="true"
       className={className}
-      style={{ display: "block", width: "100%", height: "100%" }}
+      style={{
+        display: "block",
+        width: "100%",
+        height: "100%",
+        opacity: painted ? 1 : 0,
+        transition: "opacity 700ms ease-out",
+      }}
     />
   );
 }

@@ -11,7 +11,7 @@
  * sits in the middle, and a lit edge running under it would cost the cream
  * type its contrast and need a scrim to win it back.
  */
-export function HeroTexture() {
+export function HeroTexture({ slabs = false }: { slabs?: boolean }) {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
       <svg
@@ -72,26 +72,33 @@ export function HeroTexture() {
 
         <rect width="1440" height="900" fill="url(#fuh-ground)" />
 
+        {/* The slabs are the fallback look, drawn only when the shader
+            cannot run. Showing them while the shader loads made the hero
+            open on one picture and then swap to another. */}
+        {slabs && (
+          <>
         {/* Left slab, lit down its right edge. Both slabs were pulled out
-            to the thirds after a first pass put their lit edges either side
-            of the headline: cream type wants the dark of the valley behind
-            it, and a scrim to win the contrast back would flatten the whole
-            ground. */}
-        <path d="M-80 920 L-80 96 L110 96 C236 96 340 200 340 326 L340 920 Z" fill="url(#fuh-a)" />
-
-        {/* Right slab, lit up its left edge, leaving the valley between
-            them. Its edge sits at 1130 rather than 1046 because the four
-            boxes reach 1072 at this viewBox, and cream type at 80% over that
-            lit edge measured 1.5:1. */}
-        <path d="M1130 920 L1130 296 C1130 152 1246 36 1390 36 L1600 36 L1600 920 Z" fill="url(#fuh-b)" />
-
-        {/* the fold rising across the foot, lit along its top */}
-        <path
-          d="M830 920 C982 872 1122 782 1246 672 C1346 584 1430 500 1520 398 L1520 920 Z"
-          fill="url(#fuh-c)"
-        />
-
-        <rect x="0" y="770" width="1440" height="130" fill="url(#fuh-foot)" />
+                to the thirds after a first pass put their lit edges either side
+                of the headline: cream type wants the dark of the valley behind
+                it, and a scrim to win the contrast back would flatten the whole
+                ground. */}
+            <path d="M-80 920 L-80 96 L110 96 C236 96 340 200 340 326 L340 920 Z" fill="url(#fuh-a)" />
+    
+            {/* Right slab, lit up its left edge, leaving the valley between
+                them. Its edge sits at 1130 rather than 1046 because the four
+                boxes reach 1072 at this viewBox, and cream type at 80% over that
+                lit edge measured 1.5:1. */}
+            <path d="M1130 920 L1130 296 C1130 152 1246 36 1390 36 L1600 36 L1600 920 Z" fill="url(#fuh-b)" />
+    
+            {/* the fold rising across the foot, lit along its top */}
+            <path
+              d="M830 920 C982 872 1122 782 1246 672 C1346 584 1430 500 1520 398 L1520 920 Z"
+              fill="url(#fuh-c)"
+            />
+    
+            <rect x="0" y="770" width="1440" height="130" fill="url(#fuh-foot)" />
+          </>
+        )}
 
         <rect
           width="1440"

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   AudioLines,
@@ -80,6 +81,8 @@ const proof = [
 ];
 
 export function Hero() {
+  // The slabs only show when the shader cannot run; see ShaderBackground.
+  const [fallback, setFallback] = useState(false);
   return (
     <section
       aria-labelledby="hero-title"
@@ -91,8 +94,11 @@ export function Hero() {
         leave the canvas above it transparent. When the shader does run it
         paints over the whole thing.
       */}
-      <HeroTexture />
-      <ShaderBackground className="pointer-events-none absolute inset-0" />
+      <HeroTexture slabs={fallback} />
+      <ShaderBackground
+        className="pointer-events-none absolute inset-0"
+        onFallback={() => setFallback(true)}
+      />
 
       {/*
         The scrim, and it is not optional.

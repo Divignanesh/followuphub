@@ -1,5 +1,5 @@
 import { Mail } from "lucide-react";
-import { Logo } from "../components/ui";
+import { Logo, external } from "../components/ui";
 import { SITE } from "../lib/seo";
 
 const groups = [
@@ -80,6 +80,7 @@ export function Footer() {
                   <li key={l.label}>
                     <a
                       href={l.href}
+                      {...external(l.href)}
                       className="-my-1 inline-block py-1.5 text-[14px] text-ink-soft transition-colors hover:text-teal"
                     >
                       {l.label}
@@ -102,7 +103,7 @@ export function Footer() {
                 <li key={url}>
                   <a
                     href={url}
-                    rel="noopener"
+                    {...external(url)}
                     className="-my-1 inline-block py-1.5 text-[13px] font-semibold text-ink-soft transition-colors hover:text-teal"
                   >
                     {socialLabels[key] ?? "Link"}

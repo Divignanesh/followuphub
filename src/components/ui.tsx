@@ -118,6 +118,17 @@ export function Portrait({
 
 /* ------------------------------- buttons ------------------------------ */
 
+/**
+ * Links that leave the site (checkout, the app, demo booking, socials) open
+ * in a new tab, so the page the visitor was reading stays where they left it.
+ * In-page anchors, site routes and mailto: links are untouched.
+ */
+export function external(href?: string) {
+  return href && /^https?:\/\//.test(href)
+    ? ({ target: "_blank", rel: "noopener noreferrer" } as const)
+    : {};
+}
+
 type ButtonProps = Omit<HTMLMotionProps<"a">, "children"> & {
   variant?: "primary" | "secondary" | "cream" | "ghost-cream";
   size?: "sm" | "md" | "lg";
@@ -148,6 +159,7 @@ export function Button({
   return (
     <motion.a
       href={href}
+      {...external(href)}
       whileTap={{ scale: 0.975 }}
       className={cx(
         "group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-[background-color,border-color,box-shadow,color] duration-200",
@@ -347,6 +359,7 @@ export function PillCta({
   return (
     <motion.a
       href={href}
+      {...external(href)}
       whileTap={{ scale: 0.98 }}
       className={cx(
         "group inline-flex items-center justify-center rounded-full font-semibold tracking-[-0.02em] transition-colors duration-200",

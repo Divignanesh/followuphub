@@ -3,7 +3,7 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { EASE_OUT } from "../lib/motion";
 import { SITE } from "../lib/seo";
-import { Button, Logo, PillCta, cx } from "./ui";
+import { Button, Logo, PillCta, cx, external } from "./ui";
 
 const links = [
   { label: "Platform", href: "/#platform" },
@@ -87,6 +87,7 @@ export function Nav({ overDark = false }: { overDark?: boolean }) {
           <div className="hidden items-center gap-5 lg:flex">
             <a
               href={SITE.app}
+              {...external(SITE.app)}
               className={cx(
                 "text-[15px] font-medium tracking-[-0.02em] transition-colors",
                 blended ? "text-cream/75 hover:text-cream" : "text-ink-soft hover:text-teal",

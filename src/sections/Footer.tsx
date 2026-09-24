@@ -24,9 +24,9 @@ const groups = [
     ],
   },
   {
-    title: "Head to head",
+    title: "vs FollowUpHub",
     links: COMPARE_SLUGS.map((s) => ({
-      label: `vs. ${COMPETITORS[s].name}`,
+      label: COMPETITORS[s].name,
       href: comparePath(s),
     })),
   },

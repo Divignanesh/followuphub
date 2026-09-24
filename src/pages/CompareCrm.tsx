@@ -47,7 +47,7 @@ export function CompareLinks({ exclude }: { exclude?: Competitor["slug"] }) {
           className="mx-auto max-w-2xl text-center"
         >
           <motion.div variants={fadeUp} className="flex justify-center">
-            <Kicker>Head to head</Kicker>
+            <Kicker>Compare</Kicker>
           </motion.div>
           <motion.h2 id="compare-more" variants={fadeUp} className="t-h2 mt-5 text-ink">
             {exclude ? "Compare FollowUpHub with other real estate CRMs" : "FollowUpHub against the CRMs agents switch from"}

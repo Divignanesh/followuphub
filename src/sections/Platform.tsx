@@ -338,8 +338,17 @@ function StatCard({
 function Dial() {
   const r = 26;
   const c = 2 * Math.PI * r;
+  // The in-view trigger sits on the <svg>, not the <circle>. Safari's
+  // IntersectionObserver does not report SVG child elements reliably, so a
+  // trigger on the circle never fired there and the ring stayed empty.
   return (
-    <svg viewBox="0 0 64 64" className="size-20">
+    <motion.svg
+      viewBox="0 0 64 64"
+      className="size-20"
+      initial="hidden"
+      whileInView="show"
+      viewport={viewport}
+    >
       <circle cx="32" cy="32" r={r} fill="none" stroke="currentColor" strokeWidth="6" className="text-teal/15" />
       <motion.circle
         cx="32"
@@ -352,12 +361,15 @@ function Dial() {
         className="text-teal"
         transform="rotate(-90 32 32)"
         strokeDasharray={c}
-        initial={{ strokeDashoffset: c }}
-        whileInView={{ strokeDashoffset: c * 0.08 }}
-        viewport={viewport}
-        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+        variants={{
+          hidden: { strokeDashoffset: c },
+          show: {
+            strokeDashoffset: c * 0.08,
+            transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
+          },
+        }}
       />
-    </svg>
+    </motion.svg>
   );
 }
 

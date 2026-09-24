@@ -26,7 +26,11 @@ export const LEGAL = {
   officerTitle: "Privacy Officer",
   email: SITE.email,
 
-  /** Matches the province in the schema address the site already published. */
+  /**
+   * Governing law for the terms only. Canadian contracts are governed by a
+   * province's law, so one has to be named here even though the site
+   * publishes no city or province as a location.
+   */
   province: "Ontario",
 } as const;
 

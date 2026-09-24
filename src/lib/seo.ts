@@ -14,10 +14,8 @@ export const SITE = {
   email: "support@followuphub.ai",
   app: "https://app.followuphub.ai",
   demo: "https://api.followuphub.ai/widget/bookings/discuss-crm-solution",
-  // Published in the Organization schema for local-search signal on
-  // "real estate CRM Toronto" style queries.
-  city: "Toronto",
-  region: "ON",
+  // Country only, by the client's decision: no city or province is
+  // published anywhere on the site.
   country: "CA",
   social: [
     "https://www.facebook.com/followuphub",
@@ -167,8 +165,6 @@ export function organizationSchema() {
     email: SITE.email,
     address: {
       "@type": "PostalAddress",
-      addressLocality: SITE.city,
-      addressRegion: SITE.region,
       addressCountry: SITE.country,
     },
     sameAs: [...SITE.social],

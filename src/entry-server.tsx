@@ -1,9 +1,10 @@
 import { renderToString } from "react-dom/server";
 import App, { type RoutePath } from "./App";
-import { CRM_FAQS } from "./pages/BestCrmForRealtors";
+import { CRM_FAQS, GUIDE_DATES } from "./pages/BestCrmForRealtors";
 import {
   FAQS,
   SITE,
+  articleSchema,
   breadcrumbSchema,
   faqSchema,
   graph,
@@ -51,7 +52,7 @@ export const ROUTES: RouteMeta[] = [
     out: "index.html",
     title: "FollowUpHub · AI Real Estate CRM for Agents and Teams",
     description:
-      "AI real estate CRM with voice AI calling, SMS, WhatsApp and email follow-up, visual pipeline, marketing automation and client websites. From $49.99/mo. 14-day free trial.",
+      "AI real estate CRM with voice AI calling, SMS, WhatsApp and email follow-up, pipeline, marketing and client websites. From $49.99/mo with a 14-day free trial.",
     canonical: `${SITE.domain}/`,
     ogImageAlt: "FollowUpHub AI real estate CRM dashboard",
     priority: "1.0",
@@ -66,13 +67,21 @@ export const ROUTES: RouteMeta[] = [
     out: "best-crm-for-realtors/index.html",
     title: "Best CRM for Realtors in 2026 | FollowUpHub",
     description:
-      "The best CRM for realtors follows up faster than you can by hand. Compare AI calling, texting, pipeline and marketing features, and see real estate CRM pricing for 2026.",
+      "The best CRM for realtors follows up faster than you can. Compare AI calling, texting, pipeline and marketing features, and 2026 real estate CRM pricing.",
     canonical: `${SITE.domain}/best-crm-for-realtors`,
     ogImageAlt: "Comparison of the best CRM options for realtors in 2026",
     priority: "0.9",
     changefreq: "weekly",
     schema: pageSchema(
       [
+        articleSchema({
+          url: `${SITE.domain}/best-crm-for-realtors`,
+          headline: "The best CRM for realtors in 2026",
+          description:
+            "What to look for in a real estate CRM, a feature comparison, and how real estate CRM pricing works in 2026.",
+          image: OG_IMAGE,
+          ...GUIDE_DATES,
+        }),
         breadcrumbSchema([
           { name: "Home", url: `${SITE.domain}/` },
           { name: "Best CRM for realtors", url: `${SITE.domain}/best-crm-for-realtors` },
@@ -86,7 +95,7 @@ export const ROUTES: RouteMeta[] = [
     out: "privacy/index.html",
     title: "Privacy policy | FollowUpHub",
     description:
-      "How FollowUpHub collects, uses and protects personal information, written to meet PIPEDA, Quebec's Law 25 and CASL, including call recording and your access rights.",
+      "How FollowUpHub collects, uses and protects personal information under PIPEDA, Quebec's Law 25 and CASL, including call recording and your access rights.",
     canonical: `${SITE.domain}/privacy`,
     ogImageAlt: "FollowUpHub privacy policy",
     priority: "0.3",

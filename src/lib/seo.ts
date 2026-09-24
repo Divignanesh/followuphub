@@ -14,13 +14,8 @@ export const SITE = {
   email: "support@followuphub.ai",
   app: "https://app.followuphub.ai",
   demo: "https://api.followuphub.ai/widget/bookings/discuss-crm-solution",
-  /*
-    Kept as data but no longer published anywhere: not in visible copy, not in
-    the Organization schema, not in llms.txt. Removing the locality and region
-    costs some local-search signal for "real estate CRM Toronto" style
-    queries; restore them in organizationSchema() if that trade stops being
-    worth it.
-  */
+  // Published in the Organization schema for local-search signal on
+  // "real estate CRM Toronto" style queries.
   city: "Toronto",
   region: "ON",
   country: "CA",
@@ -170,10 +165,10 @@ export function organizationSchema() {
       height: 512,
     },
     email: SITE.email,
-    // Country only. The locality and region were removed at the client's
-    // request; see the note beside SITE.city.
     address: {
       "@type": "PostalAddress",
+      addressLocality: SITE.city,
+      addressRegion: SITE.region,
       addressCountry: SITE.country,
     },
     sameAs: [...SITE.social],
@@ -272,6 +267,37 @@ export function faqSchema(faqs: readonly Faq[]) {
       name: f.q,
       acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
+  };
+}
+
+/**
+ * Article markup for editorial pages. Dates are passed in, never taken from
+ * the build clock: a dateModified that moves on every deploy is exactly the
+ * fake-freshness signal search and answer engines learn to ignore. Bump
+ * `modified` by hand when the page content actually changes.
+ */
+export function articleSchema(a: {
+  url: string;
+  headline: string;
+  description: string;
+  image: string;
+  published: string;
+  modified: string;
+}) {
+  return {
+    "@type": "Article",
+    "@id": `${a.url}#article`,
+    headline: a.headline,
+    description: a.description,
+    image: a.image,
+    url: a.url,
+    mainEntityOfPage: a.url,
+    inLanguage: "en",
+    datePublished: a.published,
+    dateModified: a.modified,
+    author: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
+    about: { "@id": SOFTWARE_ID },
   };
 }
 

@@ -9,6 +9,20 @@ import { Button, Kicker, SectionHeading, cx } from "../components/ui";
 import { fadeUp, scaleIn, stagger, viewport } from "../lib/motion";
 import { SITE, type Faq } from "../lib/seo";
 
+/**
+ * Feeds both the visible "Updated" line and the Article schema, so the two
+ * always agree. Bump `modified` when the guide's content changes.
+ */
+export const GUIDE_DATES = { published: "2026-09-05", modified: "2026-09-24" } as const;
+
+const formatDate = (iso: string) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-CA", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+
 /** Page-specific FAQ, mirrored exactly into this route's FAQPage schema. */
 export const CRM_FAQS: readonly Faq[] = [
   {
@@ -106,6 +120,10 @@ export function BestCrmForRealtors() {
           >
             <motion.div variants={fadeUp}>
               <Kicker>Buyer&rsquo;s guide · 2026</Kicker>
+              <p className="mt-3 text-[14px] text-ink-soft">
+                By FollowUpHub · Updated{" "}
+                <time dateTime={GUIDE_DATES.modified}>{formatDate(GUIDE_DATES.modified)}</time>
+              </p>
             </motion.div>
             <motion.h1
               id="crm-title"

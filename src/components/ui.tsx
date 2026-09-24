@@ -242,7 +242,7 @@ export function SectionHeading({
           </motion.div>
         </div>
         {ledeEl && (
-          <motion.div variants={fadeUp} className="max-w-lg lg:pb-1">
+          <motion.div variants={fadeUp} className="max-w-lg lg:justify-self-end lg:pb-1 lg:text-right">
             {ledeEl}
           </motion.div>
         )}

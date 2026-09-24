@@ -1,6 +1,6 @@
 import {
-  ArrowLeft, ArrowRight, CalendarCheck, Globe, Inbox, Mail, MessageSquare,
-  PhoneCall, Star, Workflow,
+  ArrowLeft, ArrowRight, BookOpen, CalendarCheck, Check, Globe, Inbox, Mail,
+  MessageCircle, MessageSquare, PhoneCall, Star, Workflow,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { SectionHeading } from "../components/ui";
@@ -66,7 +66,84 @@ const Row = ({ children }: { children: React.ReactNode }) => (
   <div className="flex items-center gap-3 rounded-lg border border-line px-3 py-2.5">{children}</div>
 );
 
+/** Small section label inside a panel screen. */
+const PanelLabel = ({ children }: { children: React.ReactNode }) => (
+  <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-ink-faint">{children}</p>
+);
+
 const CARDS: Card[] = [
+  {
+    id: "speed",
+    word: "SPEED TO LEAD",
+    kicker: "Speed to lead",
+    title: "Pre-configured agents, live on day one",
+    body: "AI agents that call, text, email and WhatsApp every new lead in seconds, already trained for real estate.",
+    chips: ["Calling", "Texting", "Email", "WhatsApp"],
+    panel: (
+      <>
+        <div className="flex items-center justify-between gap-3">
+          <p className="t-label truncate text-ink-faint">AI agents · Speed to lead</p>
+          <span className="flex shrink-0 items-center gap-1.5 text-[11px] font-semibold text-teal">
+            <span aria-hidden="true" className="size-1.5 rounded-full bg-teal" />
+            Live
+          </span>
+        </div>
+
+        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {[
+            ["Calling", PhoneCall],
+            ["Texting", MessageSquare],
+            ["Email", Mail],
+            ["WhatsApp", MessageCircle],
+          ].map(([label, Icon]) => {
+            const I = Icon as typeof PhoneCall;
+            return (
+              <span
+                key={label as string}
+                className="flex items-center gap-1.5 rounded-lg border border-line px-2.5 py-2 text-[11.5px] font-semibold text-ink"
+              >
+                <I className="size-3.5 shrink-0 text-teal" aria-hidden="true" />
+                {label as string}
+              </span>
+            );
+          })}
+        </div>
+
+        <div className="mt-4">
+          <PanelLabel>Prebuilt knowledge</PanelLabel>
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+            {["Real estate scripts", "Objection handling", "Buyer and seller FAQs", "Your business details"].map(
+              (k) => (
+                <span
+                  key={k}
+                  className="flex items-center gap-2 rounded-lg bg-mist px-2.5 py-2 text-[11.5px] font-semibold text-teal-deep"
+                >
+                  <BookOpen className="size-3.5 shrink-0 text-teal" aria-hidden="true" />
+                  <span className="truncate">{k}</span>
+                </span>
+              ),
+            )}
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <PanelLabel>Ready to go</PanelLabel>
+          <ul className="mt-2 grid gap-1.5">
+            {["Lead sources connected", "Calendar connected", "A2P registered", "Calling window 10am to 9pm"].map(
+              (r) => (
+                <li key={r} className="flex items-center gap-2 text-[12px] text-ink">
+                  <span className="grid size-4 shrink-0 place-items-center rounded-full bg-teal">
+                    <Check className="size-2.5 text-white" strokeWidth={3} aria-hidden="true" />
+                  </span>
+                  {r}
+                </li>
+              ),
+            )}
+          </ul>
+        </div>
+      </>
+    ),
+  },
   {
     id: "conversations",
     word: "INBOX",
@@ -250,7 +327,7 @@ export function Capabilities() {
             <>
               One platform.
               <br />
-              <span className="grad-teal">Four ways to work it.</span>
+              <span className="grad-teal">Multiple ways to work it.</span>
             </>
           }
           lede="The modules behind the follow-up."
